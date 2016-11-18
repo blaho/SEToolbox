@@ -55,7 +55,7 @@
                 () => new ObservableViewModelCollection<CubeItemViewModel, CubeItemModel>(dataModel.CubeList, viewModelCreator);
             _cubeList = new Lazy<ObservableCollection<CubeItemViewModel>>(collectionCreator);
 
-            DataModel.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
+            DataModel.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 if (e.PropertyName == "CubeList")
                 {
@@ -274,6 +274,11 @@
         public ICommand SetOwnerCommand
         {
             get { return new DelegateCommand(SetOwnerExecuted, SetOwnerCanExecute); }
+        }
+
+        public ICommand UseAsPivotCommand
+        {
+            get { return new DelegateCommand(UseAsPivotExecuted, UseAsPivotCanExecute); }
         }
 
         #endregion
@@ -1147,6 +1152,31 @@
                 MainViewModel.IsModified = true;
                 MainViewModel.IsBusy = false;
             }
+        }
+
+        public bool UseAsPivotCanExecute()
+        {
+            return Selections.Count == 1;
+        }
+
+        public void UseAsPivotExecuted()
+        {
+            MainViewModel.IsBusy = true;
+            MainViewModel.ResetProgress(0, CubeList.Count);
+            DataModel.RotateCubes(VRageMath.Quaternion.Inverse(SelectedCubeItem.Cube.BlockOrientation.ToQuaternion()));            
+            var pivotPos = SelectedCubeItem.Cube.Min;
+            var pivotOrient = SelectedCubeItem.Cube.BlockOrientation;
+            foreach (var cube in CubeList)
+            {
+                MainViewModel.Progress++;
+                cube.RepositionAround(pivotPos, pivotOrient);
+            }
+            DataModel.MovePivotTo(pivotPos);
+            IsSubsSystemNotReady = true;
+            DataModel.InitializeAsync();
+            MainViewModel.ClearProgress();
+            MainViewModel.IsModified = true;
+            MainViewModel.IsBusy = false;
         }
 
         #endregion

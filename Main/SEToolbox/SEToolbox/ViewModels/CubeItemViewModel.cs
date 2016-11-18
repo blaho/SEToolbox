@@ -212,6 +212,21 @@
             return _dataModel.ChangeOwner(newOwnerId);
         }
 
+        public void RepositionAround(SerializableVector3I pivotPos, SerializableBlockOrientation pivotOrient)
+        {
+            _dataModel.RepositionAround(pivotPos, pivotOrient);
+        }
+
+        public void RotateByAmounts(int[] rotateCounts)
+        {
+            _dataModel.RotateByAmounts(rotateCounts);
+        }
+
+        public int[] GetRotateCounts(VRageMath.Base6Directions.Direction okForward, VRageMath.Base6Directions.Direction okUp)
+        {
+            return _dataModel.GetRotateCounts(okForward, okUp);
+        }
+
         #endregion
     }
 }

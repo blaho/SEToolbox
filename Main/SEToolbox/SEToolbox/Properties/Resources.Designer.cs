@@ -1085,6 +1085,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use as pivot.
+        /// </summary>
+        public static string CtlCubeMnuUseAsPivotCube {
+            get {
+                return ResourceManager.GetString("CtlCubeMnuUseAsPivotCube", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Construction.
         /// </summary>
         public static string CtlCubeTabConstruction {

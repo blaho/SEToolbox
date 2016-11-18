@@ -358,6 +358,146 @@
             return false;
         }
 
+        public void RepositionAround(SerializableVector3I pivotPos, SerializableBlockOrientation pivotOrient)
+        {
+            int preX, preY, preZ;
+            if ((pivotOrient.Forward == VRageMath.Base6Directions.Direction.Left
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Right
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Up
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Down)
+                    && (pivotOrient.Up == VRageMath.Base6Directions.Direction.Left
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Right
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Up
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Down))
+                preX = _cube.Min.z - pivotPos.z;
+            else if ((pivotOrient.Forward == VRageMath.Base6Directions.Direction.Left
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Right
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Forward
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Backward)
+                    && (pivotOrient.Up == VRageMath.Base6Directions.Direction.Left
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Right
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Forward
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Backward))
+                preX = _cube.Min.y - pivotPos.y;
+            else if ((pivotOrient.Forward == VRageMath.Base6Directions.Direction.Forward
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Backward
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Up
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Down)
+                    && (pivotOrient.Up == VRageMath.Base6Directions.Direction.Forward
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Backward
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Up
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Down))
+                preX = _cube.Min.x - pivotPos.x;
+            else
+                throw new System.Exception();
+            if (pivotOrient.Up == VRageMath.Base6Directions.Direction.Forward
+                    || pivotOrient.Up == VRageMath.Base6Directions.Direction.Backward)
+                preY = _cube.Min.z - pivotPos.z;
+            else if (pivotOrient.Up == VRageMath.Base6Directions.Direction.Up
+                     || pivotOrient.Up == VRageMath.Base6Directions.Direction.Down)
+                preY = _cube.Min.y - pivotPos.y;
+            else if (pivotOrient.Up == VRageMath.Base6Directions.Direction.Left
+                    || pivotOrient.Up == VRageMath.Base6Directions.Direction.Right)
+                preY = _cube.Min.x - pivotPos.x;
+            else
+                throw new System.Exception();
+            if (pivotOrient.Forward == VRageMath.Base6Directions.Direction.Forward
+                    || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Backward)
+                preZ = _cube.Min.z - pivotPos.z;
+            else if (pivotOrient.Forward == VRageMath.Base6Directions.Direction.Up
+                    || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Down)
+                preZ = _cube.Min.y - pivotPos.y;
+            else if (pivotOrient.Forward == VRageMath.Base6Directions.Direction.Left
+                    || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Right)
+                preZ = _cube.Min.x - pivotPos.x;
+            else
+                throw new System.Exception();
+            if (((pivotOrient.Forward == VRageMath.Base6Directions.Direction.Forward
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Right)
+                    && (pivotOrient.Up == VRageMath.Base6Directions.Direction.Down
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Right
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Backward))
+                || ((pivotOrient.Forward == VRageMath.Base6Directions.Direction.Down
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Backward)
+                    && (pivotOrient.Up == VRageMath.Base6Directions.Direction.Backward
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Up
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Left))
+                || ((pivotOrient.Forward == VRageMath.Base6Directions.Direction.Up
+                        || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Left)
+                    && (pivotOrient.Up == VRageMath.Base6Directions.Direction.Forward
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Right
+                        || pivotOrient.Up == VRageMath.Base6Directions.Direction.Up)))
+                preX *= -1;
+            if (pivotOrient.Up == VRageMath.Base6Directions.Direction.Forward
+                    || pivotOrient.Up == VRageMath.Base6Directions.Direction.Down
+                    || pivotOrient.Up == VRageMath.Base6Directions.Direction.Left)
+                preY *= -1;
+            if (pivotOrient.Forward == VRageMath.Base6Directions.Direction.Backward
+                    || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Up
+                    || pivotOrient.Forward == VRageMath.Base6Directions.Direction.Right)
+                preZ *= -1;
+            _cube.Min.x = preX;
+            _cube.Min.y = preY;
+            _cube.Min.z = preZ;
+            Position = new BindablePoint3DIModel(_cube.Min);
+        }
+
+        public void RotateByAmounts(int[] rotateCounts)
+        {
+            var fwd = _cube.BlockOrientation.Forward;
+            var up = _cube.BlockOrientation.Up;
+            RotateBy(ref fwd, ref up, AxisOrders[0], rotateCounts[0]);
+            RotateBy(ref fwd, ref up, AxisOrders[1], rotateCounts[1]);
+            RotateBy(ref fwd, ref up, AxisOrders[2], rotateCounts[2]);
+            _cube.BlockOrientation.Forward = fwd;
+            _cube.BlockOrientation.Up = up;
+        }
+
+
+        VRageMath.Base6Directions.Direction[][] AxisOrders = {
+            new VRageMath.Base6Directions.Direction[]{ VRageMath.Base6Directions.Direction.Forward, VRageMath.Base6Directions.Direction.Up, VRageMath.Base6Directions.Direction.Backward, VRageMath.Base6Directions.Direction.Down },
+            new VRageMath.Base6Directions.Direction[]{ VRageMath.Base6Directions.Direction.Forward, VRageMath.Base6Directions.Direction.Left, VRageMath.Base6Directions.Direction.Backward, VRageMath.Base6Directions.Direction.Right },
+            new VRageMath.Base6Directions.Direction[]{ VRageMath.Base6Directions.Direction.Up, VRageMath.Base6Directions.Direction.Left, VRageMath.Base6Directions.Direction.Down, VRageMath.Base6Directions.Direction.Right }
+        };
+
+
+        public int[] GetRotateCounts(VRageMath.Base6Directions.Direction okForward, VRageMath.Base6Directions.Direction okUp)
+        {
+            var fwd = _cube.BlockOrientation.Forward;
+            var up = _cube.BlockOrientation.Up;
+            var axisIndex = 0;
+            int[] rotateCounts = new int[3];
+            while (fwd != okForward || up != okUp)
+            {
+                var nok = fwd != okForward && up != okUp;
+                if (fwd == okForward)
+                    axisIndex = 2;
+                if (up == okUp)
+                    axisIndex = 1;
+                RotateBy(ref fwd, ref up, AxisOrders[axisIndex],1);
+                rotateCounts[axisIndex]++;
+                if (nok && (fwd == okForward || up == okUp))
+                    axisIndex++;
+            }
+            if (rotateCounts[0] == 3)
+                rotateCounts[0] = -1;
+            if (rotateCounts[1] == 3)
+                rotateCounts[1] = -1;
+            if (rotateCounts[2] == 3)
+                rotateCounts[2] = -1;
+            return rotateCounts;
+        }
+
+        private void RotateBy(ref VRageMath.Base6Directions.Direction fwd, ref VRageMath.Base6Directions.Direction up, VRageMath.Base6Directions.Direction[] axisOrder,int increment)
+        {
+            var ind = System.Array.IndexOf(axisOrder, fwd);
+            if (ind >= 0)
+                fwd = axisOrder[(ind + increment) % 4];
+            ind = System.Array.IndexOf(axisOrder, up);
+            if (ind >= 0)
+                up = axisOrder[(ind + increment) % 4];
+        }
+
         private void SetProperties(MyObjectBuilder_CubeBlock cube, MyCubeBlockDefinition definition)
         {
             Cube = cube;
