@@ -1164,12 +1164,13 @@
             MainViewModel.IsBusy = true;
             MainViewModel.ResetProgress(0, CubeList.Count);
             DataModel.RotateCubes(VRageMath.Quaternion.Inverse(SelectedCubeItem.Cube.BlockOrientation.ToQuaternion()));            
+            if (SelectedCubeItem.Cube.BlockOrientation.Forward != VRageMath.Base6Directions.Direction.Forward || SelectedCubeItem.Cube.BlockOrientation.Up != VRageMath.Base6Directions.Direction.Up)
+                throw new InvalidOperationException("Forward must point to Forward and Up must point Up.");
             var pivotPos = SelectedCubeItem.Cube.Min;
-            var pivotOrient = SelectedCubeItem.Cube.BlockOrientation;
             foreach (var cube in CubeList)
             {
                 MainViewModel.Progress++;
-                cube.RepositionAround(pivotPos, pivotOrient);
+                cube.RepositionAround(pivotPos);
             }
             DataModel.MovePivotTo(pivotPos);
             IsSubsSystemNotReady = true;
