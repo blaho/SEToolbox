@@ -1163,16 +1163,31 @@
         {
             MainViewModel.IsBusy = true;
             MainViewModel.ResetProgress(0, CubeList.Count);
-            DataModel.RotateCubes(VRageMath.Quaternion.Inverse(SelectedCubeItem.Cube.BlockOrientation.ToQuaternion()));            
+            // rotate the grid's cubes towards the reference block's forward and up, compensate by turning the grid inversely
+            // the grid will stay in the same position and orientation in the world
+            // the blocks will be in the same position and orientation in reference to each other
+            // basically we turned only the pivot point towads the reference blocks' forward and up
+            DataModel.RotateCubes(VRageMath.Quaternion.Inverse(SelectedCubeItem.Cube.BlockOrientation.ToQuaternion()));
+            // double-check that the reference is pointing towards forward and up, it's crucial for the next steps
             if (SelectedCubeItem.Cube.BlockOrientation.Forward != VRageMath.Base6Directions.Direction.Forward || SelectedCubeItem.Cube.BlockOrientation.Up != VRageMath.Base6Directions.Direction.Up)
                 throw new InvalidOperationException("Forward must point to Forward and Up must point Up.");
+            // reposition the blocks so the reference block is at the 0,0,0 grid coordinate
             var pivotPos = SelectedCubeItem.Cube.Min;
             foreach (var cube in CubeList)
             {
                 MainViewModel.Progress++;
+                // get all block groups this block is part of
+                var blockGroups = DataModel.CubeGrid.BlockGroups.FindAll(bg => bg.Blocks.Contains(cube.Cube.Min));
+                // remove current coordinate entry (soon to be invalidated)
+                blockGroups.ForEach(bg => bg.Blocks.RemoveAll(b => (VRage.SerializableVector3I)b == cube.Cube.Min));
+                // reposition block
                 cube.RepositionAround(pivotPos);
+                // add new coordinate to block groups
+                blockGroups.ForEach(bg => bg.Blocks.Add(cube.Cube.Min));
             }
-            DataModel.MovePivotTo(pivotPos);
+            // move the grid so it's at the same world position as before           
+            DataModel.MoveGridToCubePos(pivotPos);
+            //
             IsSubsSystemNotReady = true;
             DataModel.InitializeAsync();
             MainViewModel.ClearProgress();

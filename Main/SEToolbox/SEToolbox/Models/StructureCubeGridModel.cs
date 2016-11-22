@@ -1088,7 +1088,7 @@
             return count > 0;
         }
 
-        public void MovePivotTo(SerializableVector3I cube)
+        public void MoveGridToCubePos(SerializableVector3I cube)
         {
             
             var pos1 = (VRageMath.Vector3D)CubeGrid.PositionAndOrientation.Value.Position;
