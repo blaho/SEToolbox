@@ -1185,6 +1185,9 @@
                 // add new coordinate to block groups
                 blockGroups.ForEach(bg => bg.Blocks.Add(cube.Cube.Min));
             }
+            // move the reference block to the very beginning of the cubelist
+            // (since 01.142, the blueprint's first block is placed on the projector at 0-0-0 setting)
+            DataModel.CubeGrid.CubeBlocks.Move(DataModel.CubeGrid.CubeBlocks.IndexOf(SelectedCubeItem.Cube), 0);
             // move the grid so it's at the same world position as before           
             DataModel.MoveGridToCubePos(pivotPos);
             //
