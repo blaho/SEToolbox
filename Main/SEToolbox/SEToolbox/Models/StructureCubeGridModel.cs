@@ -1089,8 +1089,7 @@
         }
 
         public void MoveGridToCubePos(SerializableVector3I cube)
-        {
-            
+        {          
             var pos1 = (VRageMath.Vector3D)CubeGrid.PositionAndOrientation.Value.Position;
             var orient1 = CubeGrid.PositionAndOrientation.Value.ToQuaternion();
             var multi1 =  CubeGrid.GridSizeEnum.ToLength();

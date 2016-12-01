@@ -360,7 +360,7 @@
 
         public void RepositionAround(SerializableVector3I pivotPos)
         {
-            _cube.Min.x-=pivotPos.x;
+            _cube.Min.x -= pivotPos.x;
             _cube.Min.y -= pivotPos.y;
             _cube.Min.z -= pivotPos.z;
             Position = new BindablePoint3DIModel(_cube.Min);
