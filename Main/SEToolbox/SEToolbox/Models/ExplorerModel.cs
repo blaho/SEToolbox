@@ -882,13 +882,14 @@
             return idReplacementTable[currentId];
         }
 
-        public void OptimizeModel(StructureCubeGridModel viewModel)
+        public void OptimizeModel(StructureCubeGridModel viewModel, bool keepFirstBlock = true)
         {
             if (viewModel == null)
                 return;
 
             // Optimise ordering of CubeBlocks within structure, so that loops can load quickly based on {X+, Y+, Z+}.
-            var neworder = viewModel.CubeGrid.CubeBlocks.OrderBy(c => c.Min.Z).ThenBy(c => c.Min.Y).ThenBy(c => c.Min.X).ToList();
+            // Since 01.142, the blueprint's first block is placed on the projector at 0-0-0 setting. It might be desired to not change the first block.
+            var neworder = viewModel.CubeGrid.CubeBlocks.Select((cb, i) => new { CubeBlock = cb, Index = i }).OrderBy(c => !keepFirstBlock || c.Index > 0).ThenBy(c => c.CubeBlock.Min.Z).ThenBy(c => c.CubeBlock.Min.Y).ThenBy(c => c.CubeBlock.Min.X).Select(c=>c.CubeBlock).ToList();
             viewModel.CubeGrid.CubeBlocks = neworder;
             IsModified = true;
         }
