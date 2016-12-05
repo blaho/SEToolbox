@@ -365,6 +365,11 @@
                                     <Image Width="16" Height="16" Source="{Binding Converter={StaticResource ResouceToImageConverter}, ConverterParameter=users_back}"/>
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Command="{Binding CopyCubeGpsCommand}" Header="{lex:Loc SEToolbox:Resources:CtlCubeMnuCopyCubeGps}" Style="{StaticResource ToolBarTopMenuitem}">
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="{Binding Converter={StaticResource ResouceToImageConverter}, ConverterParameter=target}"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </Menu>
                         <Grid Grid.Row="2">
                             <Grid.RowDefinitions>

@@ -851,6 +851,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy GPS.
+        /// </summary>
+        public static string CtlCubeMnuCopyCubeGps {
+            get {
+                return ResourceManager.GetString("CtlCubeMnuCopyCubeGps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy text detail to Clipboard.
         /// </summary>
         public static string CtlCubeMnuCopyDetail {
