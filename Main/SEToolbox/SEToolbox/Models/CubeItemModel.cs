@@ -380,8 +380,7 @@
             }
 
             CubeSize = definition.CubeSize;
-            FriendlyName = SpaceEngineersApi.GetResourceName(definition.DisplayNameText);
-
+            FriendlyName = SpaceEngineersApi.GetResourceName(definition.DisplayNameText) + (System.String.IsNullOrEmpty((cube as MyObjectBuilder_FunctionalBlock)?.CustomName) ? string.Empty : " - " + ((MyObjectBuilder_FunctionalBlock)cube).CustomName);
             var identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == Owner);
             var dead = " (dead)";
             if (SpaceEngineersCore.WorldResource.Checkpoint.AllPlayersData != null)

@@ -1511,6 +1511,9 @@ Spawns Flora:	{15}
 Show GPS:	{16}
 Planet Generator:	{17}</value>
   </data>
+  <data name="CtlCubeMnuCopyCubeGps" xml:space="preserve">
+    <value>Copy GPS</value>
+  </data>
   <data name="CtlCubeMnuUseAsPivotCube" xml:space="preserve">
     <value>Use as pivot</value>
   </data>
