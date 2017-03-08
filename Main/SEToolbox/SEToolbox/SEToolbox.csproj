@@ -153,6 +153,12 @@
     <Reference Include="SpaceEngineers.ObjectBuilders">
       <HintPath>$(BinPath)\SpaceEngineers.ObjectBuilders.dll</HintPath>
     </Reference>
+    <Reference Include="InfinarioSDK">
+      <HintPath>$(BinPath)\InfinarioSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>$(BinPath)\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="VRage">
       <HintPath>$(BinPath)\VRage.dll</HintPath>
     </Reference>
@@ -238,8 +244,6 @@
     <Compile Include="Interop\Asteroids\MyVoxelRayTracer.cs" />
     <Compile Include="Interop\BlueprintRequirement.cs" />
     <Compile Include="Interop\ContentDataPath.cs" />
-    <Compile Include="Interop\Models\MyModel.cs" />
-    <Compile Include="Interop\Models\MyModelConverter.cs" />
     <Compile Include="Interop\SpaceEngineersExtensions.cs" />
     <Compile Include="Interop\NativeMethods.cs" />
     <Compile Include="Interop\SpaceEngineersApi.cs" />
