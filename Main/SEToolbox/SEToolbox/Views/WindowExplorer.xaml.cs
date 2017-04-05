@@ -45,5 +45,20 @@
         {
             this.DataContext = viewModel;
         }
+
+        private void TabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            switch ((e.Source as System.Windows.Controls.TabControl)?.SelectedIndex)
+            {
+                case 0:
+                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedPlayer = null;
+                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedPlayers.Clear();
+                    break;
+                case 1:
+                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedStructure = null;
+                    (this.DataContext as ViewModels.ExplorerViewModel).Selections.Clear();
+                    break;
+            }
+        }
     }
 }

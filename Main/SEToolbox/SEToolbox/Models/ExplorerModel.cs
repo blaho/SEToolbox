@@ -39,6 +39,11 @@
         ///// </summary>
         private ObservableCollection<IStructureBase> _structures;
 
+        ///// <summary>
+        ///// Collection of <see cref="StructurePlayerModel"/> objects that represent the players.
+        ///// </summary>
+        private ObservableCollection<StructurePlayerModel> _players;
+
         private bool _showProgress;
 
         private double _progress;
@@ -60,6 +65,7 @@
         public ExplorerModel()
         {
             Structures = new ObservableCollection<IStructureBase>();
+            Players = new ObservableCollection<StructurePlayerModel>();
             _timer = new Stopwatch();
             SetActiveStatus();
         }
@@ -81,6 +87,23 @@
                 {
                     _structures = value;
                     RaisePropertyChanged(() => Structures);
+                }
+            }
+        }
+
+        public ObservableCollection<StructurePlayerModel> Players
+        {
+            get
+            {
+                return _players;
+            }
+
+            set
+            {
+                if (value != _players)
+                {
+                    _players = value;
+                    RaisePropertyChanged(() => Players);
                 }
             }
         }
@@ -480,9 +503,16 @@
 
                             Structures.Add(character);
                         }
+
                     }
 
                     Structures.Add(structure);
+                }
+
+                var allCubes = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>().SelectMany(cg => cg.CubeBlocks);
+                foreach (var x in allCubes.GroupBy(k => k.BuiltBy, (k, v) => new { BuiltBy = k, Cubes = v }))
+                {
+                    Players.Add(new StructurePlayerModel(x.BuiltBy, x.Cubes));
                 }
 
                 CalcDistances();

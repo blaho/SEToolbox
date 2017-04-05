@@ -273,6 +273,7 @@
     <Compile Include="Models\GenerateFloatingObjectModel.cs" />
     <Compile Include="Models\GroupMoveItemModel.cs" />
     <Compile Include="Models\GroupMoveModel.cs" />
+    <Compile Include="Models\StructurePlayerModel.cs" />
     <Compile Include="Models\StructureMeteorModel.cs" />
     <Compile Include="Models\StructureInventoryBagModel.cs" />
     <Compile Include="Models\StructureUnknownModel.cs" />
@@ -393,6 +394,7 @@
     <Compile Include="ViewModels\FindApplicationViewModel.cs" />
     <Compile Include="ViewModels\GenerateFloatingObjectViewModel.cs" />
     <Compile Include="ViewModels\GroupMoveViewModel.cs" />
+    <Compile Include="ViewModels\StructurePlayerViewModel.cs" />
     <Compile Include="ViewModels\StructureMeteorViewModel.cs" />
     <Compile Include="ViewModels\StructureInventoryBagViewModel.cs" />
     <Compile Include="ViewModels\StructureUnknownViewModel.cs" />

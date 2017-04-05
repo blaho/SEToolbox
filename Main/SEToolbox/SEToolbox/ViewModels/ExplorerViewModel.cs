@@ -43,9 +43,12 @@
 
         private bool _ignoreUpdateSelection;
         private IStructureViewBase _selectedStructure;
+        private StructurePlayerViewModel _selectedPlayer;
         private IStructureViewBase _preSelectedStructure;
         private ObservableCollection<IStructureViewBase> _selections;
+        private ObservableCollection<StructurePlayerViewModel> _selectedPlayers;
         private ObservableCollection<IStructureViewBase> _structures;
+        private ObservableCollection<StructurePlayerViewModel> _players;
         private ObservableCollection<LanguageModel> _languages;
 
         // If true, when adding new models to the collection, the new models will be highlighted as selected in the UI.
@@ -87,9 +90,19 @@
                 AddViewModel(item);
             }
 
+            SelectedPlayers = new ObservableCollection<StructurePlayerViewModel>();
+            SelectedPlayers.CollectionChanged += (sender, e) => RaisePropertyChanged(() => IsMultipleSelections);
+
+            Players = new ObservableCollection<StructurePlayerViewModel>();
+            foreach (var item in _dataModel.Players)
+            {
+                AddViewModel(item);
+            }
+
             UpdateLanguages();
 
             _dataModel.Structures.CollectionChanged += Structures_CollectionChanged;
+            _dataModel.Players.CollectionChanged += Players_CollectionChanged;
             // Will bubble property change events from the Model to the ViewModel.
             _dataModel.PropertyChanged += (sender, e) => OnPropertyChanged(e.PropertyName);
         }
@@ -392,6 +405,67 @@
             get
             {
                 return _selections.Count > 1;
+            }
+        }
+
+        public ObservableCollection<StructurePlayerViewModel> Players
+        {
+            get
+            {
+                return _players;
+            }
+
+            private set
+            {
+                if (value != _players)
+                {
+                    _players = value;
+                    RaisePropertyChanged(() => Players);
+                }
+            }
+        }
+
+        public StructurePlayerViewModel SelectedPlayer
+        {
+            get
+            {
+                return _selectedPlayer;
+            }
+
+            set
+            {
+                if (value != _selectedPlayer)
+                {
+                    _selectedPlayer = value;
+                    if (_selectedPlayer != null && !_ignoreUpdateSelection)
+                        _selectedPlayer.DataModel.InitializeAsync();
+                    RaisePropertyChanged(() => SelectedPlayer);
+                }
+            }
+        }
+
+        public ObservableCollection<StructurePlayerViewModel> SelectedPlayers
+        {
+            get
+            {
+                return _selectedPlayers;
+            }
+
+            set
+            {
+                if (value != _selectedPlayers)
+                {
+                    _selectedPlayers = value;
+                    RaisePropertyChanged(() => SelectedPlayers);
+                }
+            }
+        }
+
+        public bool AreMultiplePlayersSelected
+        {
+            get
+            {
+                return _selectedPlayers.Count > 1;
             }
         }
 
@@ -1271,6 +1345,19 @@
             }
         }
 
+        private void Players_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: AddViewModel(e.NewItems[0] as StructurePlayerModel); break;
+                case NotifyCollectionChangedAction.Remove: RemoveViewModel(e.OldItems[0] as StructurePlayerModel); break;
+                case NotifyCollectionChangedAction.Reset: _players.Clear(); break;
+                case NotifyCollectionChangedAction.Replace:
+                case NotifyCollectionChangedAction.Move: throw new NotImplementedException();
+            }
+        }
+
+
         private void AddViewModel(IStructureBase structureBase)
         {
             IStructureViewBase item;
@@ -1303,6 +1390,13 @@
             {
                 SelectedStructure = item;
             }
+        }
+
+        private void AddViewModel(StructurePlayerModel structureBase)
+        {
+            var item= new StructurePlayerViewModel(this, structureBase);
+
+            _players.Add(item);
         }
 
         /// <summary>

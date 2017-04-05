@@ -4003,6 +4003,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Players.
+        /// </summary>
+        public static string WnExplorerTabPlayers {
+            get {
+                return ResourceManager.GetString("WnExplorerTabPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string WnGenFloatBtnCancel {
