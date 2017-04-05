@@ -535,6 +535,13 @@
             get { return DataModel.TurretDetails; }
         }
 
+        public string BuilderName
+        {
+            get
+            {
+                return DataModel.BuilderName;
+            }
+        }
         #endregion
 
         #region command methods

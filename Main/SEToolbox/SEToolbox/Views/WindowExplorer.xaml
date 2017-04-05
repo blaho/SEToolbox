@@ -402,6 +402,13 @@
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn SortBinding="{Binding BuilderName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColBuilder}" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding BuilderName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
                                         <controls:SortableGridViewColumn Width="70" SortBinding="{Binding AssemblerCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColAssemblerCount}">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>

@@ -3283,6 +3283,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Builder.
+        /// </summary>
+        public static string WnExplorerColBuilder {
+            get {
+                return ResourceManager.GetString("WnExplorerColBuilder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cubes.
         /// </summary>
         public static string WnExplorerColCubes {

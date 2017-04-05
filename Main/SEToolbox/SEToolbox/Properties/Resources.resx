@@ -1538,6 +1538,9 @@ Planet Generator:	{17}</value>
   <data name="WnExplorerColAssemblers" xml:space="preserve">
     <value>Assemblers</value>
   </data>
+  <data name="WnExplorerColBuilder" xml:space="preserve">
+    <value>Builder</value>
+  </data>
   <data name="WnExplorerColPowerBlocks" xml:space="preserve">
     <value>Power blocks</value>
   </data>

@@ -117,6 +117,9 @@
         [NonSerialized]
         private string _turretDetails;
 
+        [NonSerialized]
+        private string _builderName;
+
         #endregion
 
         #region ctor
@@ -656,6 +659,13 @@
             }
         }
 
+        public string BuilderName
+        {
+            get
+            {
+                return _builderName;
+            }
+        }
         #endregion
 
         #region methods
@@ -790,6 +800,14 @@
             Center = WorldAABB.Center;
 
             DisplayName = CubeGrid.DisplayName;
+            var cubesByBuilder = CubeGrid.CubeBlocks.Where(cb=>cb.BuiltBy!=0).GroupBy(k => k.BuiltBy, (k, blocks) => new { Builder = k, Count = blocks.Count() });
+            if (cubesByBuilder.Count() > 0)
+            {
+                var topBuilderId = cubesByBuilder.Aggregate((prev, curr) => curr.Count > prev.Count ? curr : prev).Builder;
+                var identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == topBuilderId);
+                if (identity != null)
+                    _builderName = identity.DisplayName;
+            }
 
             // Add Beacon or Antenna detail for the Description.
             var broadcasters = CubeGrid.CubeBlocks.Where(b => b.SubtypeName == SubtypeId.LargeBlockBeacon.ToString()
