@@ -1514,4 +1514,43 @@ Planet Generator:	{17}</value>
   <data name="CtlCubeMnuCopyCubeGps" xml:space="preserve">
     <value>Copy GPS</value>
   </data>
+  <data name="WnExplorerColAssemblerCount" xml:space="preserve">
+    <value>Assemblers</value>
+  </data>
+  <data name="WnExplorerColAssemblerCountTooltip" xml:space="preserve">
+    <value>Assemblers</value>
+  </data>
+  <data name="WnExplorerColPowerBlockCount" xml:space="preserve">
+    <value>Power blocks</value>
+  </data>
+  <data name="WnExplorerColRefineryCount" xml:space="preserve">
+    <value>Refineries</value>
+  </data>
+  <data name="WnExplorerColShipToolCount" xml:space="preserve">
+    <value>Ship tools</value>
+  </data>
+  <data name="WnExplorerColThrusterCount" xml:space="preserve">
+    <value>Thrusters</value>
+  </data>
+  <data name="WnExplorerColTurretCount" xml:space="preserve">
+    <value>Turrets</value>
+  </data>
+  <data name="WnExplorerColAssemblers" xml:space="preserve">
+    <value>Assemblers</value>
+  </data>
+  <data name="WnExplorerColPowerBlocks" xml:space="preserve">
+    <value>Power blocks</value>
+  </data>
+  <data name="WnExplorerColRefineries" xml:space="preserve">
+    <value>Refineries</value>
+  </data>
+  <data name="WnExplorerColShipTools" xml:space="preserve">
+    <value>Ship tools</value>
+  </data>
+  <data name="WnExplorerColThrusters" xml:space="preserve">
+    <value>Thrusters</value>
+  </data>
+  <data name="WnExplorerColTurrets" xml:space="preserve">
+    <value>Turrets</value>
+  </data>
 </root>

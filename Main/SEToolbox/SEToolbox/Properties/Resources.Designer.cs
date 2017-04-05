@@ -3256,6 +3256,33 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assemblers.
+        /// </summary>
+        public static string WnExplorerColAssemblerCount {
+            get {
+                return ResourceManager.GetString("WnExplorerColAssemblerCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assemblers.
+        /// </summary>
+        public static string WnExplorerColAssemblerCountTooltip {
+            get {
+                return ResourceManager.GetString("WnExplorerColAssemblerCountTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assemblers.
+        /// </summary>
+        public static string WnExplorerColAssemblers {
+            get {
+                return ResourceManager.GetString("WnExplorerColAssemblers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cubes.
         /// </summary>
         public static string WnExplorerColCubes {
@@ -3324,6 +3351,96 @@ namespace SEToolbox.Properties {
         public static string WnExplorerColName {
             get {
                 return ResourceManager.GetString("WnExplorerColName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power blocks.
+        /// </summary>
+        public static string WnExplorerColPowerBlockCount {
+            get {
+                return ResourceManager.GetString("WnExplorerColPowerBlockCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power blocks.
+        /// </summary>
+        public static string WnExplorerColPowerBlocks {
+            get {
+                return ResourceManager.GetString("WnExplorerColPowerBlocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refineries.
+        /// </summary>
+        public static string WnExplorerColRefineries {
+            get {
+                return ResourceManager.GetString("WnExplorerColRefineries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refineries.
+        /// </summary>
+        public static string WnExplorerColRefineryCount {
+            get {
+                return ResourceManager.GetString("WnExplorerColRefineryCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ship tools.
+        /// </summary>
+        public static string WnExplorerColShipToolCount {
+            get {
+                return ResourceManager.GetString("WnExplorerColShipToolCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ship tools.
+        /// </summary>
+        public static string WnExplorerColShipTools {
+            get {
+                return ResourceManager.GetString("WnExplorerColShipTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thrusters.
+        /// </summary>
+        public static string WnExplorerColThrusterCount {
+            get {
+                return ResourceManager.GetString("WnExplorerColThrusterCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thrusters.
+        /// </summary>
+        public static string WnExplorerColThrusters {
+            get {
+                return ResourceManager.GetString("WnExplorerColThrusters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turrets.
+        /// </summary>
+        public static string WnExplorerColTurretCount {
+            get {
+                return ResourceManager.GetString("WnExplorerColTurretCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turrets.
+        /// </summary>
+        public static string WnExplorerColTurrets {
+            get {
+                return ResourceManager.GetString("WnExplorerColTurrets", resourceCulture);
             }
         }
         

@@ -391,7 +391,7 @@
                                         <controls:SortableGridViewColumn Width="70" SortBinding="{Binding BlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColCubes}">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Path=BlockCount, StringFormat='{}{0:#,##0}'}" TextAlignment="Right" ToolTip="{lex:Loc WnExplorerColCubesTooltip}"/>
+                                                    <TextBlock Text="{Binding Path=BlockCount, StringFormat='{}{0:#,##0}'}" TextAlignment="Right" ToolTip="{Binding Path=BlockCountDetails}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
@@ -399,6 +399,48 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Path=LinearVelocity, StringFormat='{}{0:#,##0.000}'}" TextAlignment="Right" ToolTip="{lex:Loc WnExplorerColVelocityTooltip}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding AssemblerCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColAssemblerCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=AssemblerCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=AssemblerDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding RefineryCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColRefineryCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=RefineryCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=RefineryDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ShipToolCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColShipToolCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=ShipToolCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=ShipToolDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding PowerBlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColPowerBlockCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=PowerBlockCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=PowerBlockDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ThrusterCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColThrusterCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=ThrusterCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=ThrusterDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding TurretCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColTurretCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=TurretCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=TurretDetails}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>

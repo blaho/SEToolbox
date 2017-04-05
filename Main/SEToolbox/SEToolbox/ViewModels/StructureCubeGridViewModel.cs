@@ -470,6 +470,71 @@
             set { DataModel.IsSubsSystemNotReady = value; }
         }
 
+        public string BlockCountDetails
+        {
+            get { return DataModel.BlockCountDetails; }
+        }
+
+        public int AssemblerCount
+        {
+            get { return DataModel.AssemblerCount; }
+        }
+
+        public string AssemblerDetails
+        {
+            get { return DataModel.AssemblerDetails; }
+        }
+
+        public int RefineryCount
+        {
+            get { return DataModel.RefineryCount; }
+        }
+
+        public string RefineryDetails
+        {
+            get { return DataModel.RefineryDetails; }
+        }
+
+        public int ShipToolCount
+        {
+            get { return DataModel.ShipToolCount; }
+        }
+
+        public string ShipToolDetails
+        {
+            get { return DataModel.ShipToolDetails; }
+        }
+
+        public int PowerBlockCount
+        {
+            get { return DataModel.PowerBlockCount; }
+        }
+
+        public string PowerBlockDetails
+        {
+            get { return DataModel.PowerBlockDetails; }
+        }
+
+        public int ThrusterCount
+        {
+            get { return DataModel.ThrusterCount; }
+        }
+
+        public string ThrusterDetails
+        {
+            get { return DataModel.ThrusterDetails; }
+        }
+
+        public int TurretCount
+        {
+            get { return DataModel.TurretCount; }
+        }
+
+        public string TurretDetails
+        {
+            get { return DataModel.TurretDetails; }
+        }
+
         #endregion
 
         #region command methods
@@ -1172,7 +1237,7 @@
             if (fb == null)
                 caption = $"{Selections[0].FriendlyName} {Selections[0].Position}";
             else
-                caption=fb.CustomName ?? Selections[0].FriendlyName;
+                caption = fb.CustomName ?? Selections[0].FriendlyName;
             var text = String.Format(System.Globalization.CultureInfo.InvariantCulture, "GPS:{0}:{1:0.00}:{2:0.00}:{3:0.00}:", caption, cubeCoord.Position.X, cubeCoord.Position.Y, cubeCoord.Position.Z);
             try
             {

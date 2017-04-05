@@ -18,6 +18,7 @@
     using VRage.ObjectBuilders;
     using VRageMath;
     using IDType = VRage.MyEntityIdentifier.ID_OBJECT_TYPE;
+    using Services;
 
     [Serializable]
     public class StructureCubeGridModel : StructureBaseModel
@@ -77,6 +78,45 @@
         [NonSerialized]
         private bool _isConstructionNotReady;
 
+        [NonSerialized]
+        private string _blockCountDetails;
+
+        [NonSerialized]
+        private int _assemblerCount;
+
+        [NonSerialized]
+        private string _assemblerDetails;
+
+        [NonSerialized]
+        private int _refineryCount;
+
+        [NonSerialized]
+        private string _refineryDetails;
+
+        [NonSerialized]
+        private int _shipToolCount;
+
+        [NonSerialized]
+        private string _shipToolDetails;
+
+        [NonSerialized]
+        private int _powerBlockCount;
+
+        [NonSerialized]
+        private string _powerBlockDetails;
+
+        [NonSerialized]
+        private int _thrusterCount;
+
+        [NonSerialized]
+        private string _thrusterDetails;
+
+        [NonSerialized]
+        private int _turretCount;
+
+        [NonSerialized]
+        private string _turretDetails;
+
         #endregion
 
         #region ctor
@@ -86,6 +126,7 @@
         {
             IsSubsSystemNotReady = true;
             IsConstructionNotReady = true;
+            CountBlocks();
         }
 
         #endregion
@@ -511,9 +552,131 @@
             }
         }
 
+        public string BlockCountDetails
+        {
+            get
+            {
+                return _blockCountDetails;
+            }
+        }
+
+        public int AssemblerCount
+        {
+            get
+            {
+                return _assemblerCount;
+            }
+        }
+
+        public string AssemblerDetails
+        {
+            get
+            {
+                return _assemblerDetails;
+            }
+        }
+
+        public int RefineryCount
+        {
+            get
+            {
+                return _refineryCount;
+            }
+        }
+
+        public string RefineryDetails
+        {
+            get
+            {
+                return _refineryDetails;
+            }
+        }
+
+        public int ShipToolCount
+        {
+            get
+            {
+                return _shipToolCount;
+            }
+        }
+
+        public string ShipToolDetails
+        {
+            get
+            {
+                return _shipToolDetails;
+            }
+        }
+
+        public int PowerBlockCount
+        {
+            get
+            {
+                return _powerBlockCount;
+            }
+        }
+
+        public string PowerBlockDetails
+        {
+            get
+            {
+                return _powerBlockDetails;
+            }
+        }
+
+        public int TurretCount
+        {
+            get
+            {
+                return _turretCount;
+            }
+        }
+
+        public string TurretDetails
+        {
+            get
+            {
+                return _turretDetails;
+            }
+        }
+
+        public int ThrusterCount
+        {
+            get
+            {
+                return _thrusterCount;
+            }
+        }
+
+        public string ThrusterDetails
+        {
+            get
+            {
+                return _thrusterDetails;
+            }
+        }
+
         #endregion
 
         #region methods
+
+        private void CountBlocks()
+        {
+            var bs = new BlockStatistics(CubeGrid.CubeBlocks);
+            _blockCountDetails = bs.BlockCountDetails;
+            _assemblerCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Assembler)?.Count ?? 0;
+            _assemblerDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Assembler)?.GetDetails();
+            _refineryCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Refinery)?.Count ?? 0;
+            _refineryDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Refinery)?.GetDetails();
+            _shipToolCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ShipTool)?.Count ?? 0;
+            _shipToolDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ShipTool)?.GetDetails();
+            _powerBlockCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Power)?.Count ?? 0;
+            _powerBlockDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Power)?.GetDetails();
+            _thrusterCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ThrusterGyro)?.Count ?? 0;
+            _thrusterDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ThrusterGyro)?.GetDetails();
+            _turretCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.WeaponTurret)?.Count ?? 0;
+            _turretDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.WeaponTurret)?.GetDetails();
+        }
 
         [OnSerializing]
         internal void OnSerializingMethod(StreamingContext context)
@@ -663,7 +826,7 @@
         {
             var worker = new BackgroundWorker();
 
-            worker.DoWork += delegate(object s, DoWorkEventArgs workArgs)
+            worker.DoWork += delegate (object s, DoWorkEventArgs workArgs)
             {
                 lock (Locker)
                 {
