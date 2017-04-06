@@ -1559,4 +1559,34 @@ Planet Generator:	{17}</value>
   <data name="WnExplorerColTurrets" xml:space="preserve">
     <value>Turrets</value>
   </data>
+  <data name="WnExplorerColDelay" xml:space="preserve">
+    <value>Delay [s]</value>
+  </data>
+  <data name="WnExplorerColEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="WnExplorerColGrid" xml:space="preserve">
+    <value>Grid</value>
+  </data>
+  <data name="WnExplorerColOwner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="WnExplorerColProgrammableBlockName" xml:space="preserve">
+    <value>Programmable Blocks</value>
+  </data>
+  <data name="WnExplorerColProgrammableBlockSourceCode" xml:space="preserve">
+    <value>Source Code</value>
+  </data>
+  <data name="WnExplorerColSelfTriggerType" xml:space="preserve">
+    <value>Self-trigger</value>
+  </data>
+  <data name="WnExplorerColTimer" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="WnExplorerColToolbarSummary" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="WnExplorerTabTimers" xml:space="preserve">
+    <value>Timers</value>
+  </data>
 </root>

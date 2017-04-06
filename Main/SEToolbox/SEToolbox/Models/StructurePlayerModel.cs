@@ -197,106 +197,67 @@
 
         public string BlockCountDetails
         {
-            get
-            {
-                return _blockCountDetails;
-            }
+            get { return _blockCountDetails; }
         }
 
         public int AssemblerCount
         {
-            get
-            {
-                return _assemblerCount;
-            }
+            get { return _assemblerCount; }
         }
 
         public string AssemblerDetails
         {
-            get
-            {
-                return _assemblerDetails;
-            }
+            get { return _assemblerDetails; }
         }
 
         public int RefineryCount
         {
-            get
-            {
-                return _refineryCount;
-            }
+            get { return _refineryCount; }
         }
 
         public string RefineryDetails
         {
-            get
-            {
-                return _refineryDetails;
-            }
+            get { return _refineryDetails; }
         }
 
         public int ShipToolCount
         {
-            get
-            {
-                return _shipToolCount;
-            }
+            get { return _shipToolCount; }
         }
 
         public string ShipToolDetails
         {
-            get
-            {
-                return _shipToolDetails;
-            }
+            get { return _shipToolDetails; }
         }
 
         public int PowerBlockCount
         {
-            get
-            {
-                return _powerBlockCount;
-            }
+            get { return _powerBlockCount; }
         }
 
         public string PowerBlockDetails
         {
-            get
-            {
-                return _powerBlockDetails;
-            }
+            get { return _powerBlockDetails; }
         }
 
         public int TurretCount
         {
-            get
-            {
-                return _turretCount;
-            }
+            get { return _turretCount; }
         }
 
         public string TurretDetails
         {
-            get
-            {
-                return _turretDetails;
-            }
+            get { return _turretDetails; }
         }
 
         public int ThrusterCount
         {
-            get
-            {
-                return _thrusterCount;
-            }
+            get { return _thrusterCount; }
         }
 
         public string ThrusterDetails
         {
-            get
-            {
-                return _thrusterDetails;
-            }
+            get { return _thrusterDetails; }
         }
         #endregion
 

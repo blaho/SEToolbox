@@ -48,16 +48,24 @@
 
         private void TabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            switch ((e.Source as System.Windows.Controls.TabControl)?.SelectedIndex)
+            if (e.Source is System.Windows.Controls.TabControl)
             {
-                case 0:
-                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedPlayer = null;
-                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedPlayers.Clear();
-                    break;
-                case 1:
+                var i = (e.Source as System.Windows.Controls.TabControl)?.SelectedIndex;
+                if (i != 0)
+                {
                     (this.DataContext as ViewModels.ExplorerViewModel).SelectedStructure = null;
                     (this.DataContext as ViewModels.ExplorerViewModel).Selections.Clear();
-                    break;
+                }
+                if (i != 1)
+                {
+                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedPlayer = null;
+                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedPlayers.Clear();
+                }
+                if (i != 2)
+                {
+                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedTimer = null;
+                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedTimers.Clear();
+                }
             }
         }
     }

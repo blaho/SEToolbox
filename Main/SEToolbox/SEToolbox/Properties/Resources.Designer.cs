@@ -3310,6 +3310,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delay [s].
+        /// </summary>
+        public static string WnExplorerColDelay {
+            get {
+                return ResourceManager.GetString("WnExplorerColDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string WnExplorerColDescription {
@@ -3333,6 +3342,24 @@ namespace SEToolbox.Properties {
         public static string WnExplorerColDistanceTooltip {
             get {
                 return ResourceManager.GetString("WnExplorerColDistanceTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string WnExplorerColEnabled {
+            get {
+                return ResourceManager.GetString("WnExplorerColEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grid.
+        /// </summary>
+        public static string WnExplorerColGrid {
+            get {
+                return ResourceManager.GetString("WnExplorerColGrid", resourceCulture);
             }
         }
         
@@ -3364,6 +3391,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Owner.
+        /// </summary>
+        public static string WnExplorerColOwner {
+            get {
+                return ResourceManager.GetString("WnExplorerColOwner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Power blocks.
         /// </summary>
         public static string WnExplorerColPowerBlockCount {
@@ -3382,6 +3418,24 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Programmable Blocks.
+        /// </summary>
+        public static string WnExplorerColProgrammableBlockName {
+            get {
+                return ResourceManager.GetString("WnExplorerColProgrammableBlockName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source Code.
+        /// </summary>
+        public static string WnExplorerColProgrammableBlockSourceCode {
+            get {
+                return ResourceManager.GetString("WnExplorerColProgrammableBlockSourceCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refineries.
         /// </summary>
         public static string WnExplorerColRefineries {
@@ -3396,6 +3450,15 @@ namespace SEToolbox.Properties {
         public static string WnExplorerColRefineryCount {
             get {
                 return ResourceManager.GetString("WnExplorerColRefineryCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self-trigger.
+        /// </summary>
+        public static string WnExplorerColSelfTriggerType {
+            get {
+                return ResourceManager.GetString("WnExplorerColSelfTriggerType", resourceCulture);
             }
         }
         
@@ -3432,6 +3495,24 @@ namespace SEToolbox.Properties {
         public static string WnExplorerColThrusters {
             get {
                 return ResourceManager.GetString("WnExplorerColThrusters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer.
+        /// </summary>
+        public static string WnExplorerColTimer {
+            get {
+                return ResourceManager.GetString("WnExplorerColTimer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string WnExplorerColToolbarSummary {
+            get {
+                return ResourceManager.GetString("WnExplorerColToolbarSummary", resourceCulture);
             }
         }
         
@@ -4008,6 +4089,15 @@ namespace SEToolbox.Properties {
         public static string WnExplorerTabPlayers {
             get {
                 return ResourceManager.GetString("WnExplorerTabPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timers.
+        /// </summary>
+        public static string WnExplorerTabTimers {
+            get {
+                return ResourceManager.GetString("WnExplorerTabTimers", resourceCulture);
             }
         }
         

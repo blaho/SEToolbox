@@ -44,6 +44,11 @@
         ///// </summary>
         private ObservableCollection<StructurePlayerModel> _players;
 
+        ///// <summary>
+        ///// Collection of <see cref="StructureTimerModel"/> objects that represent the timers.
+        ///// </summary>
+        private ObservableCollection<StructureTimerModel> _timers;
+
         private bool _showProgress;
 
         private double _progress;
@@ -66,6 +71,7 @@
         {
             Structures = new ObservableCollection<IStructureBase>();
             Players = new ObservableCollection<StructurePlayerModel>();
+            Timers = new ObservableCollection<StructureTimerModel>();
             _timer = new Stopwatch();
             SetActiveStatus();
         }
@@ -104,6 +110,23 @@
                 {
                     _players = value;
                     RaisePropertyChanged(() => Players);
+                }
+            }
+        }
+
+        public ObservableCollection<StructureTimerModel> Timers
+        {
+            get
+            {
+                return _timers;
+            }
+
+            set
+            {
+                if (value != _timers)
+                {
+                    _timers = value;
+                    RaisePropertyChanged(() => Timers);
                 }
             }
         }
@@ -515,6 +538,14 @@
                     Players.Add(new StructurePlayerModel(x.BuiltBy, x.Cubes));
                 }
 
+                var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
+                var allBlocks = allGrids.SelectMany(cg => cg.CubeBlocks, (grid, block) => new Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock>(grid, block));
+                var allTimers = allBlocks.Where(b=>b.Item2 is MyObjectBuilder_TimerBlock);
+                foreach (var t in allTimers)
+                {
+                    Timers.Add(new StructureTimerModel(allBlocks, t.Item1, (MyObjectBuilder_TimerBlock)t.Item2));
+                }
+
                 CalcDistances();
             }
 
@@ -919,7 +950,7 @@
 
             // Optimise ordering of CubeBlocks within structure, so that loops can load quickly based on {X+, Y+, Z+}.
             // Since 01.142, the blueprint's first block is placed on the projector at 0-0-0 setting. It might be desired to not change the first block.
-            var neworder = viewModel.CubeGrid.CubeBlocks.Select((cb, i) => new { CubeBlock = cb, Index = i }).OrderBy(c => !keepFirstBlock || c.Index > 0).ThenBy(c => c.CubeBlock.Min.Z).ThenBy(c => c.CubeBlock.Min.Y).ThenBy(c => c.CubeBlock.Min.X).Select(c=>c.CubeBlock).ToList();
+            var neworder = viewModel.CubeGrid.CubeBlocks.Select((cb, i) => new { CubeBlock = cb, Index = i }).OrderBy(c => !keepFirstBlock || c.Index > 0).ThenBy(c => c.CubeBlock.Min.Z).ThenBy(c => c.CubeBlock.Min.Y).ThenBy(c => c.CubeBlock.Min.X).Select(c => c.CubeBlock).ToList();
             viewModel.CubeGrid.CubeBlocks = neworder;
             IsModified = true;
         }

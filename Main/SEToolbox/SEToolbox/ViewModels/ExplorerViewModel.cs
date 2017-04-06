@@ -42,13 +42,20 @@
         private bool? _closeResult;
 
         private bool _ignoreUpdateSelection;
-        private IStructureViewBase _selectedStructure;
-        private StructurePlayerViewModel _selectedPlayer;
+
         private IStructureViewBase _preSelectedStructure;
+        private IStructureViewBase _selectedStructure;
         private ObservableCollection<IStructureViewBase> _selections;
-        private ObservableCollection<StructurePlayerViewModel> _selectedPlayers;
         private ObservableCollection<IStructureViewBase> _structures;
+
+        private StructurePlayerViewModel _selectedPlayer;
+        private ObservableCollection<StructurePlayerViewModel> _selectedPlayers;
         private ObservableCollection<StructurePlayerViewModel> _players;
+
+        private StructureTimerViewModel _selectedTimer;
+        private ObservableCollection<StructureTimerViewModel> _selectedTimers;
+        private ObservableCollection<StructureTimerViewModel> _timers;
+
         private ObservableCollection<LanguageModel> _languages;
 
         // If true, when adding new models to the collection, the new models will be highlighted as selected in the UI.
@@ -91,10 +98,19 @@
             }
 
             SelectedPlayers = new ObservableCollection<StructurePlayerViewModel>();
-            SelectedPlayers.CollectionChanged += (sender, e) => RaisePropertyChanged(() => IsMultipleSelections);
+            SelectedPlayers.CollectionChanged += (sender, e) => RaisePropertyChanged(() => AreMultiplePlayersSelected);
 
             Players = new ObservableCollection<StructurePlayerViewModel>();
             foreach (var item in _dataModel.Players)
+            {
+                AddViewModel(item);
+            }
+
+            SelectedTimers = new ObservableCollection<StructureTimerViewModel>();
+            SelectedTimers.CollectionChanged += (sender, e) => RaisePropertyChanged(() => AreMultipleTimersSelected);
+
+            Timers = new ObservableCollection<StructureTimerViewModel>();
+            foreach (var item in _dataModel.Timers)
             {
                 AddViewModel(item);
             }
@@ -103,6 +119,7 @@
 
             _dataModel.Structures.CollectionChanged += Structures_CollectionChanged;
             _dataModel.Players.CollectionChanged += Players_CollectionChanged;
+            _dataModel.Timers.CollectionChanged += Timers_CollectionChanged;
             // Will bubble property change events from the Model to the ViewModel.
             _dataModel.PropertyChanged += (sender, e) => OnPropertyChanged(e.PropertyName);
         }
@@ -466,6 +483,67 @@
             get
             {
                 return _selectedPlayers.Count > 1;
+            }
+        }
+
+        public ObservableCollection<StructureTimerViewModel> Timers
+        {
+            get
+            {
+                return _timers;
+            }
+
+            private set
+            {
+                if (value != _timers)
+                {
+                    _timers = value;
+                    RaisePropertyChanged(() => Timers);
+                }
+            }
+        }
+
+        public StructureTimerViewModel SelectedTimer
+        {
+            get
+            {
+                return _selectedTimer;
+            }
+
+            set
+            {
+                if (value != _selectedTimer)
+                {
+                    _selectedTimer = value;
+                    if (_selectedPlayer != null && !_ignoreUpdateSelection)
+                        _selectedPlayer.DataModel.InitializeAsync();
+                    RaisePropertyChanged(() => SelectedTimer);
+                }
+            }
+        }
+
+        public ObservableCollection<StructureTimerViewModel> SelectedTimers
+        {
+            get
+            {
+                return _selectedTimers;
+            }
+
+            set
+            {
+                if (value != _selectedTimers)
+                {
+                    _selectedTimers = value;
+                    RaisePropertyChanged(() => SelectedTimers);
+                }
+            }
+        }
+
+        public bool AreMultipleTimersSelected
+        {
+            get
+            {
+                return _selectedTimers.Count > 1;
             }
         }
 
@@ -1357,6 +1435,17 @@
             }
         }
 
+        private void Timers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: AddViewModel(e.NewItems[0] as StructureTimerModel); break;
+                case NotifyCollectionChangedAction.Remove: RemoveViewModel(e.OldItems[0] as StructureTimerModel); break;
+                case NotifyCollectionChangedAction.Reset: _timers.Clear(); break;
+                case NotifyCollectionChangedAction.Replace:
+                case NotifyCollectionChangedAction.Move: throw new NotImplementedException();
+            }
+        }
 
         private void AddViewModel(IStructureBase structureBase)
         {
@@ -1397,6 +1486,13 @@
             var item= new StructurePlayerViewModel(this, structureBase);
 
             _players.Add(item);
+        }
+
+        private void AddViewModel(StructureTimerModel structureBase)
+        {
+            var item = new StructureTimerViewModel(this, structureBase);
+
+            _timers.Add(item);
         }
 
         /// <summary>
