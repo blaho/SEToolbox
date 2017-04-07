@@ -48,12 +48,8 @@
         private ObservableCollection<IStructureViewBase> _selections;
         private ObservableCollection<IStructureViewBase> _structures;
 
-        private StructurePlayerViewModel _selectedPlayer;
-        private ObservableCollection<StructurePlayerViewModel> _selectedPlayers;
         private ObservableCollection<StructurePlayerViewModel> _players;
 
-        private StructureTimerViewModel _selectedTimer;
-        private ObservableCollection<StructureTimerViewModel> _selectedTimers;
         private ObservableCollection<StructureTimerViewModel> _timers;
 
         private ObservableCollection<LanguageModel> _languages;
@@ -97,17 +93,11 @@
                 AddViewModel(item);
             }
 
-            SelectedPlayers = new ObservableCollection<StructurePlayerViewModel>();
-            SelectedPlayers.CollectionChanged += (sender, e) => RaisePropertyChanged(() => AreMultiplePlayersSelected);
-
             Players = new ObservableCollection<StructurePlayerViewModel>();
             foreach (var item in _dataModel.Players)
             {
                 AddViewModel(item);
             }
-
-            SelectedTimers = new ObservableCollection<StructureTimerViewModel>();
-            SelectedTimers.CollectionChanged += (sender, e) => RaisePropertyChanged(() => AreMultipleTimersSelected);
 
             Timers = new ObservableCollection<StructureTimerViewModel>();
             foreach (var item in _dataModel.Timers)
@@ -442,50 +432,6 @@
             }
         }
 
-        public StructurePlayerViewModel SelectedPlayer
-        {
-            get
-            {
-                return _selectedPlayer;
-            }
-
-            set
-            {
-                if (value != _selectedPlayer)
-                {
-                    _selectedPlayer = value;
-                    if (_selectedPlayer != null && !_ignoreUpdateSelection)
-                        _selectedPlayer.DataModel.InitializeAsync();
-                    RaisePropertyChanged(() => SelectedPlayer);
-                }
-            }
-        }
-
-        public ObservableCollection<StructurePlayerViewModel> SelectedPlayers
-        {
-            get
-            {
-                return _selectedPlayers;
-            }
-
-            set
-            {
-                if (value != _selectedPlayers)
-                {
-                    _selectedPlayers = value;
-                    RaisePropertyChanged(() => SelectedPlayers);
-                }
-            }
-        }
-
-        public bool AreMultiplePlayersSelected
-        {
-            get
-            {
-                return _selectedPlayers.Count > 1;
-            }
-        }
-
         public ObservableCollection<StructureTimerViewModel> Timers
         {
             get
@@ -500,50 +446,6 @@
                     _timers = value;
                     RaisePropertyChanged(() => Timers);
                 }
-            }
-        }
-
-        public StructureTimerViewModel SelectedTimer
-        {
-            get
-            {
-                return _selectedTimer;
-            }
-
-            set
-            {
-                if (value != _selectedTimer)
-                {
-                    _selectedTimer = value;
-                    if (_selectedPlayer != null && !_ignoreUpdateSelection)
-                        _selectedPlayer.DataModel.InitializeAsync();
-                    RaisePropertyChanged(() => SelectedTimer);
-                }
-            }
-        }
-
-        public ObservableCollection<StructureTimerViewModel> SelectedTimers
-        {
-            get
-            {
-                return _selectedTimers;
-            }
-
-            set
-            {
-                if (value != _selectedTimers)
-                {
-                    _selectedTimers = value;
-                    RaisePropertyChanged(() => SelectedTimers);
-                }
-            }
-        }
-
-        public bool AreMultipleTimersSelected
-        {
-            get
-            {
-                return _selectedTimers.Count > 1;
             }
         }
 

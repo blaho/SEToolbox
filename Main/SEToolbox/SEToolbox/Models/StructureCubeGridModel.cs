@@ -674,18 +674,18 @@
         {
             var bs = new BlockStatistics(CubeGrid.CubeBlocks);
             _blockCountDetails = bs.BlockCountDetails;
-            _assemblerCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Assembler)?.Count ?? 0;
-            _assemblerDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Assembler)?.GetDetails();
-            _refineryCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Refinery)?.Count ?? 0;
-            _refineryDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Refinery)?.GetDetails();
-            _shipToolCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ShipTool)?.Count ?? 0;
-            _shipToolDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ShipTool)?.GetDetails();
-            _powerBlockCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Power)?.Count ?? 0;
-            _powerBlockDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Power)?.GetDetails();
-            _thrusterCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ThrusterGyro)?.Count ?? 0;
-            _thrusterDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ThrusterGyro)?.GetDetails();
-            _turretCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.WeaponTurret)?.Count ?? 0;
-            _turretDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.WeaponTurret)?.GetDetails();
+            _assemblerCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Assembler)?.Count ?? 0;
+            _assemblerDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Assembler)?.GetDetails();
+            _refineryCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Refinery)?.Count ?? 0;
+            _refineryDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Refinery)?.GetDetails();
+            _shipToolCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.ShipTool)?.Count ?? 0;
+            _shipToolDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.ShipTool)?.GetDetails();
+            _powerBlockCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Power)?.Count ?? 0;
+            _powerBlockDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Power)?.GetDetails();
+            _thrusterCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.ThrusterGyro)?.Count ?? 0;
+            _thrusterDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.ThrusterGyro)?.GetDetails();
+            _turretCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.WeaponTurret)?.Count ?? 0;
+            _turretDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.WeaponTurret)?.GetDetails();
         }
 
         [OnSerializing]

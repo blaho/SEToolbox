@@ -43,7 +43,7 @@
         private bool _isConstructionNotReady;
 
         [NonSerialized]
-        private string _blockCountDetails;
+        private BlockStatistics _blockStatistics;
 
         [NonSerialized]
         private int _assemblerCount;
@@ -88,33 +88,29 @@
         public StructurePlayerModel(long builtBy, IEnumerable<MyObjectBuilder_CubeBlock> cubes)
             : base(null)
         {
-            IsSubsSystemNotReady = true;
-            IsConstructionNotReady = true;
             var identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == builtBy);
             if (identity != null)
                 DisplayName = identity.DisplayName;
             else
                 DisplayName = "Nobody";
+            _blockStatistics = new BlockStatistics(cubes);
             CountBlocks(cubes);
         }
 
         private void CountBlocks(IEnumerable<MyObjectBuilder_CubeBlock> cubes)
         {
-            var bs = new BlockStatistics(cubes);
-            BlockCount = bs.BlockCount;
-            _blockCountDetails = bs.BlockCountDetails;
-            _assemblerCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Assembler)?.Count ?? 0;
-            _assemblerDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Assembler)?.GetDetails();
-            _refineryCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Refinery)?.Count ?? 0;
-            _refineryDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Refinery)?.GetDetails();
-            _shipToolCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ShipTool)?.Count ?? 0;
-            _shipToolDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ShipTool)?.GetDetails();
-            _powerBlockCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Power)?.Count ?? 0;
-            _powerBlockDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.Power)?.GetDetails();
-            _thrusterCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ThrusterGyro)?.Count ?? 0;
-            _thrusterDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.ThrusterGyro)?.GetDetails();
-            _turretCount = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.WeaponTurret)?.Count ?? 0;
-            _turretDetails = bs.cubeCategories.FirstOrDefault(c => c.Category == BlockStatistics.BlockCategory.WeaponTurret)?.GetDetails();
+            _assemblerCount = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.Assembler)?.Count ?? 0;
+            _assemblerDetails = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.Assembler)?.GetDetails();
+            _refineryCount = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.Refinery)?.Count ?? 0;
+            _refineryDetails = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.Refinery)?.GetDetails();
+            _shipToolCount = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.ShipTool)?.Count ?? 0;
+            _shipToolDetails = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.ShipTool)?.GetDetails();
+            _powerBlockCount = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.Power)?.Count ?? 0;
+            _powerBlockDetails = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.Power)?.GetDetails();
+            _thrusterCount = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.ThrusterGyro)?.Count ?? 0;
+            _thrusterDetails = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.ThrusterGyro)?.GetDetails();
+            _turretCount = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.WeaponTurret)?.Count ?? 0;
+            _turretDetails = _blockStatistics.CubeCategories.FirstOrDefault(c => c.Category == Services.BlockCategory.WeaponTurret)?.GetDetails();
         }
 
         #endregion
@@ -133,71 +129,19 @@
             }
         }
 
-        public string ActiveComponentFilter
+        public override int BlockCount
         {
-            get
-            {
-                return _activeComponentFilter;
-            }
-
-            set
-            {
-                if (value != _activeComponentFilter)
-                {
-                    _activeComponentFilter = value;
-                    RaisePropertyChanged(() => ActiveComponentFilter);
-                }
-            }
+            get { return _blockStatistics.Count; }
         }
 
-        public string ComponentFilter
+        public IEnumerable<BlockStatistics> BlockStatistics
         {
-            get
-            {
-                return _componentFilter;
-            }
-
-            set
-            {
-                if (value != _componentFilter)
-                {
-                    _componentFilter = value;
-                    RaisePropertyChanged(() => ComponentFilter);
-                }
-            }
-        }
-
-        public bool IsSubsSystemNotReady
-        {
-            get { return _isSubsSystemNotReady; }
-
-            set
-            {
-                if (value != _isSubsSystemNotReady)
-                {
-                    _isSubsSystemNotReady = value;
-                    RaisePropertyChanged(() => IsSubsSystemNotReady);
-                }
-            }
-        }
-
-        public bool IsConstructionNotReady
-        {
-            get { return _isConstructionNotReady; }
-
-            set
-            {
-                if (value != _isConstructionNotReady)
-                {
-                    _isConstructionNotReady = value;
-                    RaisePropertyChanged(() => IsConstructionNotReady);
-                }
-            }
+            get { return new List<BlockStatistics>(new BlockStatistics[] { _blockStatistics }); }
         }
 
         public string BlockCountDetails
         {
-            get { return _blockCountDetails; }
+            get { return _blockStatistics.BlockCountDetails; }
         }
 
         public int AssemblerCount

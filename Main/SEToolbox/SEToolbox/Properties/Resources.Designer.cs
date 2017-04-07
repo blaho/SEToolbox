@@ -1350,6 +1350,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Player:.
+        /// </summary>
+        public static string CtlPlayerTxtPlayerName {
+            get {
+                return ResourceManager.GetString("CtlPlayerTxtPlayerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unsaved.
         /// </summary>
         public static string CtlUnsavedStateTitle {

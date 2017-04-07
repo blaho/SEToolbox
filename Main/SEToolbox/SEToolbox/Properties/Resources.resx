@@ -1589,4 +1589,7 @@ Planet Generator:	{17}</value>
   <data name="WnExplorerTabTimers" xml:space="preserve">
     <value>Timers</value>
   </data>
+  <data name="CtlPlayerTxtPlayerName" xml:space="preserve">
+    <value>Player:</value>
+  </data>
 </root>

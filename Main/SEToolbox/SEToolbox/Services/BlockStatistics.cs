@@ -10,114 +10,43 @@ namespace SEToolbox.Services
 {
     public class BlockStatistics
     {
-        public int BlockCount { get; set; }
+        public string Name
+        {
+            get { return "Blocks"; }
+        }
+
+        private int _count;
+        public int Count
+        {
+            get { return _count; }
+        }
+
         public string BlockCountDetails
         {
             get
             {
                 var sb = new StringBuilder();
-                foreach (var sc in cubeCategories)
+                foreach (var sc in CubeCategories)
                     sb.AppendLine($"{sc.Category}: {sc.Count}");
                 return sb.ToString();
             }
         }
 
-        public List<BlockStatsBySubcategory> cubeSubcategories { get; private set; }
-        public List<BlockStatsByCategory> cubeCategories { get; private set; }
+        public bool NodeIsExpanded
+        {
+            get { return true; }
+        }
+
+        public IEnumerable<BlockStatsByCategory> CubeCategories { get; private set; }
 
         public BlockStatistics(IEnumerable<MyObjectBuilder_CubeBlock> cubes)
         {
-            BlockCount = cubes.Count();
+            _count = cubes.Count();
             foreach (var c in cubes.Where(c => c.SubtypeName == ""))
                 c.SubtypeName = c.GetType().Name.Remove(0, c.GetType().Name.IndexOf('_') + 1);
-            cubeSubcategories = cubes.GroupBy(k => GetBlockSubcategory(k.SubtypeName), (subtypeName, blocks) => new BlockStatsBySubcategory { Subcategory = subtypeName, Blocks = blocks, Count = blocks.Count() }).OrderBy(cc => cc.Count).ToList();
-            cubeCategories = cubeSubcategories.GroupBy(k => GetBlockCategory(k.Subcategory), (cat, subcats) => new BlockStatsByCategory() { Category = cat, Subcategories = subcats, Count = subcats.Select(sc => sc.Count).Aggregate((prev, curr) => prev + curr) }).ToList();
-        }
-
-        public enum BlockCategory
-        {
-            None,
-
-            // interesting
-            Assembler,
-            Refinery,
-            ShipTool,
-            Power,
-            ThrusterGyro,
-            WeaponTurret,
-
-            // not interesting
-            Armor,
-            Conveyor,
-            Gases,
-            Container,
-            JumpDrive,
-            Weapon,
-
-            Misc
-        }
-
-        public enum BlockSubcategory
-        {
-            None,
-
-            Assembler,
-
-            Refinery,
-            ArcFurnace,
-
-            ShipDrill,
-            ShipWelder,
-            ShipGrinder,
-
-            SmallReactor,
-            LargeReactor,
-            Battery,
-            Solar,
-
-            SmallThruster,
-            LargeThruster,
-            Gyro,
-            JumpDrive,
-
-            InteriorTurret,
-            GatlingTurret,
-            MissileTurret,
-
-            GatlingGun,
-            MissileLauncher,
-
-            LightArmor,
-            HeavyArmor,
-            InteriorWall,
-            SteelCatwalk,
-            StairRamp,
-            Window,
-
-            OxygenTank,
-            HydrogenTank,
-            OxygenGenerator,
-            AirVent,
-
-            SmallContainer,
-            MediumContainer,
-            LargeContainer,
-
-            Conveyor,
-            Suspension,
-            Lights,
-            Cockpit,
-            Automation,
-            Door,
-            Modules,
-            Communication,
-            Environment,
-            RotorPiston,
-            Projector,
-            Medical,
-            MergeBlock,
-
-            Misc
+            var blockTypes = cubes.GroupBy(k => k.SubtypeName, (subtypeName, blocks) => new BlockStatsByBlockType { Name = subtypeName, Count = blocks.Count() }).OrderBy(cc => cc.Name);
+            var subCategories = blockTypes.GroupBy(k => GetBlockSubcategory(k.Name), (subcat, bt) => new BlockStatsBySubcategory { Subcategory = subcat, BlockTypes = bt, Count = bt.Select(sc => sc.Count).Aggregate((prev, curr) => prev + curr) }).OrderBy(cc => cc.Name);
+            CubeCategories = subCategories.GroupBy(k => GetBlockCategory(k.Subcategory), (cat, subCats) => new BlockStatsByCategory() { Category = cat, Subcategories = subCats, Count = subCats.Select(sc => sc.Count).Aggregate((prev, curr) => prev + curr) });
         }
 
         private BlockSubcategory GetBlockSubcategory(string subtypeName)
@@ -136,7 +65,7 @@ namespace SEToolbox.Services
                 else
                     return BlockSubcategory.LargeThruster;
             if (subtypeName == SubtypeId.LargeJumpDrive.ToString())
-                return BlockSubcategory.JumpDrive; 
+                return BlockSubcategory.JumpDrive;
             if (subtypeName.Contains("OxygenTank"))
                 return BlockSubcategory.OxygenTank;
             if (subtypeName.Contains("OxygenGenerator") || (subtypeName == SubtypeId.LargeBlockOxygenFarm.ToString()))
@@ -170,7 +99,7 @@ namespace SEToolbox.Services
             if (subtypeName == SubtypeId.LargeInteriorTurret.ToString())
                 return BlockSubcategory.InteriorTurret;
             if ((subtypeName == SubtypeId.SmallBlockSmallContainer.ToString()) || (subtypeName == SubtypeId.LargeBlockSmallContainer.ToString()))
-                return BlockSubcategory.SmallContainer; 
+                return BlockSubcategory.SmallContainer;
             if (subtypeName == SubtypeId.SmallBlockMediumContainer.ToString())
                 return BlockSubcategory.MediumContainer;
             if ((subtypeName == SubtypeId.SmallBlockLargeContainer.ToString()) || (subtypeName == SubtypeId.LargeBlockLargeContainer.ToString()))
@@ -275,26 +204,141 @@ namespace SEToolbox.Services
             }
         }
 
-        public class BlockStatsBySubcategory
+    }
+
+    public class BlockStatsBySubcategory
+    {
+        public string Name
         {
-            public BlockSubcategory Subcategory;
-            public IEnumerable<MyObjectBuilder_CubeBlock> Blocks;
-            public int Count;
+            get { return Subcategory.ToString(); }
         }
 
-        public class BlockStatsByCategory
-        {
-            public BlockCategory Category;
-            public IEnumerable<BlockStatsBySubcategory> Subcategories;
-            public int Count;
+        public int Count { get; set; }
 
-            public string GetDetails()
-            {
-                var sb = new StringBuilder();
-                foreach (var sc in Subcategories)
-                    sb.AppendLine($"{sc.Subcategory}: {sc.Count}");
-                return sb.ToString();
-            }
+        public IEnumerable<BlockStatsByBlockType> BlockTypes { get; set; }
+
+        public BlockSubcategory Subcategory;
+    }
+
+    public class BlockStatsByBlockType
+    {
+        public string Name { get; set; }
+
+        public int Count { get; set; }
+
+    }
+
+    public enum BlockCategory
+    {
+        None,
+
+        // interesting
+        Assembler,
+        Refinery,
+        ShipTool,
+        Power,
+        ThrusterGyro,
+        WeaponTurret,
+
+        // not interesting
+        Armor,
+        Conveyor,
+        Gases,
+        Container,
+        JumpDrive,
+        Weapon,
+
+        Misc
+    }
+
+    public enum BlockSubcategory
+    {
+        None,
+
+        Assembler,
+
+        Refinery,
+        ArcFurnace,
+
+        ShipDrill,
+        ShipWelder,
+        ShipGrinder,
+
+        SmallReactor,
+        LargeReactor,
+        Battery,
+        Solar,
+
+        SmallThruster,
+        LargeThruster,
+        Gyro,
+        JumpDrive,
+
+        InteriorTurret,
+        GatlingTurret,
+        MissileTurret,
+
+        GatlingGun,
+        MissileLauncher,
+
+        LightArmor,
+        HeavyArmor,
+        InteriorWall,
+        SteelCatwalk,
+        StairRamp,
+        Window,
+
+        OxygenTank,
+        HydrogenTank,
+        OxygenGenerator,
+        AirVent,
+
+        SmallContainer,
+        MediumContainer,
+        LargeContainer,
+
+        Conveyor,
+        Suspension,
+        Lights,
+        Cockpit,
+        Automation,
+        Door,
+        Modules,
+        Communication,
+        Environment,
+        RotorPiston,
+        Projector,
+        Medical,
+        MergeBlock,
+
+        Misc
+    }
+
+
+    public class BlockStatsByCategory
+    {
+        public string Name
+        {
+            get { return Category.ToString(); }
+        }
+
+        public BlockCategory Category;
+
+        public bool NodeIsExpanded
+        {
+            get { return true; }
+        }
+
+        public IEnumerable<BlockStatsBySubcategory> Subcategories { get; set; }
+
+        public int Count { get; set; }
+
+        public string GetDetails()
+        {
+            var sb = new StringBuilder();
+            foreach (var sc in Subcategories)
+                sb.AppendLine($"{sc.Subcategory}: {sc.Count}");
+            return sb.ToString();
         }
     }
 

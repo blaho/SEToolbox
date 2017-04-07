@@ -71,28 +71,9 @@
             set { DataModel.Center = value.ToVector3(); }
         }
 
-        public string ActiveComponentFilter
+        public IEnumerable<BlockStatistics> BlockStatistics
         {
-            get { return DataModel.ActiveComponentFilter; }
-            set { DataModel.ActiveComponentFilter = value; }
-        }
-
-        public string ComponentFilter
-        {
-            get { return DataModel.ComponentFilter; }
-            set { DataModel.ComponentFilter = value; }
-        }
-
-        public bool IsConstructionNotReady
-        {
-            get { return DataModel.IsConstructionNotReady; }
-            set { DataModel.IsConstructionNotReady = value; }
-        }
-
-        public bool IsSubsSystemNotReady
-        {
-            get { return DataModel.IsSubsSystemNotReady; }
-            set { DataModel.IsSubsSystemNotReady = value; }
+            get { return DataModel.BlockStatistics; }
         }
 
         public string BlockCountDetails

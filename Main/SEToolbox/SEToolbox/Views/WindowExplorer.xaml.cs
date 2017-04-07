@@ -46,25 +46,18 @@
             this.DataContext = viewModel;
         }
 
+        int? prevTabIndex;
+
         private void TabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (e.Source is System.Windows.Controls.TabControl)
             {
                 var i = (e.Source as System.Windows.Controls.TabControl)?.SelectedIndex;
-                if (i != 0)
+                if (i != prevTabIndex)
                 {
                     (this.DataContext as ViewModels.ExplorerViewModel).SelectedStructure = null;
                     (this.DataContext as ViewModels.ExplorerViewModel).Selections.Clear();
-                }
-                if (i != 1)
-                {
-                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedPlayer = null;
-                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedPlayers.Clear();
-                }
-                if (i != 2)
-                {
-                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedTimer = null;
-                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedTimers.Clear();
+                    prevTabIndex = i;
                 }
             }
         }

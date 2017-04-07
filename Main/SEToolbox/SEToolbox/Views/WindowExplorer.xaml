@@ -478,7 +478,7 @@
                             </controls:SortableListView>
                         </TabItem>
                         <TabItem Header="{lex:Loc WnExplorerTabPlayers}">
-                            <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Players}" SelectedValue="{Binding SelectedPlayer, Mode=TwoWay}"
+                            <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Players}" SelectedValue="{Binding SelectedStructure, Mode=TwoWay}"
                             >
                                 <controls:SortableListView.ColumnHeaderArrowUpTemplate>
                                     <StaticResource ResourceKey="HeaderTemplateArrowUp"/>
@@ -556,12 +556,12 @@
                                 </controls:SortableListView.InputBindings>
                                 <i:Interaction.Behaviors>
                                     <!-- This custom behavior that synchronizes the selected items with the view models collection -->
-                                    <commands:SynchronizeSelectedItems Selections="{Binding SelectedPlayers}"/>
+                                    <commands:SynchronizeSelectedItems Selections="{Binding Selections}"/>
                                 </i:Interaction.Behaviors>
                             </controls:SortableListView>
                         </TabItem>
                         <TabItem Header="{lex:Loc WnExplorerTabTimers}">
-                            <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Timers}" SelectedValue="{Binding SelectedTimer, Mode=TwoWay}"
+                            <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Timers}" SelectedValue="{Binding SelectedStructure, Mode=TwoWay}"
                             >
                                 <controls:SortableListView.ColumnHeaderArrowUpTemplate>
                                     <StaticResource ResourceKey="HeaderTemplateArrowUp"/>
@@ -646,7 +646,7 @@
                                 </controls:SortableListView.InputBindings>
                                 <i:Interaction.Behaviors>
                                     <!-- This custom behavior that synchronizes the selected items with the view models collection -->
-                                    <commands:SynchronizeSelectedItems Selections="{Binding SelectedTimers}"/>
+                                    <commands:SynchronizeSelectedItems Selections="{Binding Selections}"/>
                                 </i:Interaction.Behaviors>
                             </controls:SortableListView>
                         </TabItem>
@@ -682,6 +682,9 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:StructureInventoryBagViewModel}">
                                 <views:ControlInventoryBag />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:StructurePlayerViewModel}">
+                                <views:ControlPlayer />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:StructureUnknownViewModel}">
                                 <views:ControlUnknown />

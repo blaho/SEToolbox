@@ -432,6 +432,12 @@
     <Compile Include="Views\ControlPlanet.xaml.cs">
       <DependentUpon>ControlPlanet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ControlPlayer.xaml.cs">
+      <DependentUpon>ControlPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControlTimer.xaml.cs">
+      <DependentUpon>ControlTimer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ControlVoxel.xaml.cs">
       <DependentUpon>ControlVoxel.xaml</DependentUpon>
     </Compile>
@@ -542,6 +548,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ControlPlanet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ControlPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ControlTimer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
