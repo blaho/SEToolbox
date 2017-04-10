@@ -628,14 +628,14 @@
                                         <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ProgrammableBlockName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColProgrammableBlockName}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding ProgrammableBlockName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding ProgrammableBlockName}"/>
+                                                    <TextBlock Text="{Binding ProgrammableBlockName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding ProgrammableBlockNames}"/>
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
                                         <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ProgrammableBlockSourceCodePreview}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColProgrammableBlockSourceCode}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding ProgrammableBlockSourceCodePreview}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding ProgrammableBlockSourceCode}" />
+                                                    <TextBlock Text="{Binding ProgrammableBlockSourceCodePreview}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
@@ -685,6 +685,9 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:StructurePlayerViewModel}">
                                 <views:ControlPlayer />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:StructureTimerViewModel}">
+                                <views:ControlTimer />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:StructureUnknownViewModel}">
                                 <views:ControlUnknown />

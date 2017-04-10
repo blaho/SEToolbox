@@ -27,26 +27,18 @@
 
         // Fields are marked as NonSerialized, as they aren't required during the drag-drop operation.
 
-        [NonSerialized]
-        private string _activeComponentFilter;
-
-        [NonSerialized]
-        private string _componentFilter;
 
         [NonSerialized]
         private static readonly object Locker = new object();
-
-        [NonSerialized]
-        private bool _isSubsSystemNotReady;
-
-        [NonSerialized]
-        private bool _isConstructionNotReady;
 
         [NonSerialized]
         private string _gridName;
 
         [NonSerialized]
         private string _ownerName;
+
+        [NonSerialized]
+        private IEnumerable<string> _toolbarButtons;
 
         [NonSerialized]
         private string _toolbarSummary;
@@ -61,13 +53,16 @@
         private string _selfTriggerType;
 
         [NonSerialized]
-        private string _pbName;
+        IEnumerable<Tuple<long, string>> _programmableBlocks;
+
+        [NonSerialized]
+        private string _pbNames;
 
         [NonSerialized]
         private string _pbSourceCodePreview;
 
         [NonSerialized]
-        private string _pbSourceCode;
+        private IEnumerable<Tuple<long, string>> _pbSourceCodes;
 
         #endregion
 
@@ -76,8 +71,6 @@
         public StructureTimerModel(IEnumerable<Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock>> blocks, MyObjectBuilder_CubeGrid grid, MyObjectBuilder_TimerBlock timer)
             : base(null)
         {
-            IsSubsSystemNotReady = true;
-            IsConstructionNotReady = true;
             var identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == timer.Owner);
             if (identity != null)
                 _ownerName = identity.DisplayName;
@@ -90,7 +83,8 @@
             if (timer.Toolbar.Slots.Count > 0)
             {
                 var toolbarItems = timer.Toolbar.Slots.OrderBy(s => s.Index).Select(s => s.Data).OfType<MyObjectBuilder_ToolbarItemTerminalBlock>();
-                _toolbarSummary = String.Join(" | ", toolbarItems.Select(ti => $"{GetBlockName(blocks.SingleOrDefault(cb => cb.Item2.EntityId == ti.BlockEntityId))} - {ti._Action}"));
+                _toolbarButtons = toolbarItems.Select(ti => $"{GetBlockName(blocks.SingleOrDefault(cb => cb.Item2.EntityId == ti.BlockEntityId))} - {ti._Action}");
+                _toolbarSummary = String.Join(" | ", _toolbarButtons);
                 var selfRefSlots = timer.Toolbar.Slots.Select(s => s.Data).OfType<MyObjectBuilder_ToolbarItemTerminalBlock>().Where(s => s.BlockEntityId == timer.EntityId);
                 if (selfRefSlots.Count() == 0)
                     _selfTriggerType = "None";
@@ -107,15 +101,14 @@
                     }
                 }
                 var pbSlots = toolbarItems.Select(s => blocks.SingleOrDefault(cb => cb.Item2.EntityId == s.BlockEntityId)).Where(cb => cb?.Item2 is MyObjectBuilder_MyProgrammableBlock);
-                _pbName = String.Join("\n", pbSlots.Select(pb => GetBlockName(pb)));
+                _programmableBlocks = pbSlots.Select(pb => new Tuple<long, string>(pb.Item2.EntityId, GetBlockName(pb)));
+                _pbNames = String.Join("\n", _programmableBlocks);
                 _pbSourceCodePreview = String.Join("\n", pbSlots.Select(pb =>
                     {
                         var prg = ((MyObjectBuilder_MyProgrammableBlock)pb.Item2).Program;
-                        return prg.Substring(0, Math.Min(prg.Length, 1000)).Replace('\n', ' ');
+                        return prg?.Substring(0, Math.Min(prg.Length, 1000)).Replace('\n', ' ');
                     }));
-                _pbSourceCode = String.Join("\n\n-----------------\n\n", pbSlots.Select(pb => ((MyObjectBuilder_MyProgrammableBlock)pb.Item2).Program));
-
-                ;
+                _pbSourceCodes = pbSlots.Select(pb => new Tuple<long, string>(pb.Item2.EntityId, ((MyObjectBuilder_MyProgrammableBlock)pb.Item2).Program));
             }
         }
 
@@ -151,68 +144,6 @@
             }
         }
 
-        public string ActiveComponentFilter
-        {
-            get
-            {
-                return _activeComponentFilter;
-            }
-
-            set
-            {
-                if (value != _activeComponentFilter)
-                {
-                    _activeComponentFilter = value;
-                    RaisePropertyChanged(() => ActiveComponentFilter);
-                }
-            }
-        }
-
-        public string ComponentFilter
-        {
-            get
-            {
-                return _componentFilter;
-            }
-
-            set
-            {
-                if (value != _componentFilter)
-                {
-                    _componentFilter = value;
-                    RaisePropertyChanged(() => ComponentFilter);
-                }
-            }
-        }
-
-        public bool IsSubsSystemNotReady
-        {
-            get { return _isSubsSystemNotReady; }
-
-            set
-            {
-                if (value != _isSubsSystemNotReady)
-                {
-                    _isSubsSystemNotReady = value;
-                    RaisePropertyChanged(() => IsSubsSystemNotReady);
-                }
-            }
-        }
-
-        public bool IsConstructionNotReady
-        {
-            get { return _isConstructionNotReady; }
-
-            set
-            {
-                if (value != _isConstructionNotReady)
-                {
-                    _isConstructionNotReady = value;
-                    RaisePropertyChanged(() => IsConstructionNotReady);
-                }
-            }
-        }
-
         public string GridName
         {
             get { return _gridName; }
@@ -226,6 +157,11 @@
         public string ToolbarSummary
         {
             get { return _toolbarSummary; }
+        }
+
+        public IEnumerable<string> ToolbarButtons
+        {
+            get { return _toolbarButtons; }
         }
 
         public decimal Delay
@@ -243,9 +179,14 @@
             get { return _selfTriggerType; }
         }
 
-        public string ProgrammableBlockName
+        public IEnumerable<Tuple<long, string>> ProgrammableBlocks
         {
-            get { return _pbName; }
+            get { return _programmableBlocks; }
+        }
+
+        public string ProgrammableBlockNames
+        {
+            get { return _pbNames; }
         }
 
         public string ProgrammableBlockSourceCodePreview
@@ -253,9 +194,9 @@
             get { return _pbSourceCodePreview; }
         }
 
-        public string ProgrammableBlockSourceCode
+        public IEnumerable<Tuple<long, string>> ProgrammableBlockSourceCodes
         {
-            get { return _pbSourceCode; }
+            get { return _pbSourceCodes; }
         }
 
         #endregion

@@ -24,27 +24,17 @@
     {
         #region fields
 
-        private readonly IDialogService _dialogService;
-        private readonly Func<IColorDialog> _colorDialogFactory;
+        private Tuple<long, string> _selectedProgrammableBlock;
+        private string _programmableBlockSourceCode;
 
         #endregion
 
         #region ctor
 
         public StructureTimerViewModel(BaseViewModel parentViewModel, StructureTimerModel dataModel)
-            : this(parentViewModel, dataModel, ServiceLocator.Resolve<IDialogService>(), ServiceLocator.Resolve<IColorDialog>)
-        {
-        }
-
-        public StructureTimerViewModel(BaseViewModel parentViewModel, StructureTimerModel dataModel, IDialogService dialogService, Func<IColorDialog> colorDialogFactory)
             : base(parentViewModel, dataModel)
         {
-            Contract.Requires(dialogService != null);
-            Contract.Requires(colorDialogFactory != null);
-
-            _dialogService = dialogService;
-            _colorDialogFactory = colorDialogFactory;
-
+            SelectedProgrammableBlock = DataModel.ProgrammableBlocks?.FirstOrDefault();
             DataModel.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
                 // Will bubble property change events from the Model to the ViewModel.
@@ -65,36 +55,6 @@
             get { return base.DataModel as StructureTimerModel; }
         }
 
-        public BindableVector3DModel Center
-        {
-            get { return new BindableVector3DModel(DataModel.Center); }
-            set { DataModel.Center = value.ToVector3(); }
-        }
-
-        public string ActiveComponentFilter
-        {
-            get { return DataModel.ActiveComponentFilter; }
-            set { DataModel.ActiveComponentFilter = value; }
-        }
-
-        public string ComponentFilter
-        {
-            get { return DataModel.ComponentFilter; }
-            set { DataModel.ComponentFilter = value; }
-        }
-
-        public bool IsConstructionNotReady
-        {
-            get { return DataModel.IsConstructionNotReady; }
-            set { DataModel.IsConstructionNotReady = value; }
-        }
-
-        public bool IsSubsSystemNotReady
-        {
-            get { return DataModel.IsSubsSystemNotReady; }
-            set { DataModel.IsSubsSystemNotReady = value; }
-        }
-
         public string GridName
         {
             get { return DataModel.GridName; }
@@ -108,6 +68,11 @@
         public string ToolbarSummary
         {
             get { return DataModel.ToolbarSummary; }
+        }
+
+        public IEnumerable<string> ToolbarButtons
+        {
+            get { return DataModel.ToolbarButtons; }
         }
 
         public decimal Delay
@@ -125,9 +90,28 @@
             get { return DataModel.SelfTriggerType; }
         }
 
-        public string ProgrammableBlockName
+        public IEnumerable<Tuple<long, string>> ProgrammableBlocks
         {
-            get { return DataModel.ProgrammableBlockName; }
+            get { return DataModel.ProgrammableBlocks; }
+        }
+
+        public Tuple<long, string> SelectedProgrammableBlock
+        {
+            get { return _selectedProgrammableBlock; }
+            set
+            {
+                if (value != _selectedProgrammableBlock)
+                {
+                    _selectedProgrammableBlock = value;
+                    _programmableBlockSourceCode = DataModel.ProgrammableBlockSourceCodes.SingleOrDefault(pb => pb.Item1 == _selectedProgrammableBlock.Item1).Item2;
+                    OnPropertyChanged(nameof(ProgrammableBlockSourceCode));
+                }
+            }
+        }
+
+        public string ProgrammableBlockNames
+        {
+            get { return DataModel.ProgrammableBlockNames; }
         }
 
         public string ProgrammableBlockSourceCodePreview
@@ -137,7 +121,7 @@
 
         public string ProgrammableBlockSourceCode
         {
-            get { return DataModel.ProgrammableBlockSourceCode; }
+            get { return _programmableBlockSourceCode; }
         }
 
         #endregion
