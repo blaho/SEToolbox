@@ -3,11 +3,11 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for ControlTimer.xaml
+    /// Interaction logic for ControlProjector.xaml
     /// </summary>
-    public partial class ControlTimer : UserControl
+    public partial class ControlProjector : UserControl
     {
-        public ControlTimer()
+        public ControlProjector()
         {
             InitializeComponent();
         }

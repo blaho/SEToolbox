@@ -49,6 +49,11 @@
         ///// </summary>
         private ObservableCollection<StructureTimerModel> _timers;
 
+        ///// <summary>
+        ///// Collection of <see cref="StructureProjectorModel"/> objects that represent the projector.
+        ///// </summary>
+        private ObservableCollection<StructureProjectorModel> _projectors;
+
         private bool _showProgress;
 
         private double _progress;
@@ -72,6 +77,7 @@
             Structures = new ObservableCollection<IStructureBase>();
             Players = new ObservableCollection<StructurePlayerModel>();
             Timers = new ObservableCollection<StructureTimerModel>();
+            Projectors = new ObservableCollection<StructureProjectorModel>();
             _timer = new Stopwatch();
             SetActiveStatus();
         }
@@ -127,6 +133,23 @@
                 {
                     _timers = value;
                     RaisePropertyChanged(() => Timers);
+                }
+            }
+        }
+
+        public ObservableCollection<StructureProjectorModel> Projectors
+        {
+            get
+            {
+                return _projectors;
+            }
+
+            set
+            {
+                if (value != _projectors)
+                {
+                    _projectors = value;
+                    RaisePropertyChanged(() => Projectors);
                 }
             }
         }
@@ -532,18 +555,21 @@
                     Structures.Add(structure);
                 }
 
-                var allCubes = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>().SelectMany(cg => cg.CubeBlocks);
-                foreach (var x in allCubes.GroupBy(k => k.BuiltBy, (k, v) => new { BuiltBy = k, Cubes = v }))
+                var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
+                var allBlocks = allGrids.SelectMany(cg => cg.CubeBlocks);
+                foreach (var x in allBlocks.GroupBy(k => k.BuiltBy, (k, v) => new { BuiltBy = k, Cubes = v }))
                 {
                     Players.Add(new StructurePlayerModel(x.BuiltBy, x.Cubes));
                 }
 
-                var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
-                var allBlocks = allGrids.SelectMany(cg => cg.CubeBlocks, (grid, block) => new Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock>(grid, block));
-                var allTimers = allBlocks.Where(b=>b.Item2 is MyObjectBuilder_TimerBlock);
-                foreach (var t in allTimers)
+                var allBlocksWithGrid = allGrids.SelectMany(cg => cg.CubeBlocks, (grid, block) => new Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock>(grid, block));
+                foreach (var t in allBlocksWithGrid.Where(b => b.Item2 is MyObjectBuilder_TimerBlock))
                 {
-                    Timers.Add(new StructureTimerModel(allBlocks, t.Item1, (MyObjectBuilder_TimerBlock)t.Item2));
+                    Timers.Add(new StructureTimerModel(allBlocksWithGrid, t.Item1, (MyObjectBuilder_TimerBlock)t.Item2));
+                }
+                foreach (var t in allBlocksWithGrid.Where(b => b.Item2 is MyObjectBuilder_Projector))
+                {
+                    Projectors.Add(new StructureProjectorModel(t.Item1, (MyObjectBuilder_Projector)t.Item2));
                 }
 
                 CalcDistances();

@@ -49,8 +49,8 @@
         private ObservableCollection<IStructureViewBase> _structures;
 
         private ObservableCollection<StructurePlayerViewModel> _players;
-
         private ObservableCollection<StructureTimerViewModel> _timers;
+        private ObservableCollection<StructureProjectorViewModel> _projectors;
 
         private ObservableCollection<LanguageModel> _languages;
 
@@ -105,11 +105,18 @@
                 AddViewModel(item);
             }
 
+            Projectors = new ObservableCollection<StructureProjectorViewModel>();
+            foreach (var item in _dataModel.Projectors)
+            {
+                AddViewModel(item);
+            }
+
             UpdateLanguages();
 
             _dataModel.Structures.CollectionChanged += Structures_CollectionChanged;
             _dataModel.Players.CollectionChanged += Players_CollectionChanged;
             _dataModel.Timers.CollectionChanged += Timers_CollectionChanged;
+            _dataModel.Projectors.CollectionChanged += Projectors_CollectionChanged;
             // Will bubble property change events from the Model to the ViewModel.
             _dataModel.PropertyChanged += (sender, e) => OnPropertyChanged(e.PropertyName);
         }
@@ -445,6 +452,23 @@
                 {
                     _timers = value;
                     RaisePropertyChanged(() => Timers);
+                }
+            }
+        }
+
+        public ObservableCollection<StructureProjectorViewModel> Projectors
+        {
+            get
+            {
+                return _projectors;
+            }
+
+            private set
+            {
+                if (value != _projectors)
+                {
+                    _projectors = value;
+                    RaisePropertyChanged(() => Projectors);
                 }
             }
         }
@@ -1349,6 +1373,18 @@
             }
         }
 
+        private void Projectors_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: AddViewModel(e.NewItems[0] as StructureProjectorModel); break;
+                case NotifyCollectionChangedAction.Remove: RemoveViewModel(e.OldItems[0] as StructureProjectorModel); break;
+                case NotifyCollectionChangedAction.Reset: _projectors.Clear(); break;
+                case NotifyCollectionChangedAction.Replace:
+                case NotifyCollectionChangedAction.Move: throw new NotImplementedException();
+            }
+        }
+
         private void AddViewModel(IStructureBase structureBase)
         {
             IStructureViewBase item;
@@ -1395,6 +1431,13 @@
             var item = new StructureTimerViewModel(this, structureBase);
 
             _timers.Add(item);
+        }
+
+        private void AddViewModel(StructureProjectorModel structureBase)
+        {
+            var item = new StructureProjectorViewModel(this, structureBase);
+
+            _projectors.Add(item);
         }
 
         /// <summary>

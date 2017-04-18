@@ -1619,4 +1619,7 @@ Planet Generator:	{17}</value>
   <data name="CtlTimerTxtTimerName" xml:space="preserve">
     <value>Timer</value>
   </data>
+  <data name="WnExplorerTabProjectors" xml:space="preserve">
+    <value>Projectors</value>
+  </data>
 </root>

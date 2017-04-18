@@ -28,19 +28,7 @@
         // Fields are marked as NonSerialized, as they aren't required during the drag-drop operation.
 
         [NonSerialized]
-        private string _activeComponentFilter;
-
-        [NonSerialized]
-        private string _componentFilter;
-
-        [NonSerialized]
         private static readonly object Locker = new object();
-
-        [NonSerialized]
-        private bool _isSubsSystemNotReady;
-
-        [NonSerialized]
-        private bool _isConstructionNotReady;
 
         [NonSerialized]
         private BlockStatistics _blockStatistics;
@@ -92,7 +80,7 @@
             if (identity != null)
                 DisplayName = identity.DisplayName;
             else
-                DisplayName = "Nobody";
+                DisplayName = "Unknown";
             _blockStatistics = new BlockStatistics(cubes);
             CountBlocks(cubes);
         }

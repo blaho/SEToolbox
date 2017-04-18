@@ -3,7 +3,7 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for ControlUnknown.xaml
+    /// Interaction logic for ControlPlayer.xaml
     /// </summary>
     public partial class ControlPlayer : UserControl
     {

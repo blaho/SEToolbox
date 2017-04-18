@@ -4183,6 +4183,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projectors.
+        /// </summary>
+        public static string WnExplorerTabProjectors {
+            get {
+                return ResourceManager.GetString("WnExplorerTabProjectors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Timers.
         /// </summary>
         public static string WnExplorerTabTimers {

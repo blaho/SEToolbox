@@ -75,7 +75,7 @@
             if (identity != null)
                 _ownerName = identity.DisplayName;
             else
-                _ownerName = "Nobody";
+                _ownerName = "Unknown";
             _gridName = grid.DisplayName;
             DisplayName = GetBlockName(grid, timer);
             _delay = timer.Delay / 1000;

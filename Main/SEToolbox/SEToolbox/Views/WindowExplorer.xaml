@@ -650,6 +650,68 @@
                                 </i:Interaction.Behaviors>
                             </controls:SortableListView>
                         </TabItem>
+                        <TabItem Header="{lex:Loc WnExplorerTabProjectors}">
+                            <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Projectors}" SelectedValue="{Binding SelectedStructure, Mode=TwoWay}"
+                            >
+                                <controls:SortableListView.ColumnHeaderArrowUpTemplate>
+                                    <StaticResource ResourceKey="HeaderTemplateArrowUp"/>
+                                </controls:SortableListView.ColumnHeaderArrowUpTemplate>
+                                <controls:SortableListView.ColumnHeaderArrowDownTemplate>
+                                    <StaticResource ResourceKey="HeaderTemplateArrowDown"/>
+                                </controls:SortableListView.ColumnHeaderArrowDownTemplate>
+                                <controls:SortableListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </controls:SortableListView.ItemContainerStyle>
+                                <controls:SortableListView.View>
+                                    <GridView>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding Enabled}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColEnabled}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding Enabled, Mode=OneWay}" IsEnabled="False" />
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn SortBinding="{Binding DisplayName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColTimer}" Width="100">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding DisplayName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding DisplayName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding GridName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColGrid}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding GridName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding GridName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding OwnerName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColOwner}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding OwnerName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding OwnerName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding BlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColCubes}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding BlockCountStr}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding BlockCountStr}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                    </GridView>
+                                </controls:SortableListView.View>
+                                <controls:SortableListView.InputBindings>
+                                    <KeyBinding Key="Delete" Command="{Binding DeleteObjectCommand}" />
+                                </controls:SortableListView.InputBindings>
+                                <i:Interaction.Behaviors>
+                                    <!-- This custom behavior that synchronizes the selected items with the view models collection -->
+                                    <commands:SynchronizeSelectedItems Selections="{Binding Selections}"/>
+                                </i:Interaction.Behaviors>
+                            </controls:SortableListView>
+                        </TabItem>
                         <!--<TabItem Header="Factions/Owners">
                             
                         </TabItem>-->
@@ -688,6 +750,9 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:StructureTimerViewModel}">
                                 <views:ControlTimer />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:StructureProjectorViewModel}">
+                                <views:ControlProjector />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:StructureUnknownViewModel}">
                                 <views:ControlUnknown />

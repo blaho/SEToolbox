@@ -273,6 +273,7 @@
     <Compile Include="Models\GenerateFloatingObjectModel.cs" />
     <Compile Include="Models\GroupMoveItemModel.cs" />
     <Compile Include="Models\GroupMoveModel.cs" />
+    <Compile Include="Models\StructureProjectorModel.cs" />
     <Compile Include="Models\StructureTimerModel.cs" />
     <Compile Include="Models\StructurePlayerModel.cs" />
     <Compile Include="Models\StructureMeteorModel.cs" />
@@ -395,6 +396,7 @@
     <Compile Include="ViewModels\FindApplicationViewModel.cs" />
     <Compile Include="ViewModels\GenerateFloatingObjectViewModel.cs" />
     <Compile Include="ViewModels\GroupMoveViewModel.cs" />
+    <Compile Include="ViewModels\StructureProjectorViewModel.cs" />
     <Compile Include="ViewModels\StructureTimerViewModel.cs" />
     <Compile Include="ViewModels\StructurePlayerViewModel.cs" />
     <Compile Include="ViewModels\StructureMeteorViewModel.cs" />
@@ -434,6 +436,9 @@
     </Compile>
     <Compile Include="Views\ControlPlayer.xaml.cs">
       <DependentUpon>ControlPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControlProjector.xaml.cs">
+      <DependentUpon>ControlProjector.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ControlTimer.xaml.cs">
       <DependentUpon>ControlTimer.xaml</DependentUpon>
@@ -552,6 +557,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ControlPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ControlProjector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

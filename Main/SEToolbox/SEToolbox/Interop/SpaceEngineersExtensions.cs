@@ -546,5 +546,13 @@
 
             return texture;
         }
+
+        public static long GetTopBuilderId(this MyObjectBuilder_CubeGrid grid)
+        {
+            var cubesByBuilder = grid.CubeBlocks.Where(cb => cb.BuiltBy != 0).GroupBy(k => k.BuiltBy, (k, blocks) => new { Builder = k, Count = blocks.Count() });
+            if (cubesByBuilder.Count() == 0)
+                return 0;
+            return cubesByBuilder.Aggregate((prev, curr) => curr.Count > prev.Count ? curr : prev).Builder;
+        }
     }
 }
