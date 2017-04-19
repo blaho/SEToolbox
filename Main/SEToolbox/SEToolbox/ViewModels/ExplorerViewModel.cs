@@ -30,11 +30,13 @@
     using VRage.ObjectBuilders;
     using VRageMath;
     using WPFLocalizeExtension.Engine;
+    using System.Windows.Threading;
 
     public class ExplorerViewModel : BaseViewModel, IDropable, IMainView
     {
         #region Fields
 
+        private static readonly object Locker = new object();
         private readonly ExplorerModel _dataModel;
         private readonly IDialogService _dialogService;
         private readonly Func<IOpenFileDialog> _openFileDialogFactory;
@@ -96,22 +98,11 @@
             }
 
             Players = new ObservableCollection<StructurePlayerViewModel>();
-            foreach (var item in _dataModel.Players)
-            {
-                AddViewModel(item);
-            }
-
             Timers = new ObservableCollection<StructureTimerViewModel>();
-            foreach (var item in _dataModel.Timers)
-            {
-                AddViewModel(item);
-            }
-
             Projectors = new ObservableCollection<StructureProjectorViewModel>();
-            foreach (var item in _dataModel.Projectors)
-            {
-                AddViewModel(item);
-            }
+            System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Players, Locker);
+            System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Timers, Locker);
+            System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Projectors, Locker);
 
             UpdateLanguages();
 
@@ -592,6 +583,21 @@
                     SelectedStructure = null;
                     Selections.Clear();
                     _selectedTabIndex = value;
+                    switch (_selectedTabIndex)
+                    {
+                        case 1:
+                            if (!_dataModel.ArePlayersLoaded)
+                                InitializePlayersAsync();
+                            break;
+                        case 2:
+                            if (!_dataModel.AreTimersLoaded)
+                                InitializeTimersAsync();
+                            break;
+                        case 3:
+                            if (!_dataModel.AreProjectorsLoaded)
+                                InitializeProjectorsAsync();
+                            break;
+                    }
                     OnPropertyChanged(nameof(SelectedTabIndex));
                 }
             }
@@ -1474,6 +1480,27 @@
             {
                 Structures.Remove(viewModel);
             }
+        }
+
+        public async System.Threading.Tasks.Task InitializePlayersAsync()
+        {
+            IsBusy = true;
+            await _dataModel.InitializePlayers();
+            IsBusy = false;
+        }
+
+        public async System.Threading.Tasks.Task InitializeTimersAsync()
+        {
+            IsBusy = true;
+            await _dataModel.InitializeTimers();
+            IsBusy = false;
+        }
+
+        public async System.Threading.Tasks.Task InitializeProjectorsAsync()
+        {
+            IsBusy = true;
+            await _dataModel.InitializeProjectors();
+            IsBusy = false;
         }
 
         // remove Model from collection, causing sync to happen.

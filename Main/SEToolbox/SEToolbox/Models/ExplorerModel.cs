@@ -68,6 +68,10 @@
 
         private List<int> _customColors;
 
+        private bool _arePlayersLoaded;
+        private bool _areTimersLoaded;
+        private bool _areProjectorsLoaded;
+
         #endregion
 
         #region Constructors
@@ -267,6 +271,30 @@
                     _isBaseSaveChanged = value;
                     RaisePropertyChanged(() => IsBaseSaveChanged);
                 }
+            }
+        }
+
+        public bool ArePlayersLoaded
+        {
+            get
+            {
+                return _arePlayersLoaded;
+            }
+        }
+
+        public bool AreTimersLoaded
+        {
+            get
+            {
+                return _areTimersLoaded;
+            }
+        }
+
+        public bool AreProjectorsLoaded
+        {
+            get
+            {
+                return _areProjectorsLoaded;
             }
         }
 
@@ -510,9 +538,15 @@
         private void LoadSectorDetail()
         {
             Structures.Clear();
+            Players.Clear();
+            Timers.Clear();
+            Projectors.Clear();
             SpaceEngineersCore.ManageDeleteVoxelList.Clear();
             ThePlayerCharacter = null;
             _customColors = null;
+            _arePlayersLoaded = false;
+            _areTimersLoaded = false;
+            _areProjectorsLoaded = false;
 
             if (ActiveWorld.SectorData != null && ActiveWorld.Checkpoint != null)
             {
@@ -555,27 +589,52 @@
                     Structures.Add(structure);
                 }
 
+                CalcDistances();
+            }
+
+            RaisePropertyChanged(() => Structures);
+        }
+
+        public async System.Threading.Tasks.Task InitializePlayers()
+        {
+            await System.Threading.Tasks.Task.Run(() =>
+            {
                 var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
                 var allBlocks = allGrids.SelectMany(cg => cg.CubeBlocks);
                 foreach (var x in allBlocks.GroupBy(k => k.BuiltBy, (k, v) => new { BuiltBy = k, Cubes = v }))
                 {
                     Players.Add(new StructurePlayerModel(x.BuiltBy, x.Cubes));
                 }
+                _arePlayersLoaded = true;
+            });
+        }
 
+        public async System.Threading.Tasks.Task InitializeTimers()
+        {
+            await System.Threading.Tasks.Task.Run(() =>
+            {
+                var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
                 var allBlocksWithGrid = allGrids.SelectMany(cg => cg.CubeBlocks, (grid, block) => new Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock>(grid, block));
                 foreach (var t in allBlocksWithGrid.Where(b => b.Item2 is MyObjectBuilder_TimerBlock))
                 {
                     Timers.Add(new StructureTimerModel(allBlocksWithGrid, t.Item1, (MyObjectBuilder_TimerBlock)t.Item2));
                 }
+                _areTimersLoaded = true;
+            });
+        }
+
+        public async System.Threading.Tasks.Task InitializeProjectors()
+        {
+            await System.Threading.Tasks.Task.Run(() =>
+            {
+                var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
+                var allBlocksWithGrid = allGrids.SelectMany(cg => cg.CubeBlocks, (grid, block) => new Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock>(grid, block));
                 foreach (var t in allBlocksWithGrid.Where(b => b.Item2 is MyObjectBuilder_Projector))
                 {
                     Projectors.Add(new StructureProjectorModel(t.Item1, (MyObjectBuilder_Projector)t.Item2));
                 }
-
-                CalcDistances();
-            }
-
-            RaisePropertyChanged(() => Structures);
+                _areProjectorsLoaded = true;
+            });
         }
 
         public void CalcDistances()
