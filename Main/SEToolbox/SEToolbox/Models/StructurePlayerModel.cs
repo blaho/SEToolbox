@@ -80,7 +80,7 @@
             if (identity != null)
                 DisplayName = identity.DisplayName;
             else
-                DisplayName = "Unknown";
+                DisplayName = "Nobody";
             _blockStatistics = new BlockStatistics(cubes);
             CountBlocks(cubes);
         }

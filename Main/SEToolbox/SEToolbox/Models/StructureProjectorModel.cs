@@ -63,20 +63,19 @@
             if (identity != null)
                 _ownerName = identity.DisplayName;
             else
-                _ownerName = "Unknown";
-            _ownerName = $"(by {_ownerName})";
+                _ownerName = "Nobody";
             _gridName = grid.DisplayName;
             identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == proj.BuiltBy);
             if (identity != null)
                 _builderName = identity.DisplayName;
             else
-                _builderName = "Unknown";
+                _builderName = "Nobody";
             _builderName = $"(by {_builderName})";
             identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == grid.GetTopBuilderId());
             if (identity != null)
                 _gridBuilderName = identity.DisplayName;
             else
-                _gridBuilderName = "Unknown";
+                _gridBuilderName = "Nobody";
             _gridBuilderName = $"(by {_gridBuilderName})";
             DisplayName = GetBlockName(grid, proj);
             _enabled = proj.Enabled && proj.ProjectedGrid != null;

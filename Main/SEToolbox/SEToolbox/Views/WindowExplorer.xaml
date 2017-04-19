@@ -336,7 +336,7 @@
                     <ColumnDefinition Width="*" MinWidth="40"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <TabControl SelectionChanged="TabControl_SelectionChanged">
+                    <TabControl SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
                         <TabItem Header="{lex:Loc WnExplorerTabObjects}">
                             <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Structures}" SelectedValue="{Binding SelectedStructure, Mode=TwoWay}"
                             ColumnHeaderArrowUpTemplate="{StaticResource HeaderTemplateArrowUp}" ColumnHeaderArrowDownTemplate="{StaticResource HeaderTemplateArrowDown}">

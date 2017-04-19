@@ -57,6 +57,8 @@
         // If true, when adding new models to the collection, the new models will be highlighted as selected in the UI.
         private bool _selectNewStructure;
 
+        private int _selectedTabIndex;
+
         #endregion
 
         #region event handlers
@@ -576,6 +578,25 @@
             }
         }
 
+        public int SelectedTabIndex
+        {
+            get
+            {
+                return _selectedTabIndex;
+            }
+
+            set
+            {
+                if (value != _selectedTabIndex)
+                {
+                    SelectedStructure = null;
+                    Selections.Clear();
+                    _selectedTabIndex = value;
+                    OnPropertyChanged(nameof(SelectedTabIndex));
+                }
+            }
+        }
+
         #endregion
 
         #region Command Methods
@@ -618,6 +639,7 @@
             var result = _dialogService.ShowDialog<WindowLoad>(this, loadVm);
             if (result == true)
             {
+                SelectedTabIndex = 0;
                 _dataModel.BeginLoad();
                 _dataModel.ActiveWorld = model.SelectedWorld;
                 ActiveWorld.LoadCheckpoint();
@@ -1421,7 +1443,7 @@
 
         private void AddViewModel(StructurePlayerModel structureBase)
         {
-            var item= new StructurePlayerViewModel(this, structureBase);
+            var item = new StructurePlayerViewModel(this, structureBase);
 
             _players.Add(item);
         }

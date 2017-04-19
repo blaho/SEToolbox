@@ -45,21 +45,5 @@
         {
             this.DataContext = viewModel;
         }
-
-        int? prevTabIndex;
-
-        private void TabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (e.Source is System.Windows.Controls.TabControl)
-            {
-                var i = (e.Source as System.Windows.Controls.TabControl)?.SelectedIndex;
-                if (i != prevTabIndex)
-                {
-                    (this.DataContext as ViewModels.ExplorerViewModel).SelectedStructure = null;
-                    (this.DataContext as ViewModels.ExplorerViewModel).Selections.Clear();
-                    prevTabIndex = i;
-                }
-            }
-        }
     }
 }

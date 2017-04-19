@@ -24,9 +24,6 @@
     {
         #region fields
 
-        private Tuple<long, string> _selectedProgrammableBlock;
-        private string _programmableBlockSourceCode;
-
         #endregion
 
         #region ctor
