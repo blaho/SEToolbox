@@ -1514,6 +1514,9 @@ Planet Generator:	{17}</value>
   <data name="CtlCubeMnuCopyCubeGps" xml:space="preserve">
     <value>Copy GPS</value>
   </data>
+  <data name="CtlCubeMnuUseAsPivotCube" xml:space="preserve">
+    <value>Use as pivot</value>
+  </data>
   <data name="WnExplorerTabPlayers" xml:space="preserve">
     <value>Players</value>
   </data>

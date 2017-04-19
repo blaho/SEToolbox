@@ -281,6 +281,11 @@
             get { return new DelegateCommand(CopyCubeGpsExecuted, CopyCubeGpsCanExecute); }
         }
 
+        public ICommand UseAsPivotCommand
+        {
+            get { return new DelegateCommand(UseAsPivotExecuted, UseAsPivotCanExecute); }
+        }
+
         #endregion
 
         #region Properties
@@ -1224,6 +1229,55 @@
                 MainViewModel.IsModified = true;
                 MainViewModel.IsBusy = false;
             }
+        }
+
+        public bool UseAsPivotCanExecute()
+        {
+            return Selections.Count == 1;
+        }
+
+        public void UseAsPivotExecuted()
+        {
+            MainViewModel.IsBusy = true;
+            MainViewModel.ResetProgress(0, CubeList.Count + DataModel.CubeGrid.BlockGroups.SelectMany(x => x.Blocks).Count());
+            // rotate the grid's cubes towards the reference block's forward and up, compensate by turning the grid inversely
+            // the grid will stay in the same position and orientation in the world
+            // the blocks will be in the same position and orientation in reference to each other
+            // basically we turned only the pivot point towads the reference blocks' forward and up
+            DataModel.RotateCubes(VRageMath.Quaternion.Inverse(SelectedCubeItem.Cube.BlockOrientation.ToQuaternion()));
+            // double-check that the reference is pointing towards forward and up, it's crucial for the next steps
+            if (SelectedCubeItem.Cube.BlockOrientation.Forward != VRageMath.Base6Directions.Direction.Forward || SelectedCubeItem.Cube.BlockOrientation.Up != VRageMath.Base6Directions.Direction.Up)
+                throw new InvalidOperationException("Forward must point to Forward and Up must point Up.");
+            // reposition the blocks so the reference block is at the 0,0,0 grid coordinate
+            var pivotPos = SelectedCubeItem.Cube.Min;
+            foreach (var cube in CubeList)
+            {
+                MainViewModel.Progress++;
+                // reposition block
+                cube.RepositionAround(pivotPos);
+            }
+            // adjust blockgroups
+            foreach (var bg in DataModel.CubeGrid.BlockGroups)
+            {
+                var newList = new List<VRageMath.Vector3I>();
+                for (var i = 0; i < bg.Blocks.Count; i++)
+                {
+                    MainViewModel.Progress++;
+                    newList.Add(new VRageMath.Vector3I(bg.Blocks[i].X - pivotPos.X, bg.Blocks[i].Y - pivotPos.Y, bg.Blocks[i].Z - pivotPos.Z));
+                }
+                bg.Blocks = newList;
+            }
+            // move the reference block to the very beginning of the cubelist
+            // (since 01.142, the blueprint's first block is placed on the projector at 0-0-0 setting)
+            DataModel.CubeGrid.CubeBlocks.Move(DataModel.CubeGrid.CubeBlocks.IndexOf(SelectedCubeItem.Cube), 0);
+            // move the grid so it's at the same world position as before           
+            DataModel.MoveGridToCubePos(pivotPos);
+            //
+            IsSubsSystemNotReady = true;
+            DataModel.InitializeAsync();
+            MainViewModel.ClearProgress();
+            MainViewModel.IsModified = true;
+            MainViewModel.IsBusy = false;
         }
 
         private bool CopyCubeGpsCanExecute()

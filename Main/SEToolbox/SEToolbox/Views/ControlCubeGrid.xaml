@@ -370,6 +370,11 @@
                                     <Image Width="16" Height="16" Source="{Binding Converter={StaticResource ResouceToImageConverter}, ConverterParameter=target}"/>
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Command="{Binding UseAsPivotCommand}" Style="{StaticResource ToolBarTopMenuitem}" Header="{lex:Loc SEToolbox:Resources:CtlCubeMnuUseAsPivotCube}">
+                                <MenuItem.Icon>
+                                    <Image Width="16" Height="16" Source="{Binding ConverterParameter=SECubes16, Converter={StaticResource ResouceToImageConverter}}"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </Menu>
                         <Grid Grid.Row="2">
                             <Grid.RowDefinitions>

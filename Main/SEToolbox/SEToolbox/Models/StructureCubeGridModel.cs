@@ -1274,6 +1274,15 @@
             return count > 0;
         }
 
+        public void MoveGridToCubePos(SerializableVector3I cube)
+        {          
+            var pos1 = (VRageMath.Vector3D)CubeGrid.PositionAndOrientation.Value.Position;
+            var orient1 = CubeGrid.PositionAndOrientation.Value.ToQuaternion();
+            var multi1 =  CubeGrid.GridSizeEnum.ToLength();
+            pos1 += Vector3.Transform(cube.ToVector3() * multi1, orient1);
+            CubeGrid.PositionAndOrientation = new MyPositionAndOrientation(pos1, orient1.Forward, orient1.Up);
+        }
+
         #region Mirror
 
         public bool MirrorModel(bool usePlane, bool oddMirror)

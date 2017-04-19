@@ -212,6 +212,11 @@
             return _dataModel.ChangeOwner(newOwnerId);
         }
 
+        public void RepositionAround(SerializableVector3I pivotPos)
+        {
+            _dataModel.RepositionAround(pivotPos);
+        }
+
         #endregion
     }
 }
