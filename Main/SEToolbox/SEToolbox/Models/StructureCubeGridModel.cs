@@ -18,6 +18,7 @@
     using VRage.ObjectBuilders;
     using VRageMath;
     using IDType = VRage.MyEntityIdentifier.ID_OBJECT_TYPE;
+    using Services;
 
     [Serializable]
     public class StructureCubeGridModel : StructureBaseModel
@@ -77,6 +78,51 @@
         [NonSerialized]
         private bool _isConstructionNotReady;
 
+        [NonSerialized]
+        private string _blockCountDetails;
+
+        [NonSerialized]
+        private int _assemblerCount;
+
+        [NonSerialized]
+        private string _assemblerDetails;
+
+        [NonSerialized]
+        private int _refineryCount;
+
+        [NonSerialized]
+        private string _refineryDetails;
+
+        [NonSerialized]
+        private int _shipToolCount;
+
+        [NonSerialized]
+        private string _shipToolDetails;
+
+        [NonSerialized]
+        private int _powerBlockCount;
+
+        [NonSerialized]
+        private string _powerBlockDetails;
+
+        [NonSerialized]
+        private int _thrusterCount;
+
+        [NonSerialized]
+        private string _thrusterDetails;
+
+        [NonSerialized]
+        private int _turretCount;
+
+        [NonSerialized]
+        private string _turretDetails;
+
+        [NonSerialized]
+        private string _builderName;
+
+        [NonSerialized]
+        private Dispatcher _dispatcher;
+
         #endregion
 
         #region ctor
@@ -86,6 +132,7 @@
         {
             IsSubsSystemNotReady = true;
             IsConstructionNotReady = true;
+            CountBlocks();
         }
 
         #endregion
@@ -511,9 +558,145 @@
             }
         }
 
+        public string BlockCountDetails
+        {
+            get
+            {
+                return _blockCountDetails;
+            }
+        }
+
+        public int AssemblerCount
+        {
+            get
+            {
+                return _assemblerCount;
+            }
+        }
+
+        public string AssemblerDetails
+        {
+            get
+            {
+                return _assemblerDetails;
+            }
+        }
+
+        public int RefineryCount
+        {
+            get
+            {
+                return _refineryCount;
+            }
+        }
+
+        public string RefineryDetails
+        {
+            get
+            {
+                return _refineryDetails;
+            }
+        }
+
+        public int ShipToolCount
+        {
+            get
+            {
+                return _shipToolCount;
+            }
+        }
+
+        public string ShipToolDetails
+        {
+            get
+            {
+                return _shipToolDetails;
+            }
+        }
+
+        public int PowerBlockCount
+        {
+            get
+            {
+                return _powerBlockCount;
+            }
+        }
+
+        public string PowerBlockDetails
+        {
+            get
+            {
+                return _powerBlockDetails;
+            }
+        }
+
+        public int TurretCount
+        {
+            get
+            {
+                return _turretCount;
+            }
+        }
+
+        public string TurretDetails
+        {
+            get
+            {
+                return _turretDetails;
+            }
+        }
+
+        public int ThrusterCount
+        {
+            get
+            {
+                return _thrusterCount;
+            }
+        }
+
+        public string ThrusterDetails
+        {
+            get
+            {
+                return _thrusterDetails;
+            }
+        }
+
+        public string BuilderName
+        {
+            get
+            {
+                return _builderName;
+            }
+        }
+
+        internal Dispatcher Dispatcher
+        {
+            get { return _dispatcher; }
+            set { _dispatcher = value; }
+        }
+
         #endregion
 
         #region methods
+
+        private void CountBlocks()
+        {
+            var bs = new BlockStatistics(CubeGrid.CubeBlocks);
+            _blockCountDetails = bs.BlockCountDetails;
+            _assemblerCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Assembler)?.Count ?? 0;
+            _assemblerDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Assembler)?.GetDetails();
+            _refineryCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Refinery)?.Count ?? 0;
+            _refineryDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Refinery)?.GetDetails();
+            _shipToolCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.ShipTool)?.Count ?? 0;
+            _shipToolDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.ShipTool)?.GetDetails();
+            _powerBlockCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Power)?.Count ?? 0;
+            _powerBlockDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.Power)?.GetDetails();
+            _thrusterCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.ThrusterGyro)?.Count ?? 0;
+            _thrusterDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.ThrusterGyro)?.GetDetails();
+            _turretCount = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.WeaponTurret)?.Count ?? 0;
+            _turretDetails = bs.CubeCategories.FirstOrDefault(c => c.Category == BlockCategory.WeaponTurret)?.GetDetails();
+        }
 
         [OnSerializing]
         internal void OnSerializingMethod(StreamingContext context)
@@ -627,6 +810,9 @@
             Center = WorldAABB.Center;
 
             DisplayName = CubeGrid.DisplayName;
+            var identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == CubeGrid.GetTopBuilderId());
+            if (identity != null)
+                _builderName = identity.DisplayName;
 
             // Add Beacon or Antenna detail for the Description.
             var broadcasters = CubeGrid.CubeBlocks.Where(b => b.SubtypeName == SubtypeId.LargeBlockBeacon.ToString()
@@ -663,7 +849,7 @@
         {
             var worker = new BackgroundWorker();
 
-            worker.DoWork += delegate(object s, DoWorkEventArgs workArgs)
+            worker.DoWork += delegate (object s, DoWorkEventArgs workArgs)
             {
                 lock (Locker)
                 {

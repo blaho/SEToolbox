@@ -336,7 +336,7 @@
                     <ColumnDefinition Width="*" MinWidth="40"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <TabControl>
+                    <TabControl SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
                         <TabItem Header="{lex:Loc WnExplorerTabObjects}">
                             <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Structures}" SelectedValue="{Binding SelectedStructure, Mode=TwoWay}"
                             ColumnHeaderArrowUpTemplate="{StaticResource HeaderTemplateArrowUp}" ColumnHeaderArrowDownTemplate="{StaticResource HeaderTemplateArrowDown}">
@@ -391,7 +391,7 @@
                                         <controls:SortableGridViewColumn Width="70" SortBinding="{Binding BlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColCubes}">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Path=BlockCount, StringFormat='{}{0:#,##0}'}" TextAlignment="Right" ToolTip="{lex:Loc WnExplorerColCubesTooltip}"/>
+                                                    <TextBlock Text="{Binding Path=BlockCount, StringFormat='{}{0:#,##0}'}" TextAlignment="Right" ToolTip="{Binding Path=BlockCountDetails}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
@@ -399,6 +399,55 @@
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Path=LinearVelocity, StringFormat='{}{0:#,##0.000}'}" TextAlignment="Right" ToolTip="{lex:Loc WnExplorerColVelocityTooltip}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn SortBinding="{Binding BuilderName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColBuilder}" Width="100">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding BuilderName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding AssemblerCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColAssemblerCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=AssemblerCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=AssemblerDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding RefineryCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColRefineryCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=RefineryCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=RefineryDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ShipToolCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColShipToolCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=ShipToolCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=ShipToolDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding PowerBlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColPowerBlockCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=PowerBlockCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=PowerBlockDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ThrusterCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColThrusterCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=ThrusterCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=ThrusterDetails}"/>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding TurretCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColTurretCount}">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Path=TurretCount, StringFormat='{}{0:#,##0}'}" ToolTip="{Binding Path=TurretDetails}"/>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
@@ -426,6 +475,241 @@
                                         </MenuItem>
                                     </ContextMenu>
                                 </ListBox.ContextMenu>
+                            </controls:SortableListView>
+                        </TabItem>
+                        <TabItem Header="{lex:Loc WnExplorerTabPlayers}">
+                            <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Players}" SelectedValue="{Binding SelectedStructure, Mode=TwoWay}"
+                            >
+                                <controls:SortableListView.ColumnHeaderArrowUpTemplate>
+                                    <StaticResource ResourceKey="HeaderTemplateArrowUp"/>
+                                </controls:SortableListView.ColumnHeaderArrowUpTemplate>
+                                <controls:SortableListView.ColumnHeaderArrowDownTemplate>
+                                    <StaticResource ResourceKey="HeaderTemplateArrowDown"/>
+                                </controls:SortableListView.ColumnHeaderArrowDownTemplate>
+                                <controls:SortableListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </controls:SortableListView.ItemContainerStyle>
+                                <controls:SortableListView.View>
+                                    <GridView>
+                                        <controls:SortableGridViewColumn SortBinding="{Binding DisplayName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColName}" Width="200">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding DisplayName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding BlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColCubes}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding BlockCount, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding BlockCountDetails}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding AssemblerCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColAssemblers}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding AssemblerCount, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding AssemblerDetails}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding RefineryCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColRefineries}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding RefineryCount, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding RefineryDetails}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ShipToolCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColShipTools}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding ShipToolCount, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding ShipToolDetails}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding PowerBlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColPowerBlocks}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding PowerBlockCount, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding PowerBlockDetails}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ThrusterCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColThrusters}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding ThrusterCount, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding ThrusterDetails}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding TurretCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColTurrets}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding TurretCount, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding TurretDetails}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                    </GridView>
+                                </controls:SortableListView.View>
+                                <controls:SortableListView.InputBindings>
+                                    <KeyBinding Key="Delete" Command="{Binding DeleteObjectCommand}" />
+                                </controls:SortableListView.InputBindings>
+                                <i:Interaction.Behaviors>
+                                    <!-- This custom behavior that synchronizes the selected items with the view models collection -->
+                                    <commands:SynchronizeSelectedItems Selections="{Binding Selections}"/>
+                                </i:Interaction.Behaviors>
+                            </controls:SortableListView>
+                        </TabItem>
+                        <TabItem Header="{lex:Loc WnExplorerTabTimers}">
+                            <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Timers}" SelectedValue="{Binding SelectedStructure, Mode=TwoWay}"
+                            >
+                                <controls:SortableListView.ColumnHeaderArrowUpTemplate>
+                                    <StaticResource ResourceKey="HeaderTemplateArrowUp"/>
+                                </controls:SortableListView.ColumnHeaderArrowUpTemplate>
+                                <controls:SortableListView.ColumnHeaderArrowDownTemplate>
+                                    <StaticResource ResourceKey="HeaderTemplateArrowDown"/>
+                                </controls:SortableListView.ColumnHeaderArrowDownTemplate>
+                                <controls:SortableListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </controls:SortableListView.ItemContainerStyle>
+                                <controls:SortableListView.View>
+                                    <GridView>
+                                        <controls:SortableGridViewColumn Width="50" SortBinding="{Binding Enabled}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColEnabled}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding Enabled, Mode=OneWay}" IsEnabled="False" />
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn SortBinding="{Binding DisplayName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColTimer}" Width="100">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding DisplayName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding DisplayName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="100" SortBinding="{Binding GridName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColGrid}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding GridName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding GridName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding OwnerName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColOwner}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding OwnerName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding OwnerName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="50" SortBinding="{Binding Delay}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColDelay}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Delay, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding Delay}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="100" SortBinding="{Binding SelfTriggerType}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColSelfTriggerType}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding SelfTriggerType}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding SelfTriggerType}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="150" SortBinding="{Binding ToolbarSummary}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColToolbarSummary}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding ToolbarSummary}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding ToolbarSummary}" />
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ProgrammableBlockName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColProgrammableBlockName}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding ProgrammableBlockName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding ProgrammableBlockNames}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="300" SortBinding="{Binding ProgrammableBlockSourceCodePreview}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColProgrammableBlockSourceCode}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding ProgrammableBlockSourceCodePreview}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                    </GridView>
+                                </controls:SortableListView.View>
+                                <controls:SortableListView.InputBindings>
+                                    <KeyBinding Key="Delete" Command="{Binding DeleteObjectCommand}" />
+                                </controls:SortableListView.InputBindings>
+                                <i:Interaction.Behaviors>
+                                    <!-- This custom behavior that synchronizes the selected items with the view models collection -->
+                                    <commands:SynchronizeSelectedItems Selections="{Binding Selections}"/>
+                                </i:Interaction.Behaviors>
+                            </controls:SortableListView>
+                        </TabItem>
+                        <TabItem Header="{lex:Loc WnExplorerTabProjectors}">
+                            <controls:SortableListView DisplayMemberPath="ClassType" SelectionMode="Extended" DefaultSortColumn="DisplayName" ItemsSource="{Binding Projectors}" SelectedValue="{Binding SelectedStructure, Mode=TwoWay}"
+                            >
+                                <controls:SortableListView.ColumnHeaderArrowUpTemplate>
+                                    <StaticResource ResourceKey="HeaderTemplateArrowUp"/>
+                                </controls:SortableListView.ColumnHeaderArrowUpTemplate>
+                                <controls:SortableListView.ColumnHeaderArrowDownTemplate>
+                                    <StaticResource ResourceKey="HeaderTemplateArrowDown"/>
+                                </controls:SortableListView.ColumnHeaderArrowDownTemplate>
+                                <controls:SortableListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </controls:SortableListView.ItemContainerStyle>
+                                <controls:SortableListView.View>
+                                    <GridView>
+                                        <controls:SortableGridViewColumn Width="50" SortBinding="{Binding Enabled}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColEnabled}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <CheckBox IsChecked="{Binding Enabled, Mode=OneWay}" IsEnabled="False" />
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn SortBinding="{Binding DisplayName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColProjector}" Width="100">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding DisplayName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding DisplayName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="100" SortBinding="{Binding GridName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColGrid}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding GridName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding GridName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding OwnerName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColOwner}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding OwnerName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding OwnerName}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                        <controls:SortableGridViewColumn Width="150" SortBinding="{Binding BlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColCubes}">
+                                            <controls:SortableGridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding BlockCountStr}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding BlockCountStr}"/>
+                                                </DataTemplate>
+                                            </controls:SortableGridViewColumn.CellTemplate>
+                                        </controls:SortableGridViewColumn>
+                                    </GridView>
+                                </controls:SortableListView.View>
+                                <controls:SortableListView.InputBindings>
+                                    <KeyBinding Key="Delete" Command="{Binding DeleteObjectCommand}" />
+                                </controls:SortableListView.InputBindings>
+                                <i:Interaction.Behaviors>
+                                    <!-- This custom behavior that synchronizes the selected items with the view models collection -->
+                                    <commands:SynchronizeSelectedItems Selections="{Binding Selections}"/>
+                                </i:Interaction.Behaviors>
                             </controls:SortableListView>
                         </TabItem>
                         <!--<TabItem Header="Factions/Owners">
@@ -460,6 +744,15 @@
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:StructureInventoryBagViewModel}">
                                 <views:ControlInventoryBag />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:StructurePlayerViewModel}">
+                                <views:ControlPlayer />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:StructureTimerViewModel}">
+                                <views:ControlTimer />
+                            </DataTemplate>
+                            <DataTemplate DataType="{x:Type vm:StructureProjectorViewModel}">
+                                <views:ControlProjector />
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type vm:StructureUnknownViewModel}">
                                 <views:ControlUnknown />

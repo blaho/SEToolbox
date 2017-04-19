@@ -273,6 +273,9 @@
     <Compile Include="Models\GenerateFloatingObjectModel.cs" />
     <Compile Include="Models\GroupMoveItemModel.cs" />
     <Compile Include="Models\GroupMoveModel.cs" />
+    <Compile Include="Models\StructureProjectorModel.cs" />
+    <Compile Include="Models\StructureTimerModel.cs" />
+    <Compile Include="Models\StructurePlayerModel.cs" />
     <Compile Include="Models\StructureMeteorModel.cs" />
     <Compile Include="Models\StructureInventoryBagModel.cs" />
     <Compile Include="Models\StructureUnknownModel.cs" />
@@ -304,6 +307,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\BlockStatistics.cs" />
     <Compile Include="Services\BrowserBehavior.cs" />
     <Compile Include="Services\BubbleScrollBehavior.cs" />
     <Compile Include="Services\ColorDialog.cs">
@@ -343,6 +347,7 @@
     <Compile Include="Services\ListBoxDropBehavior.cs" />
     <Compile Include="Services\ListBoxItemDragBehavior.cs" />
     <Compile Include="Services\MessageListener.cs" />
+    <Compile Include="Services\NotifyTaskCompletion.cs" />
     <Compile Include="Services\ObservableViewModelCollection.cs" />
     <Compile Include="Services\OpenFileDialog.cs" />
     <Compile Include="Services\OpenFileDialogViewModel.cs" />
@@ -392,6 +397,9 @@
     <Compile Include="ViewModels\FindApplicationViewModel.cs" />
     <Compile Include="ViewModels\GenerateFloatingObjectViewModel.cs" />
     <Compile Include="ViewModels\GroupMoveViewModel.cs" />
+    <Compile Include="ViewModels\StructureProjectorViewModel.cs" />
+    <Compile Include="ViewModels\StructureTimerViewModel.cs" />
+    <Compile Include="ViewModels\StructurePlayerViewModel.cs" />
     <Compile Include="ViewModels\StructureMeteorViewModel.cs" />
     <Compile Include="ViewModels\StructureInventoryBagViewModel.cs" />
     <Compile Include="ViewModels\StructureUnknownViewModel.cs" />
@@ -426,6 +434,15 @@
     </Compile>
     <Compile Include="Views\ControlPlanet.xaml.cs">
       <DependentUpon>ControlPlanet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControlPlayer.xaml.cs">
+      <DependentUpon>ControlPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControlProjector.xaml.cs">
+      <DependentUpon>ControlProjector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControlTimer.xaml.cs">
+      <DependentUpon>ControlTimer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ControlVoxel.xaml.cs">
       <DependentUpon>ControlVoxel.xaml</DependentUpon>
@@ -537,6 +554,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ControlPlanet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ControlPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ControlProjector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ControlTimer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

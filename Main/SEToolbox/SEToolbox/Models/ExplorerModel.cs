@@ -39,6 +39,21 @@
         ///// </summary>
         private ObservableCollection<IStructureBase> _structures;
 
+        ///// <summary>
+        ///// Collection of <see cref="StructurePlayerModel"/> objects that represent the players.
+        ///// </summary>
+        private ObservableCollection<StructurePlayerModel> _players;
+
+        ///// <summary>
+        ///// Collection of <see cref="StructureTimerModel"/> objects that represent the timers.
+        ///// </summary>
+        private ObservableCollection<StructureTimerModel> _timers;
+
+        ///// <summary>
+        ///// Collection of <see cref="StructureProjectorModel"/> objects that represent the projector.
+        ///// </summary>
+        private ObservableCollection<StructureProjectorModel> _projectors;
+
         private bool _showProgress;
 
         private double _progress;
@@ -60,6 +75,9 @@
         public ExplorerModel()
         {
             Structures = new ObservableCollection<IStructureBase>();
+            Players = new ObservableCollection<StructurePlayerModel>();
+            Timers = new ObservableCollection<StructureTimerModel>();
+            Projectors = new ObservableCollection<StructureProjectorModel>();
             _timer = new Stopwatch();
             SetActiveStatus();
         }
@@ -81,6 +99,57 @@
                 {
                     _structures = value;
                     RaisePropertyChanged(() => Structures);
+                }
+            }
+        }
+
+        public ObservableCollection<StructurePlayerModel> Players
+        {
+            get
+            {
+                return _players;
+            }
+
+            set
+            {
+                if (value != _players)
+                {
+                    _players = value;
+                    RaisePropertyChanged(() => Players);
+                }
+            }
+        }
+
+        public ObservableCollection<StructureTimerModel> Timers
+        {
+            get
+            {
+                return _timers;
+            }
+
+            set
+            {
+                if (value != _timers)
+                {
+                    _timers = value;
+                    RaisePropertyChanged(() => Timers);
+                }
+            }
+        }
+
+        public ObservableCollection<StructureProjectorModel> Projectors
+        {
+            get
+            {
+                return _projectors;
+            }
+
+            set
+            {
+                if (value != _projectors)
+                {
+                    _projectors = value;
+                    RaisePropertyChanged(() => Projectors);
                 }
             }
         }
@@ -441,11 +510,29 @@
         private void LoadSectorDetail()
         {
             Structures.Clear();
+            Players.Clear();
+            Timers.Clear();
+            Projectors.Clear();
             SpaceEngineersCore.ManageDeleteVoxelList.Clear();
             ThePlayerCharacter = null;
             _customColors = null;
 
             if (ActiveWorld.SectorData != null && ActiveWorld.Checkpoint != null)
+            {
+                InitializeStructuresAsync();
+                InitializePlayersAsync();
+                InitializeTimersAsync();
+                InitializeProjectorsAsync();
+            }
+
+            RaisePropertyChanged(() => Structures);
+        }
+
+        public void InitializeStructuresAsync()
+        {
+            ResetProgress(0, ActiveWorld.SectorData.SectorObjects.Count);
+            var dispatcher = Dispatcher.CurrentDispatcher;
+            var t = new Services.NotifyTaskCompletion<int>(System.Threading.Tasks.Task.Run(() =>
             {
                 foreach (var entityBase in ActiveWorld.SectorData.SectorObjects)
                 {
@@ -464,7 +551,7 @@
                     else if (structure is StructureCubeGridModel)
                     {
                         var cubeGrid = structure as StructureCubeGridModel;
-
+                        cubeGrid.Dispatcher = dispatcher;
                         var list = cubeGrid.GetActiveCockpits();
                         foreach (var cockpit in list)
                         {
@@ -480,15 +567,80 @@
 
                             Structures.Add(character);
                         }
-                    }
 
+                    }
+                    Progress++;
                     Structures.Add(structure);
                 }
+                return Structures.Count;
+            }));
+            t.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == nameof(t.IsCompleted))
+                {
+                    if (t.IsFaulted)
+                        throw t.Exception;
+                    CalcDistances();
+                    ClearProgress();
+                }
+            };
+        }
 
-                CalcDistances();
-            }
+        public void InitializePlayersAsync()
+        {
+            var t = new Services.NotifyTaskCompletion<int>(System.Threading.Tasks.Task.Run(() =>
+            {
+                var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
+                var allBlocks = allGrids.SelectMany(cg => cg.CubeBlocks);
+                foreach (var x in allBlocks.GroupBy(k => k.BuiltBy, (k, v) => new { BuiltBy = k, Cubes = v }))
+                {
+                    Players.Add(new StructurePlayerModel(x.BuiltBy, x.Cubes));
+                }
+                return Players.Count;
+            }));
+            t.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == nameof(t.IsCompleted) && t.IsFaulted)
+                    throw t.Exception;
+            };
+        }
 
-            RaisePropertyChanged(() => Structures);
+        public void InitializeTimersAsync()
+        {
+            var t = new Services.NotifyTaskCompletion<int>(System.Threading.Tasks.Task.Run(() =>
+            {
+                var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
+                var allBlocksWithGrid = allGrids.SelectMany(cg => cg.CubeBlocks, (grid, block) => new Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock>(grid, block));
+                foreach (var timer in allBlocksWithGrid.Where(b => b.Item2 is MyObjectBuilder_TimerBlock))
+                {
+                    Timers.Add(new StructureTimerModel(allBlocksWithGrid, timer.Item1, (MyObjectBuilder_TimerBlock)timer.Item2));
+                }
+                return Timers.Count;
+            }));
+            t.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == nameof(t.IsCompleted) && t.IsFaulted)
+                    throw t.Exception;
+            };
+        }
+
+        public void InitializeProjectorsAsync()
+        {
+            var t = new Services.NotifyTaskCompletion<int>(System.Threading.Tasks.Task.Run(() =>
+            {
+                var allGrids = ActiveWorld.SectorData.SectorObjects.OfType<MyObjectBuilder_CubeGrid>();
+                var allBlocksWithGrid = allGrids.SelectMany(cg => cg.CubeBlocks, (grid, block) => new Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock>(grid, block));
+                foreach (var p in allBlocksWithGrid.Where(b => b.Item2 is MyObjectBuilder_Projector))
+                {
+                    Projectors.Add(new StructureProjectorModel(p.Item1, (MyObjectBuilder_Projector)p.Item2));
+                }
+                return Projectors.Count;
+            }));
+            t.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == nameof(t.IsCompleted) && t.IsFaulted)
+                    throw t.Exception;
+            };
         }
 
         public void CalcDistances()
@@ -889,7 +1041,7 @@
 
             // Optimise ordering of CubeBlocks within structure, so that loops can load quickly based on {X+, Y+, Z+}.
             // Since 01.142, the blueprint's first block is placed on the projector at 0-0-0 setting. It might be desired to not change the first block.
-            var neworder = viewModel.CubeGrid.CubeBlocks.Select((cb, i) => new { CubeBlock = cb, Index = i }).OrderBy(c => !keepFirstBlock || c.Index > 0).ThenBy(c => c.CubeBlock.Min.Z).ThenBy(c => c.CubeBlock.Min.Y).ThenBy(c => c.CubeBlock.Min.X).Select(c=>c.CubeBlock).ToList();
+            var neworder = viewModel.CubeGrid.CubeBlocks.Select((cb, i) => new { CubeBlock = cb, Index = i }).OrderBy(c => !keepFirstBlock || c.Index > 0).ThenBy(c => c.CubeBlock.Min.Z).ThenBy(c => c.CubeBlock.Min.Y).ThenBy(c => c.CubeBlock.Min.X).Select(c => c.CubeBlock).ToList();
             viewModel.CubeGrid.CubeBlocks = neworder;
             IsModified = true;
         }

@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="SEToolbox.Views.ControlTimer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:SEToolbox.Views"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:ResxLocalizationProvider.DefaultAssembly="SEToolbox"
+             lex:ResxLocalizationProvider.DefaultDictionary="Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="632" d:DesignWidth="545">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+            <Label Content="{lex:Loc CtlTimerTxtTimerName}"/>
+            <Label Content="{Binding DisplayName, Mode=OneWay}" FontWeight="Bold" />
+            <Label Content="{Binding BuilderName}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <Label Content="{lex:Loc CtlTimerTxtGridName}"/>
+            <Label Content="{Binding GridName, Mode=OneWay}" FontWeight="Bold" />
+            <Label Content="{Binding GridBuilderName}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+            <Label Content="{lex:Loc CtlTimerTxtOwnerName}"/>
+            <Label Content="{Binding OwnerName, Mode=OneWay}" FontWeight="Bold" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+            <Label Content="{lex:Loc CtlTimerTxtDelay}" />
+            <Label Content="{Binding Delay, Mode=OneWay, StringFormat=\{0:#\,#\s\}}" FontWeight="Bold" />
+            <CheckBox Content="{lex:Loc CtlTimerTxtEnabled}" IsChecked="{Binding Enabled, Mode=OneWay}" IsEnabled="False" VerticalAlignment="Center" Margin="10,0,0,0"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Label Content="{lex:Loc CtlTimerTxtToolbarButtons}"/>
+            <ListView ItemsSource="{Binding ToolbarButtons}" Height="200">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Label Content="{lex:Loc CtlTimerTxtSelfTriggerType}"/>
+            <Label Content="{Binding SelfTriggerType, Mode=OneWay}" FontWeight="Bold" />
+        </StackPanel>
+        <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="{lex:Loc CtlTimerTxtProgrammableBlockName}"/>
+        <ComboBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" ItemsSource="{Binding ProgrammableBlocks}" SelectedItem="{Binding SelectedProgrammableBlock}" DisplayMemberPath="Item2"/>
+        <DockPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" >
+            <Label DockPanel.Dock="Top" Content="{lex:Loc CtlTimerTxtProgrammableBlockSourceCode}"/>
+            <TextBox Text="{Binding ProgrammableBlockSourceCode, Mode=OneWay}" AcceptsReturn="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
+        </DockPanel>
+    </Grid>
+</UserControl>

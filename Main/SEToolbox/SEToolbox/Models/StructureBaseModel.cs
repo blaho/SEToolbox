@@ -59,9 +59,6 @@
 
         private string _serializedEntity;
 
-        [NonSerialized]
-        internal Dispatcher _dispatcher;
-
         #endregion
 
         #region ctor
@@ -72,7 +69,6 @@
 
         public StructureBaseModel(MyObjectBuilder_EntityBase entityBase)
         {
-            _dispatcher = Dispatcher.CurrentDispatcher;
             EntityBase = entityBase;
         }
 

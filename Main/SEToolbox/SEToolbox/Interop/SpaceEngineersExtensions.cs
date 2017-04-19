@@ -546,5 +546,22 @@
 
             return texture;
         }
+
+        public static long GetTopBuilderId(this MyObjectBuilder_CubeGrid grid)
+        {
+            var cubesByBuilder = grid.CubeBlocks.Where(cb => cb.BuiltBy != 0).GroupBy(k => k.BuiltBy, (k, blocks) => new { Builder = k, Count = blocks.Count() });
+            if (cubesByBuilder.Count() == 0)
+                return 0;
+            return cubesByBuilder.Aggregate((prev, curr) => curr.Count > prev.Count ? curr : prev).Builder;
+        }
+
+        public static string GetBlockName(this MyObjectBuilder_CubeBlock block, MyObjectBuilder_CubeGrid grid)
+        {
+            var res = (block as MyObjectBuilder_TerminalBlock)?.CustomName;
+            if (res != null)
+                return res;
+            var cubeDefinition = SpaceEngineersApi.GetCubeDefinition(block.TypeId, grid.GridSizeEnum, block.SubtypeName);
+            return cubeDefinition.DisplayNameText;
+        }
     }
 }

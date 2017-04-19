@@ -1514,4 +1514,127 @@ Planet Generator:	{17}</value>
   <data name="CtlCubeMnuCopyCubeGps" xml:space="preserve">
     <value>Copy GPS</value>
   </data>
+  <data name="WnExplorerTabPlayers" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="WnExplorerColAssemblerCount" xml:space="preserve">
+    <value>Assemblers</value>
+  </data>
+  <data name="WnExplorerColAssemblerCountTooltip" xml:space="preserve">
+    <value>Assemblers</value>
+  </data>
+  <data name="WnExplorerColPowerBlockCount" xml:space="preserve">
+    <value>Power blocks</value>
+  </data>
+  <data name="WnExplorerColRefineryCount" xml:space="preserve">
+    <value>Refineries</value>
+  </data>
+  <data name="WnExplorerColShipToolCount" xml:space="preserve">
+    <value>Ship tools</value>
+  </data>
+  <data name="WnExplorerColThrusterCount" xml:space="preserve">
+    <value>Thrusters</value>
+  </data>
+  <data name="WnExplorerColTurretCount" xml:space="preserve">
+    <value>Turrets</value>
+  </data>
+  <data name="WnExplorerColAssemblers" xml:space="preserve">
+    <value>Assemblers</value>
+  </data>
+  <data name="WnExplorerColBuilder" xml:space="preserve">
+    <value>Builder</value>
+  </data>
+  <data name="WnExplorerColPowerBlocks" xml:space="preserve">
+    <value>Power blocks</value>
+  </data>
+  <data name="WnExplorerColRefineries" xml:space="preserve">
+    <value>Refineries</value>
+  </data>
+  <data name="WnExplorerColShipTools" xml:space="preserve">
+    <value>Ship tools</value>
+  </data>
+  <data name="WnExplorerColThrusters" xml:space="preserve">
+    <value>Thrusters</value>
+  </data>
+  <data name="WnExplorerColTurrets" xml:space="preserve">
+    <value>Turrets</value>
+  </data>
+  <data name="WnExplorerColDelay" xml:space="preserve">
+    <value>Delay [s]</value>
+  </data>
+  <data name="WnExplorerColEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="WnExplorerColGrid" xml:space="preserve">
+    <value>Grid</value>
+  </data>
+  <data name="WnExplorerColOwner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="WnExplorerColProgrammableBlockName" xml:space="preserve">
+    <value>Programmable Blocks</value>
+  </data>
+  <data name="WnExplorerColProgrammableBlockSourceCode" xml:space="preserve">
+    <value>Source Code</value>
+  </data>
+  <data name="WnExplorerColSelfTriggerType" xml:space="preserve">
+    <value>Self-trigger</value>
+  </data>
+  <data name="WnExplorerColTimer" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="WnExplorerColToolbarSummary" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="WnExplorerTabTimers" xml:space="preserve">
+    <value>Timers</value>
+  </data>
+  <data name="CtlPlayerTxtPlayerName" xml:space="preserve">
+    <value>Player:</value>
+  </data>
+  <data name="CtlProjectorTxtCubes" xml:space="preserve">
+    <value>Cubes:</value>
+  </data>
+  <data name="CtlProjectorTxtGridName" xml:space="preserve">
+    <value>Grid:</value>
+  </data>
+  <data name="CtlProjectorTxtOwnerName" xml:space="preserve">
+    <value>Owner:</value>
+  </data>
+  <data name="CtlProjectorTxtProjectorName" xml:space="preserve">
+    <value>Projector:</value>
+  </data>
+  <data name="CtlTimerTxtDelay" xml:space="preserve">
+    <value>Delay:</value>
+  </data>
+  <data name="CtlTimerTxtEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="CtlTimerTxtGridName" xml:space="preserve">
+    <value>Grid:</value>
+  </data>
+  <data name="CtlTimerTxtOwnerName" xml:space="preserve">
+    <value>Owner:</value>
+  </data>
+  <data name="CtlTimerTxtProgrammableBlockName" xml:space="preserve">
+    <value>Programmable block</value>
+  </data>
+  <data name="CtlTimerTxtProgrammableBlockSourceCode" xml:space="preserve">
+    <value>Source code</value>
+  </data>
+  <data name="CtlTimerTxtSelfTriggerType" xml:space="preserve">
+    <value>Self-trigger type:</value>
+  </data>
+  <data name="CtlTimerTxtTimerName" xml:space="preserve">
+    <value>Timer:</value>
+  </data>
+  <data name="CtlTimerTxtToolbarButtons" xml:space="preserve">
+    <value>Toolbar buttons:</value>
+  </data>
+  <data name="WnExplorerColProjector" xml:space="preserve">
+    <value>Projector</value>
+  </data>
+  <data name="WnExplorerTabProjectors" xml:space="preserve">
+    <value>Projectors</value>
+  </data>
 </root>

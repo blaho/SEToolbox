@@ -30,11 +30,13 @@
     using VRage.ObjectBuilders;
     using VRageMath;
     using WPFLocalizeExtension.Engine;
+    using System.Windows.Threading;
 
     public class ExplorerViewModel : BaseViewModel, IDropable, IMainView
     {
         #region Fields
 
+        private static readonly object Locker = new object();
         private readonly ExplorerModel _dataModel;
         private readonly IDialogService _dialogService;
         private readonly Func<IOpenFileDialog> _openFileDialogFactory;
@@ -42,14 +44,22 @@
         private bool? _closeResult;
 
         private bool _ignoreUpdateSelection;
-        private IStructureViewBase _selectedStructure;
+
         private IStructureViewBase _preSelectedStructure;
+        private IStructureViewBase _selectedStructure;
         private ObservableCollection<IStructureViewBase> _selections;
         private ObservableCollection<IStructureViewBase> _structures;
+
+        private ObservableCollection<StructurePlayerViewModel> _players;
+        private ObservableCollection<StructureTimerViewModel> _timers;
+        private ObservableCollection<StructureProjectorViewModel> _projectors;
+
         private ObservableCollection<LanguageModel> _languages;
 
         // If true, when adding new models to the collection, the new models will be highlighted as selected in the UI.
         private bool _selectNewStructure;
+
+        private int _selectedTabIndex;
 
         #endregion
 
@@ -87,9 +97,20 @@
                 AddViewModel(item);
             }
 
+            Players = new ObservableCollection<StructurePlayerViewModel>();
+            Timers = new ObservableCollection<StructureTimerViewModel>();
+            Projectors = new ObservableCollection<StructureProjectorViewModel>();
+            System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Structures, Locker);
+            System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Players, Locker);
+            System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Timers, Locker);
+            System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Projectors, Locker);
+
             UpdateLanguages();
 
             _dataModel.Structures.CollectionChanged += Structures_CollectionChanged;
+            _dataModel.Players.CollectionChanged += Players_CollectionChanged;
+            _dataModel.Timers.CollectionChanged += Timers_CollectionChanged;
+            _dataModel.Projectors.CollectionChanged += Projectors_CollectionChanged;
             // Will bubble property change events from the Model to the ViewModel.
             _dataModel.PropertyChanged += (sender, e) => OnPropertyChanged(e.PropertyName);
         }
@@ -395,6 +416,57 @@
             }
         }
 
+        public ObservableCollection<StructurePlayerViewModel> Players
+        {
+            get
+            {
+                return _players;
+            }
+
+            private set
+            {
+                if (value != _players)
+                {
+                    _players = value;
+                    RaisePropertyChanged(() => Players);
+                }
+            }
+        }
+
+        public ObservableCollection<StructureTimerViewModel> Timers
+        {
+            get
+            {
+                return _timers;
+            }
+
+            private set
+            {
+                if (value != _timers)
+                {
+                    _timers = value;
+                    RaisePropertyChanged(() => Timers);
+                }
+            }
+        }
+
+        public ObservableCollection<StructureProjectorViewModel> Projectors
+        {
+            get
+            {
+                return _projectors;
+            }
+
+            private set
+            {
+                if (value != _projectors)
+                {
+                    _projectors = value;
+                    RaisePropertyChanged(() => Projectors);
+                }
+            }
+        }
+
         public WorldResource ActiveWorld
         {
             get
@@ -498,6 +570,25 @@
             }
         }
 
+        public int SelectedTabIndex
+        {
+            get
+            {
+                return _selectedTabIndex;
+            }
+
+            set
+            {
+                if (value != _selectedTabIndex)
+                {
+                    SelectedStructure = null;
+                    Selections.Clear();
+                    _selectedTabIndex = value;
+                    OnPropertyChanged(nameof(SelectedTabIndex));
+                }
+            }
+        }
+
         #endregion
 
         #region Command Methods
@@ -540,6 +631,7 @@
             var result = _dialogService.ShowDialog<WindowLoad>(this, loadVm);
             if (result == true)
             {
+                SelectedTabIndex = 0;
                 _dataModel.BeginLoad();
                 _dataModel.ActiveWorld = model.SelectedWorld;
                 ActiveWorld.LoadCheckpoint();
@@ -1271,6 +1363,42 @@
             }
         }
 
+        private void Players_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: AddViewModel(e.NewItems[0] as StructurePlayerModel); break;
+                case NotifyCollectionChangedAction.Remove: RemoveViewModel(e.OldItems[0] as StructurePlayerModel); break;
+                case NotifyCollectionChangedAction.Reset: _players.Clear(); break;
+                case NotifyCollectionChangedAction.Replace:
+                case NotifyCollectionChangedAction.Move: throw new NotImplementedException();
+            }
+        }
+
+        private void Timers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: AddViewModel(e.NewItems[0] as StructureTimerModel); break;
+                case NotifyCollectionChangedAction.Remove: RemoveViewModel(e.OldItems[0] as StructureTimerModel); break;
+                case NotifyCollectionChangedAction.Reset: _timers.Clear(); break;
+                case NotifyCollectionChangedAction.Replace:
+                case NotifyCollectionChangedAction.Move: throw new NotImplementedException();
+            }
+        }
+
+        private void Projectors_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add: AddViewModel(e.NewItems[0] as StructureProjectorModel); break;
+                case NotifyCollectionChangedAction.Remove: RemoveViewModel(e.OldItems[0] as StructureProjectorModel); break;
+                case NotifyCollectionChangedAction.Reset: _projectors.Clear(); break;
+                case NotifyCollectionChangedAction.Replace:
+                case NotifyCollectionChangedAction.Move: throw new NotImplementedException();
+            }
+        }
+
         private void AddViewModel(IStructureBase structureBase)
         {
             IStructureViewBase item;
@@ -1305,6 +1433,27 @@
             }
         }
 
+        private void AddViewModel(StructurePlayerModel structureBase)
+        {
+            var item = new StructurePlayerViewModel(this, structureBase);
+
+            _players.Add(item);
+        }
+
+        private void AddViewModel(StructureTimerModel structureBase)
+        {
+            var item = new StructureTimerViewModel(this, structureBase);
+
+            _timers.Add(item);
+        }
+
+        private void AddViewModel(StructureProjectorModel structureBase)
+        {
+            var item = new StructureProjectorViewModel(this, structureBase);
+
+            _projectors.Add(item);
+        }
+        
         /// <summary>
         /// Find and remove ViewModel, with the specied Model.
         /// Remove the Entity also.
