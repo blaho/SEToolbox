@@ -347,6 +347,7 @@
     <Compile Include="Services\ListBoxDropBehavior.cs" />
     <Compile Include="Services\ListBoxItemDragBehavior.cs" />
     <Compile Include="Services\MessageListener.cs" />
+    <Compile Include="Services\NotifyTaskCompletion.cs" />
     <Compile Include="Services\ObservableViewModelCollection.cs" />
     <Compile Include="Services\OpenFileDialog.cs" />
     <Compile Include="Services\OpenFileDialogViewModel.cs" />

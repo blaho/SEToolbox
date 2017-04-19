@@ -120,6 +120,9 @@
         [NonSerialized]
         private string _builderName;
 
+        [NonSerialized]
+        private Dispatcher _dispatcher;
+
         #endregion
 
         #region ctor
@@ -666,6 +669,13 @@
                 return _builderName;
             }
         }
+
+        internal Dispatcher Dispatcher
+        {
+            get { return _dispatcher; }
+            set { _dispatcher = value; }
+        }
+
         #endregion
 
         #region methods

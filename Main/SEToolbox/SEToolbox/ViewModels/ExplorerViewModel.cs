@@ -100,6 +100,7 @@
             Players = new ObservableCollection<StructurePlayerViewModel>();
             Timers = new ObservableCollection<StructureTimerViewModel>();
             Projectors = new ObservableCollection<StructureProjectorViewModel>();
+            System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Structures, Locker);
             System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Players, Locker);
             System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Timers, Locker);
             System.Windows.Data.BindingOperations.EnableCollectionSynchronization(Projectors, Locker);
@@ -583,21 +584,6 @@
                     SelectedStructure = null;
                     Selections.Clear();
                     _selectedTabIndex = value;
-                    switch (_selectedTabIndex)
-                    {
-                        case 1:
-                            if (!_dataModel.ArePlayersLoaded)
-                                InitializePlayersAsync();
-                            break;
-                        case 2:
-                            if (!_dataModel.AreTimersLoaded)
-                                InitializeTimersAsync();
-                            break;
-                        case 3:
-                            if (!_dataModel.AreProjectorsLoaded)
-                                InitializeProjectorsAsync();
-                            break;
-                    }
                     OnPropertyChanged(nameof(SelectedTabIndex));
                 }
             }
@@ -1467,7 +1453,7 @@
 
             _projectors.Add(item);
         }
-
+        
         /// <summary>
         /// Find and remove ViewModel, with the specied Model.
         /// Remove the Entity also.
@@ -1480,27 +1466,6 @@
             {
                 Structures.Remove(viewModel);
             }
-        }
-
-        public async System.Threading.Tasks.Task InitializePlayersAsync()
-        {
-            IsBusy = true;
-            await _dataModel.InitializePlayers();
-            IsBusy = false;
-        }
-
-        public async System.Threading.Tasks.Task InitializeTimersAsync()
-        {
-            IsBusy = true;
-            await _dataModel.InitializeTimers();
-            IsBusy = false;
-        }
-
-        public async System.Threading.Tasks.Task InitializeProjectorsAsync()
-        {
-            IsBusy = true;
-            await _dataModel.InitializeProjectors();
-            IsBusy = false;
         }
 
         // remove Model from collection, causing sync to happen.
