@@ -493,7 +493,7 @@
                                 </controls:SortableListView.ItemContainerStyle>
                                 <controls:SortableListView.View>
                                     <GridView>
-                                        <controls:SortableGridViewColumn SortBinding="{Binding DisplayName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColName}" Width="100">
+                                        <controls:SortableGridViewColumn SortBinding="{Binding DisplayName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColName}" Width="200">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding DisplayName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
@@ -576,7 +576,7 @@
                                 </controls:SortableListView.ItemContainerStyle>
                                 <controls:SortableListView.View>
                                     <GridView>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding Enabled}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColEnabled}">
+                                        <controls:SortableGridViewColumn Width="50" SortBinding="{Binding Enabled}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColEnabled}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <CheckBox IsChecked="{Binding Enabled, Mode=OneWay}" IsEnabled="False" />
@@ -590,7 +590,7 @@
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding GridName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColGrid}">
+                                        <controls:SortableGridViewColumn Width="100" SortBinding="{Binding GridName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColGrid}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding GridName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding GridName}"/>
@@ -604,21 +604,21 @@
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding Delay}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColDelay}">
+                                        <controls:SortableGridViewColumn Width="50" SortBinding="{Binding Delay}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColDelay}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding Delay, StringFormat=\{0:#\,##0\}}" TextAlignment="Right" ToolTip="{Binding Delay}"/>
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding SelfTriggerType}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColSelfTriggerType}">
+                                        <controls:SortableGridViewColumn Width="100" SortBinding="{Binding SelfTriggerType}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColSelfTriggerType}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding SelfTriggerType}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding SelfTriggerType}"/>
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ToolbarSummary}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColToolbarSummary}">
+                                        <controls:SortableGridViewColumn Width="150" SortBinding="{Binding ToolbarSummary}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColToolbarSummary}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding ToolbarSummary}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding ToolbarSummary}" />
@@ -632,7 +632,7 @@
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding ProgrammableBlockSourceCodePreview}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColProgrammableBlockSourceCode}">
+                                        <controls:SortableGridViewColumn Width="300" SortBinding="{Binding ProgrammableBlockSourceCodePreview}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColProgrammableBlockSourceCode}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding ProgrammableBlockSourceCodePreview}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
@@ -666,21 +666,21 @@
                                 </controls:SortableListView.ItemContainerStyle>
                                 <controls:SortableListView.View>
                                     <GridView>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding Enabled}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColEnabled}">
+                                        <controls:SortableGridViewColumn Width="50" SortBinding="{Binding Enabled}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColEnabled}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <CheckBox IsChecked="{Binding Enabled, Mode=OneWay}" IsEnabled="False" />
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
-                                        <controls:SortableGridViewColumn SortBinding="{Binding DisplayName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColTimer}" Width="100">
+                                        <controls:SortableGridViewColumn SortBinding="{Binding DisplayName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColProjector}" Width="100">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding DisplayName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding DisplayName}"/>
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding GridName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColGrid}">
+                                        <controls:SortableGridViewColumn Width="100" SortBinding="{Binding GridName}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColGrid}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding GridName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding GridName}"/>
@@ -694,7 +694,7 @@
                                                 </DataTemplate>
                                             </controls:SortableGridViewColumn.CellTemplate>
                                         </controls:SortableGridViewColumn>
-                                        <controls:SortableGridViewColumn Width="70" SortBinding="{Binding BlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColCubes}">
+                                        <controls:SortableGridViewColumn Width="150" SortBinding="{Binding BlockCount}" Header="{lex:Loc SEToolbox:Resources:WnExplorerColCubes}">
                                             <controls:SortableGridViewColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding BlockCountStr}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding BlockCountStr}"/>

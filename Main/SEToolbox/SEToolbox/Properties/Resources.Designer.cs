@@ -1166,15 +1166,6 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delay.
-        /// </summary>
-        public static string CtlCubeTxtDelay {
-            get {
-                return ResourceManager.GetString("CtlCubeTxtDelay", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Destructible:.
         /// </summary>
         public static string CtlCubeTxtDestructible {
@@ -1229,15 +1220,6 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Grid.
-        /// </summary>
-        public static string CtlCubeTxtGridName {
-            get {
-                return ResourceManager.GetString("CtlCubeTxtGridName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Linear Velocity.
         /// </summary>
         public static string CtlCubeTxtLinearVelocityTooltip {
@@ -1265,15 +1247,6 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Owner.
-        /// </summary>
-        public static string CtlCubeTxtOwnerName {
-            get {
-                return ResourceManager.GetString("CtlCubeTxtOwnerName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Piloted:.
         /// </summary>
         public static string CtlCubeTxtPiloted {
@@ -1292,38 +1265,11 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Programmable block.
-        /// </summary>
-        public static string CtlCubeTxtProgrammableBlockName {
-            get {
-                return ResourceManager.GetString("CtlCubeTxtProgrammableBlockName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Source code.
-        /// </summary>
-        public static string CtlCubeTxtProgrammableBlockSourceCode {
-            get {
-                return ResourceManager.GetString("CtlCubeTxtProgrammableBlockSourceCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Scale:.
         /// </summary>
         public static string CtlCubeTxtScale {
             get {
                 return ResourceManager.GetString("CtlCubeTxtScale", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Self-trigger type.
-        /// </summary>
-        public static string CtlCubeTxtSelfTriggerType {
-            get {
-                return ResourceManager.GetString("CtlCubeTxtSelfTriggerType", resourceCulture);
             }
         }
         
@@ -1351,15 +1297,6 @@ namespace SEToolbox.Properties {
         public static string CtlCubeTxtTimeToProd {
             get {
                 return ResourceManager.GetString("CtlCubeTxtTimeToProd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Toolbar buttons.
-        /// </summary>
-        public static string CtlCubeTxtToolbarButtons {
-            get {
-                return ResourceManager.GetString("CtlCubeTxtToolbarButtons", resourceCulture);
             }
         }
         
@@ -1422,6 +1359,51 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cubes:.
+        /// </summary>
+        public static string CtlProjectorTxtCubes {
+            get {
+                return ResourceManager.GetString("CtlProjectorTxtCubes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grid:.
+        /// </summary>
+        public static string CtlProjectorTxtGridName {
+            get {
+                return ResourceManager.GetString("CtlProjectorTxtGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Owner:.
+        /// </summary>
+        public static string CtlProjectorTxtOwnerName {
+            get {
+                return ResourceManager.GetString("CtlProjectorTxtOwnerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projector:.
+        /// </summary>
+        public static string CtlProjectorTxtProjectorName {
+            get {
+                return ResourceManager.GetString("CtlProjectorTxtProjectorName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delay:.
+        /// </summary>
+        public static string CtlTimerTxtDelay {
+            get {
+                return ResourceManager.GetString("CtlTimerTxtDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
         public static string CtlTimerTxtEnabled {
@@ -1431,11 +1413,65 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timer.
+        ///   Looks up a localized string similar to Grid:.
+        /// </summary>
+        public static string CtlTimerTxtGridName {
+            get {
+                return ResourceManager.GetString("CtlTimerTxtGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Owner:.
+        /// </summary>
+        public static string CtlTimerTxtOwnerName {
+            get {
+                return ResourceManager.GetString("CtlTimerTxtOwnerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Programmable block.
+        /// </summary>
+        public static string CtlTimerTxtProgrammableBlockName {
+            get {
+                return ResourceManager.GetString("CtlTimerTxtProgrammableBlockName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source code.
+        /// </summary>
+        public static string CtlTimerTxtProgrammableBlockSourceCode {
+            get {
+                return ResourceManager.GetString("CtlTimerTxtProgrammableBlockSourceCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self-trigger type:.
+        /// </summary>
+        public static string CtlTimerTxtSelfTriggerType {
+            get {
+                return ResourceManager.GetString("CtlTimerTxtSelfTriggerType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer:.
         /// </summary>
         public static string CtlTimerTxtTimerName {
             get {
                 return ResourceManager.GetString("CtlTimerTxtTimerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toolbar buttons:.
+        /// </summary>
+        public static string CtlTimerTxtToolbarButtons {
+            get {
+                return ResourceManager.GetString("CtlTimerTxtToolbarButtons", resourceCulture);
             }
         }
         
@@ -3522,6 +3558,15 @@ namespace SEToolbox.Properties {
         public static string WnExplorerColProgrammableBlockSourceCode {
             get {
                 return ResourceManager.GetString("WnExplorerColProgrammableBlockSourceCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projector.
+        /// </summary>
+        public static string WnExplorerColProjector {
+            get {
+                return ResourceManager.GetString("WnExplorerColProjector", resourceCulture);
             }
         }
         

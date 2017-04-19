@@ -38,6 +38,12 @@
         private string _ownerName;
 
         [NonSerialized]
+        private string _builderName;
+
+        [NonSerialized]
+        private string _gridBuilderName;
+
+        [NonSerialized]
         private IEnumerable<string> _toolbarButtons;
 
         [NonSerialized]
@@ -77,7 +83,19 @@
             else
                 _ownerName = "Nobody";
             _gridName = grid.DisplayName;
-            DisplayName = GetBlockName(grid, timer);
+            identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == timer.BuiltBy);
+            if (identity != null)
+                _builderName = identity.DisplayName;
+            else
+                _builderName = "Nobody";
+            _builderName = $"(by {_builderName})";
+            identity = SpaceEngineersCore.WorldResource.Checkpoint.Identities.FirstOrDefault(p => p.PlayerId == grid.GetTopBuilderId());
+            if (identity != null)
+                _gridBuilderName = identity.DisplayName;
+            else
+                _gridBuilderName = "Nobody";
+            _gridBuilderName = $"(by {_gridBuilderName})";
+            DisplayName = timer.GetBlockName(grid);
             _delay = timer.Delay / 1000;
             _enabled = timer.Enabled && timer.IsCountingDown;
             if (timer.Toolbar.Slots.Count > 0)
@@ -116,16 +134,7 @@
         {
             if (blockWithParent == null)
                 return "?";
-            return GetBlockName(blockWithParent.Item1, blockWithParent.Item2);
-        }
-
-        private string GetBlockName(MyObjectBuilder_CubeGrid grid, MyObjectBuilder_CubeBlock block)
-        {
-            var res = (block as MyObjectBuilder_TerminalBlock)?.CustomName;
-            if (res != null)
-                return res;
-            var cubeDefinition = SpaceEngineersApi.GetCubeDefinition(block.TypeId, grid.GridSizeEnum, block.SubtypeName);
-            return cubeDefinition.DisplayNameText;
+            return blockWithParent.Item2.GetBlockName(blockWithParent.Item1);
         }
 
         #endregion
@@ -147,6 +156,16 @@
         public string GridName
         {
             get { return _gridName; }
+        }
+
+        public string BuilderName
+        {
+            get { return _builderName; }
+        }
+
+        public string GridBuilderName
+        {
+            get { return _gridBuilderName; }
         }
 
         public string OwnerName

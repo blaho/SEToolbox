@@ -1592,32 +1592,47 @@ Planet Generator:	{17}</value>
   <data name="CtlPlayerTxtPlayerName" xml:space="preserve">
     <value>Player:</value>
   </data>
-  <data name="CtlCubeTxtDelay" xml:space="preserve">
-    <value>Delay</value>
+  <data name="CtlProjectorTxtCubes" xml:space="preserve">
+    <value>Cubes:</value>
   </data>
-  <data name="CtlCubeTxtGridName" xml:space="preserve">
-    <value>Grid</value>
+  <data name="CtlProjectorTxtGridName" xml:space="preserve">
+    <value>Grid:</value>
   </data>
-  <data name="CtlCubeTxtOwnerName" xml:space="preserve">
-    <value>Owner</value>
+  <data name="CtlProjectorTxtOwnerName" xml:space="preserve">
+    <value>Owner:</value>
   </data>
-  <data name="CtlCubeTxtProgrammableBlockName" xml:space="preserve">
-    <value>Programmable block</value>
+  <data name="CtlProjectorTxtProjectorName" xml:space="preserve">
+    <value>Projector:</value>
   </data>
-  <data name="CtlCubeTxtProgrammableBlockSourceCode" xml:space="preserve">
-    <value>Source code</value>
-  </data>
-  <data name="CtlCubeTxtSelfTriggerType" xml:space="preserve">
-    <value>Self-trigger type</value>
-  </data>
-  <data name="CtlCubeTxtToolbarButtons" xml:space="preserve">
-    <value>Toolbar buttons</value>
+  <data name="CtlTimerTxtDelay" xml:space="preserve">
+    <value>Delay:</value>
   </data>
   <data name="CtlTimerTxtEnabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
+  <data name="CtlTimerTxtGridName" xml:space="preserve">
+    <value>Grid:</value>
+  </data>
+  <data name="CtlTimerTxtOwnerName" xml:space="preserve">
+    <value>Owner:</value>
+  </data>
+  <data name="CtlTimerTxtProgrammableBlockName" xml:space="preserve">
+    <value>Programmable block</value>
+  </data>
+  <data name="CtlTimerTxtProgrammableBlockSourceCode" xml:space="preserve">
+    <value>Source code</value>
+  </data>
+  <data name="CtlTimerTxtSelfTriggerType" xml:space="preserve">
+    <value>Self-trigger type:</value>
+  </data>
   <data name="CtlTimerTxtTimerName" xml:space="preserve">
-    <value>Timer</value>
+    <value>Timer:</value>
+  </data>
+  <data name="CtlTimerTxtToolbarButtons" xml:space="preserve">
+    <value>Toolbar buttons:</value>
+  </data>
+  <data name="WnExplorerColProjector" xml:space="preserve">
+    <value>Projector</value>
   </data>
   <data name="WnExplorerTabProjectors" xml:space="preserve">
     <value>Projectors</value>

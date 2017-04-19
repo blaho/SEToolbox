@@ -65,6 +65,16 @@
             get { return DataModel.OwnerName; }
         }
 
+        public string BuilderName
+        {
+            get { return DataModel.BuilderName; }
+        }
+
+        public string GridBuilderName
+        {
+            get { return DataModel.GridBuilderName; }
+        }
+
         public string ToolbarSummary
         {
             get { return DataModel.ToolbarSummary; }

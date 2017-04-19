@@ -8,10 +8,10 @@
              lex:ResxLocalizationProvider.DefaultAssembly="SEToolbox"
              lex:ResxLocalizationProvider.DefaultDictionary="Resources"
              mc:Ignorable="d" 
-             d:DesignHeight="632" d:DesignWidth="545">
+             d:DesignHeight="167.066" d:DesignWidth="545">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -20,26 +20,26 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="553*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Label Content="{lex:Loc CtlTimerTxtTimerName}"/>
+            <Label Content="{lex:Loc CtlProjectorTxtProjectorName}"/>
             <Label Content="{Binding DisplayName, Mode=OneWay}" FontWeight="Bold" />
             <Label Content="{Binding BuilderName}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Label Content="{lex:Loc CtlCubeTxtGridName}"/>
+            <Label Content="{lex:Loc CtlProjectorTxtGridName}"/>
             <Label Content="{Binding GridName, Mode=OneWay}" FontWeight="Bold" />
             <Label Content="{Binding GridBuilderName}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-            <Label Content="{lex:Loc CtlCubeTxtOwnerName}"/>
+            <Label Content="{lex:Loc CtlProjectorTxtOwnerName}"/>
             <Label Content="{Binding OwnerName, Mode=OneWay}" FontWeight="Bold" />
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-            <Label Content="{lex:Loc CtlCubeTxtBuilderName}"/>
-            <Label Content="{Binding BuilderName, Mode=OneWay}" FontWeight="Bold" />
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
+            <Label Content="{lex:Loc CtlProjectorTxtCubes}"/>
+            <Label Content="{Binding BlockCountStr, Mode=OneWay}" FontWeight="Bold" />
         </StackPanel>
-        <Label Grid.Row="2" Grid.Column="0" Content="{lex:Loc CtlCubeTxtBlockCount}"/>
     </Grid>
 </UserControl>

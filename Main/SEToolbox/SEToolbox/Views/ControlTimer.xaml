@@ -11,7 +11,7 @@
              d:DesignHeight="632" d:DesignWidth="545">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -25,23 +25,24 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Label Content="{lex:Loc CtlTimerTxtTimerName}"/>
             <Label Content="{Binding DisplayName, Mode=OneWay}" FontWeight="Bold" />
+            <Label Content="{Binding BuilderName}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Label Content="{lex:Loc CtlCubeTxtGridName}"/>
+            <Label Content="{lex:Loc CtlTimerTxtGridName}"/>
             <Label Content="{Binding GridName, Mode=OneWay}" FontWeight="Bold" />
+            <Label Content="{Binding GridBuilderName}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-            <Label Content="{lex:Loc CtlCubeTxtOwnerName}"/>
+            <Label Content="{lex:Loc CtlTimerTxtOwnerName}"/>
             <Label Content="{Binding OwnerName, Mode=OneWay}" FontWeight="Bold" />
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-            <Label Content="{lex:Loc CtlCubeTxtDelay}" />
-            <TextBox Text="{Binding Delay, Mode=OneWay}" Width="30" />
-            <Label Content="s" />
-            <CheckBox Content="{lex:Loc CtlTimerTxtEnabled}" IsChecked="{Binding Enabled, Mode=OneWay}" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <Label Content="{lex:Loc CtlTimerTxtDelay}" />
+            <Label Content="{Binding Delay, Mode=OneWay, StringFormat=\{0:#\,#\s\}}" FontWeight="Bold" />
+            <CheckBox Content="{lex:Loc CtlTimerTxtEnabled}" IsChecked="{Binding Enabled, Mode=OneWay}" IsEnabled="False" VerticalAlignment="Center" Margin="10,0,0,0"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <Label Content="{lex:Loc CtlCubeTxtToolbarButtons}"/>
+            <Label Content="{lex:Loc CtlTimerTxtToolbarButtons}"/>
             <ListView ItemsSource="{Binding ToolbarButtons}" Height="200">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -51,14 +52,14 @@
             </ListView>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <Label Content="{lex:Loc CtlCubeTxtSelfTriggerType}"/>
+            <Label Content="{lex:Loc CtlTimerTxtSelfTriggerType}"/>
             <Label Content="{Binding SelfTriggerType, Mode=OneWay}" FontWeight="Bold" />
         </StackPanel>
-        <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="{lex:Loc CtlCubeTxtProgrammableBlockName}"/>
+        <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="{lex:Loc CtlTimerTxtProgrammableBlockName}"/>
         <ComboBox Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" ItemsSource="{Binding ProgrammableBlocks}" SelectedItem="{Binding SelectedProgrammableBlock}" DisplayMemberPath="Item2"/>
         <DockPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" >
-            <Label DockPanel.Dock="Top" Content="{lex:Loc CtlCubeTxtProgrammableBlockSourceCode}"/>
-            <TextBox Text="{Binding ProgrammableBlockSourceCode, Mode=OneWay}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
+            <Label DockPanel.Dock="Top" Content="{lex:Loc CtlTimerTxtProgrammableBlockSourceCode}"/>
+            <TextBox Text="{Binding ProgrammableBlockSourceCode, Mode=OneWay}" AcceptsReturn="True" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
         </DockPanel>
     </Grid>
 </UserControl>

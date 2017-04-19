@@ -77,29 +77,13 @@
             else
                 _gridBuilderName = "Nobody";
             _gridBuilderName = $"(by {_gridBuilderName})";
-            DisplayName = GetBlockName(grid, proj);
+            DisplayName = proj.GetBlockName(grid);
             _enabled = proj.Enabled && proj.ProjectedGrid != null;
             if (proj.ProjectedGrid == null)
                 return;
             _blockStatistics = new BlockStatistics(proj.ProjectedGrid.CubeBlocks);
             BlockCount = proj.ProjectedGrid.CubeBlocks.Count;
             _blockCountStr = $"{proj.ProjectedGrid.CubeBlocks.Count} ({((decimal)proj.ProjectedGrid.CubeBlocks.Count / grid.CubeBlocks.Count * 100):F1}% of self)";
-        }
-
-        private string GetBlockName(Tuple<MyObjectBuilder_CubeGrid, MyObjectBuilder_CubeBlock> blockWithParent)
-        {
-            if (blockWithParent == null)
-                return "?";
-            return GetBlockName(blockWithParent.Item1, blockWithParent.Item2);
-        }
-
-        private string GetBlockName(MyObjectBuilder_CubeGrid grid, MyObjectBuilder_CubeBlock block)
-        {
-            var res = (block as MyObjectBuilder_TerminalBlock)?.CustomName;
-            if (res != null)
-                return res;
-            var cubeDefinition = SpaceEngineersApi.GetCubeDefinition(block.TypeId, grid.GridSizeEnum, block.SubtypeName);
-            return cubeDefinition.DisplayNameText;
         }
 
         #endregion
