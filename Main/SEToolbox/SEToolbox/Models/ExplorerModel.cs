@@ -445,7 +445,7 @@
                             FileSystem.DeleteFile(voxel.VoxelFilepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
                         }
 
-                        if (Path.GetExtension(voxel.SourceVoxelFilepath).Equals(MyVoxelMap.V1FileExtension, StringComparison.InvariantCultureIgnoreCase))
+                        if (Path.GetExtension(voxel.SourceVoxelFilepath).Equals(MyVoxelMap.V1FileExtension, StringComparison.OrdinalIgnoreCase))
                         {
                             // Convert between formats.
                             var voxelmap = new MyVoxelMap();
@@ -556,7 +556,10 @@
                         foreach (var cockpit in list)
                         {
                             cubeGrid.Pilots++;
-                            var character = (StructureCharacterModel)StructureBaseModel.Create(cockpit.Pilot, null);
+                            // theoretically with the Hierarchy structure, there could be more than one character attached to a single cube.
+                            // thus, more than 1 pilot.
+                            var pilots = cockpit.GetHierarchyCharacters();
+                            var character = (StructureCharacterModel)StructureBaseModel.Create(pilots.First(), null);
                             character.IsPilot = true;
 
                             if (ActiveWorld.Checkpoint != null && cockpit.EntityId == ActiveWorld.Checkpoint.ControlledObject)
@@ -800,9 +803,15 @@
                             if (cubeGrid is MyObjectBuilder_Cockpit)
                             {
                                 var cockpit = cubeGrid as MyObjectBuilder_Cockpit;
-                                if (cockpit.Pilot == entity)
+
+                                // theoretically with the Hierarchy structure, there could be more than one character attached to a single cube.
+                                // thus, more than 1 pilot.
+                                var pilots = cockpit.GetHierarchyCharacters();
+                                if (pilots.First() == entity)
                                 {
                                     cockpit.Pilot = null;
+                                    cockpit.RemoveHierarchyCharacter(pilots.First());
+
                                     var structure = Structures.FirstOrDefault(s => s.EntityBase == sectorObject) as StructureCubeGridModel;
                                     structure.Pilots--;
                                     return true;
@@ -945,6 +954,7 @@
                 var cockpit = cubeGrid as MyObjectBuilder_Cockpit;
                 if (cockpit != null)
                 {
+                    cockpit.RemoveHierarchyCharacter(cockpit.Pilot);
                     cockpit.Pilot = null;  // remove any pilots.
                 }
 

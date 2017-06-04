@@ -203,6 +203,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large Station.
+        /// </summary>
+        public static string ClassType_LargeStation {
+            get {
+                return ResourceManager.GetString("ClassType_LargeStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Planet.
         /// </summary>
         public static string ClassType_Planet {
@@ -221,11 +230,11 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Station.
+        ///   Looks up a localized string similar to Small Station.
         /// </summary>
-        public static string ClassType_Station {
+        public static string ClassType_SmallStation {
             get {
-                return ResourceManager.GetString("ClassType_Station", resourceCulture);
+                return ResourceManager.GetString("ClassType_SmallStation", resourceCulture);
             }
         }
         
@@ -274,6 +283,15 @@ namespace SEToolbox.Properties {
         public static string CtlCubeColBuild {
             get {
                 return ResourceManager.GetString("CtlCubeColBuild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Built By.
+        /// </summary>
+        public static string CtlCubeColBuiltBy {
+            get {
+                return ResourceManager.GetString("CtlCubeColBuiltBy", resourceCulture);
             }
         }
         
@@ -523,6 +541,15 @@ namespace SEToolbox.Properties {
         public static string CtlCubeDetail {
             get {
                 return ResourceManager.GetString("CtlCubeDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Built By.
+        /// </summary>
+        public static string CtlCubeMnuBuiltByCube {
+            get {
+                return ResourceManager.GetString("CtlCubeMnuBuiltByCube", resourceCulture);
             }
         }
         
@@ -824,7 +851,7 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change a Station into a Large Ship..
+        ///   Looks up a localized string similar to Change a Station into a Ship..
         /// </summary>
         public static string CtlCubeMnuConvertToShipTooltip {
             get {
@@ -842,7 +869,7 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change a Large Ship into a Station..
+        ///   Looks up a localized string similar to Change a Ship into a Station..
         /// </summary>
         public static string CtlCubeMnuConvertToStationTooltip {
             get {
@@ -2401,6 +2428,16 @@ namespace SEToolbox.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap hammer {
+            get {
+                object obj = ResourceManager.GetObject("hammer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap help {
             get {
                 object obj = ResourceManager.GetObject("help", resourceCulture);
@@ -2438,6 +2475,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large Station.
+        /// </summary>
+        public static string ImportImageClassType_LargeStation {
+            get {
+                return ResourceManager.GetString("ImportImageClassType_LargeStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Small Ship.
         /// </summary>
         public static string ImportImageClassType_SmallShip {
@@ -2447,11 +2493,11 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Station.
+        ///   Looks up a localized string similar to Small Station.
         /// </summary>
-        public static string ImportImageClassType_Station {
+        public static string ImportImageClassType_SmallStation {
             get {
-                return ResourceManager.GetString("ImportImageClassType_Station", resourceCulture);
+                return ResourceManager.GetString("ImportImageClassType_SmallStation", resourceCulture);
             }
         }
         
@@ -2474,6 +2520,15 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Large Station.
+        /// </summary>
+        public static string ImportModelClassType_LargeStation {
+            get {
+                return ResourceManager.GetString("ImportModelClassType_LargeStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Small Ship.
         /// </summary>
         public static string ImportModelClassType_SmallShip {
@@ -2483,11 +2538,11 @@ namespace SEToolbox.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Station.
+        ///   Looks up a localized string similar to Small Station.
         /// </summary>
-        public static string ImportModelClassType_Station {
+        public static string ImportModelClassType_SmallStation {
             get {
-                return ResourceManager.GetString("ImportModelClassType_Station", resourceCulture);
+                return ResourceManager.GetString("ImportModelClassType_SmallStation", resourceCulture);
             }
         }
         
@@ -3072,6 +3127,24 @@ namespace SEToolbox.Properties {
         public static string WnAboutTxtVersion {
             get {
                 return ResourceManager.GetString("WnAboutTxtVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Built By.
+        /// </summary>
+        public static string WnChangeBuiltByTitle {
+            get {
+                return ResourceManager.GetString("WnChangeBuiltByTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Owner.
+        /// </summary>
+        public static string WnChangeOwnerTitle {
+            get {
+                return ResourceManager.GetString("WnChangeOwnerTitle", resourceCulture);
             }
         }
         
@@ -4008,6 +4081,42 @@ namespace SEToolbox.Properties {
         public static string WnExplorerMnuSelection {
             get {
                 return ResourceManager.GetString("WnExplorerMnuSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Ship.
+        /// </summary>
+        public static string WnExplorerMnuSelectionConvertToShip {
+            get {
+                return ResourceManager.GetString("WnExplorerMnuSelectionConvertToShip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert selected Stations to Ships.
+        /// </summary>
+        public static string WnExplorerMnuSelectionConvertToShipTooltip {
+            get {
+                return ResourceManager.GetString("WnExplorerMnuSelectionConvertToShipTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Station.
+        /// </summary>
+        public static string WnExplorerMnuSelectionConvertToStation {
+            get {
+                return ResourceManager.GetString("WnExplorerMnuSelectionConvertToStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert selected Ships to Stations.
+        /// </summary>
+        public static string WnExplorerMnuSelectionConvertToStationTooltip {
+            get {
+                return ResourceManager.GetString("WnExplorerMnuSelectionConvertToStationTooltip", resourceCulture);
             }
         }
         

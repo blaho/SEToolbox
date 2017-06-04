@@ -15,6 +15,7 @@
     using SEToolbox.Support;
     using VRage;
     using VRage.Game;
+    using VRage.Game.ObjectBuilders.Components;
     using VRage.ObjectBuilders;
     using VRageMath;
     using IDType = VRage.MyEntityIdentifier.ID_OBJECT_TYPE;
@@ -715,7 +716,11 @@
             double scaleMultiplyer = CubeGrid.GridSizeEnum.ToLength();
             if (IsStatic && CubeGrid.GridSizeEnum == MyCubeSize.Large)
             {
-                ClassType = ClassType.Station;
+                ClassType = ClassType.LargeStation;
+            }
+            else if (IsStatic && CubeGrid.GridSizeEnum == MyCubeSize.Small)
+            {
+                ClassType = ClassType.SmallStation;
             }
             else if (!IsStatic && CubeGrid.GridSizeEnum == MyCubeSize.Large)
             {
@@ -1003,8 +1008,19 @@
         /// <returns></returns>
         public List<MyObjectBuilder_Cockpit> GetActiveCockpits()
         {
-            var cubes = CubeGrid.CubeBlocks.Where<MyObjectBuilder_CubeBlock>(e => e is MyObjectBuilder_Cockpit && ((MyObjectBuilder_Cockpit)e).Pilot != null);
-            return new List<MyObjectBuilder_Cockpit>(cubes.Cast<MyObjectBuilder_Cockpit>());
+            List<MyObjectBuilder_Cockpit> list = new List<MyObjectBuilder_Cockpit>();
+
+            foreach (MyObjectBuilder_CubeBlock cube in CubeGrid.CubeBlocks.Where<MyObjectBuilder_CubeBlock>(e => e is MyObjectBuilder_Cockpit))
+            {
+                var hierarchyBase = cube.ComponentContainer.Components.FirstOrDefault(e => e.TypeId == "MyHierarchyComponentBase")?.Component as MyObjectBuilder_HierarchyComponentBase;
+                if (hierarchyBase != null)
+                {
+                    if (hierarchyBase.Children.Any(e => e is MyObjectBuilder_Character))
+                        list.Add((MyObjectBuilder_Cockpit)cube);
+                }
+            }
+
+            return list;
         }
 
         public void RepairAllDamage()
