@@ -37,8 +37,7 @@ Before asking any question please read the [documentation (FAQ)](https://github.
  * the pivot will be moved to the selected block (old projector behavior used the pivot at the 0-0-0 position)
  * grid's forward and up will be the selected blocks' forward and up
  * overall the grid's position and orientation in the world will stay the same 
-* Optimize Model feature leaves first block at first position
-  * because projector puts the first block at the projector's 0-0-0 position
+ * Optimize Model feature leaves first block at first position (because projector puts the first block at the projector's 0-0-0 position)
 ##### **Performance eater finder**
 * New columns in the entity list
  * builder name
