@@ -142,18 +142,12 @@
 
         public MyObjectBuilder_CubeGrid CubeGrid
         {
-            get
-            {
-                return EntityBase as MyObjectBuilder_CubeGrid;
-            }
+            get { return EntityBase as MyObjectBuilder_CubeGrid; }
         }
 
         public MyCubeSize GridSize
         {
-            get
-            {
-                return CubeGrid.GridSizeEnum;
-            }
+            get { return CubeGrid.GridSizeEnum; }
 
             set
             {
@@ -167,10 +161,7 @@
 
         public bool IsStatic
         {
-            get
-            {
-                return CubeGrid.IsStatic;
-            }
+            get { return CubeGrid.IsStatic; }
 
             set
             {
@@ -184,10 +175,7 @@
 
         public bool Dampeners
         {
-            get
-            {
-                return CubeGrid.DampenersEnabled;
-            }
+            get { return CubeGrid.DampenersEnabled; }
 
             set
             {
@@ -201,10 +189,7 @@
 
         public bool Destructible
         {
-            get
-            {
-                return CubeGrid.DestructibleBlocks;
-            }
+            get { return CubeGrid.DestructibleBlocks; }
 
             set
             {
@@ -219,10 +204,8 @@
 
         public override string DisplayName
         {
-            get
-            {
-                return base.DisplayName;
-            }
+            get { return base.DisplayName; }
+
             set
             {
                 base.DisplayName = value;
@@ -232,10 +215,7 @@
 
         public Point3D Min
         {
-            get
-            {
-                return _min;
-            }
+            get { return _min; }
 
             set
             {
@@ -249,10 +229,7 @@
 
         public Point3D Max
         {
-            get
-            {
-                return _max;
-            }
+            get { return _max; }
 
             set
             {
@@ -266,10 +243,7 @@
 
         public System.Windows.Media.Media3D.Vector3D Scale
         {
-            get
-            {
-                return _scale;
-            }
+            get { return _scale; }
 
             set
             {
@@ -283,10 +257,7 @@
 
         public Size3D Size
         {
-            get
-            {
-                return _size;
-            }
+            get { return _size; }
 
             set
             {
@@ -300,10 +271,7 @@
 
         public int Pilots
         {
-            get
-            {
-                return _pilots;
-            }
+            get { return _pilots; }
 
             set
             {
@@ -317,10 +285,7 @@
 
         public bool IsPiloted
         {
-            get
-            {
-                return Pilots > 0;
-            }
+            get { return Pilots > 0; }
         }
 
         public bool IsDamaged
@@ -337,33 +302,24 @@
             get
             {
                 // TODO: create a seperate property for the CubeBlocks/ cube.IntegrityPercent
-                return CubeGrid.Skeleton.Count;
+                return CubeGrid.Skeleton?.Count ?? 0;
             }
         }
 
         public override double LinearVelocity
         {
-            get
-            {
-                return CubeGrid.LinearVelocity.ToVector3().LinearVector();
-            }
+            get { return CubeGrid.LinearVelocity.ToVector3().LinearVector(); }
         }
 
         /// This is not to be taken as an accurate representation.
         public double AngularVelocity
         {
-            get
-            {
-                return CubeGrid.AngularVelocity.ToVector3().LinearVector();
-            }
+            get { return CubeGrid.AngularVelocity.ToVector3().LinearVector(); }
         }
 
         public TimeSpan TimeToProduce
         {
-            get
-            {
-                return _timeToProduce;
-            }
+            get { return _timeToProduce; }
 
             set
             {
@@ -377,18 +333,12 @@
 
         public override int BlockCount
         {
-            get
-            {
-                return CubeGrid.CubeBlocks.Count;
-            }
+            get { return CubeGrid.CubeBlocks.Count; }
         }
 
         public string CockpitOrientation
         {
-            get
-            {
-                return _cockpitOrientation;
-            }
+            get { return _cockpitOrientation; }
 
             set
             {
@@ -405,10 +355,7 @@
         /// </summary>
         public List<CubeAssetModel> CubeAssets
         {
-            get
-            {
-                return _cubeAssets;
-            }
+            get { return _cubeAssets; }
 
             set
             {
@@ -425,10 +372,7 @@
         /// </summary>
         public List<CubeAssetModel> ComponentAssets
         {
-            get
-            {
-                return _componentAssets;
-            }
+            get { return _componentAssets; }
 
             set
             {
@@ -445,10 +389,7 @@
         /// </summary>
         public List<OreAssetModel> IngotAssets
         {
-            get
-            {
-                return _ingotAssets;
-            }
+            get { return _ingotAssets; }
 
             set
             {
@@ -465,10 +406,7 @@
         /// </summary>
         public List<OreAssetModel> OreAssets
         {
-            get
-            {
-                return _oreAssets;
-            }
+            get { return _oreAssets; }
 
             set
             {
@@ -482,10 +420,7 @@
 
         public string ActiveComponentFilter
         {
-            get
-            {
-                return _activeComponentFilter;
-            }
+            get { return _activeComponentFilter; }
 
             set
             {
@@ -499,10 +434,7 @@
 
         public string ComponentFilter
         {
-            get
-            {
-                return _componentFilter;
-            }
+            get { return _componentFilter; }
 
             set
             {
@@ -516,10 +448,7 @@
 
         public ObservableCollection<CubeItemModel> CubeList
         {
-            get
-            {
-                return _cubeList;
-            }
+            get { return _cubeList; }
 
             set
             {
@@ -829,7 +758,23 @@
             {
                 var beaconNames = broadcasters.Where(b => b is MyObjectBuilder_Beacon).Select(b => ((MyObjectBuilder_Beacon)b).CustomName ?? "Beacon").ToArray();
                 var antennaNames = broadcasters.Where(b => b is MyObjectBuilder_RadioAntenna).Select(b => ((MyObjectBuilder_RadioAntenna)b).CustomName ?? "Antenna").ToArray();
-                broadcastNames = String.Join("|", beaconNames.Concat(antennaNames).OrderBy(s => s));
+                broadcastNames = string.Join("|", beaconNames.Concat(antennaNames).OrderBy(s => s));
+            }
+
+            if (CubeGrid.CubeBlocks.Count == 1)
+            {
+                if (CubeGrid.CubeBlocks[0] is MyObjectBuilder_Wheel)
+                {
+                    // TODO: cached search of all cubes.
+                    //MyObjectBuilder_MotorSuspension motor = returnedCube as MyObjectBuilder_MotorSuspension
+                    //motor.TopBlockId == CubeGrid.CubeBlocks[0].EntityId;
+                    // Attached or orphan
+                    // list the attachged grid name.
+                    // ie., "Wheel - Attached SmallGrid 1234"
+
+                    Description = "Wheel";
+                    return;
+                }
             }
 
             if (string.IsNullOrEmpty(broadcastNames))
@@ -1012,7 +957,7 @@
 
             foreach (MyObjectBuilder_CubeBlock cube in CubeGrid.CubeBlocks.Where<MyObjectBuilder_CubeBlock>(e => e is MyObjectBuilder_Cockpit))
             {
-                var hierarchyBase = cube.ComponentContainer.Components.FirstOrDefault(e => e.TypeId == "MyHierarchyComponentBase")?.Component as MyObjectBuilder_HierarchyComponentBase;
+                var hierarchyBase = cube.ComponentContainer?.Components?.FirstOrDefault(e => e.TypeId == "MyHierarchyComponentBase")?.Component as MyObjectBuilder_HierarchyComponentBase;
                 if (hierarchyBase != null)
                 {
                     if (hierarchyBase.Children.Any(e => e is MyObjectBuilder_Character))

@@ -15,7 +15,6 @@
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Shell;
-
     using Sandbox.Common.ObjectBuilders;
     using SEToolbox.Interfaces;
     using SEToolbox.Interop;
@@ -886,14 +885,16 @@
         public void OpenSettingsExecuted()
         {
             var model = new SettingsModel();
-            model.Load(GlobalSettings.Default.SEBinPath, GlobalSettings.Default.CustomVoxelPath, GlobalSettings.Default.AlwaysCheckForUpdates);
+            model.Load(GlobalSettings.Default.SEBinPath, GlobalSettings.Default.CustomVoxelPath, GlobalSettings.Default.AlwaysCheckForUpdates, GlobalSettings.Default.UseCustomResource);
             var loadVm = new SettingsViewModel(this, model);
             if (_dialogService.ShowDialog<WindowSettings>(this, loadVm) == true)
             {
-                var reloadMods = GlobalSettings.Default.SEBinPath != model.SEBinPath;
+                bool reloadMods = GlobalSettings.Default.SEBinPath != model.SEBinPath;
                 GlobalSettings.Default.SEBinPath = model.SEBinPath;
                 GlobalSettings.Default.CustomVoxelPath = model.CustomVoxelPath;
                 GlobalSettings.Default.AlwaysCheckForUpdates = model.AlwaysCheckForUpdates;
+                bool resetLocalization = GlobalSettings.Default.UseCustomResource != model.UseCustomResource;
+                GlobalSettings.Default.UseCustomResource = model.UseCustomResource;
                 GlobalSettings.Default.Save();
 
                 if (reloadMods)
@@ -911,6 +912,12 @@
                     }
 
                     IsBusy = false;
+                }
+
+                if (resetLocalization)
+                {
+                    SpaceEngineersApi.LoadLocalization();
+                    UpdateLanguages();
                 }
             }
         }
@@ -1535,7 +1542,7 @@
         public void ImportSandboxObjectFromFile()
         {
             var openFileDialog = _openFileDialogFactory();
-            openFileDialog.Filter = Res.DialogImportSandboxObjectFilter;
+            openFileDialog.Filter = AppConstants.SandboxObjectFilter;
             openFileDialog.Title = Res.DialogImportSandboxObjectTitle;
             openFileDialog.Multiselect = true;
 
@@ -1548,7 +1555,7 @@
 
                 foreach (var filename in badfiles)
                 {
-                    _dialogService.ShowMessageBox(this, string.Format("Could not load '{0}', because the file is either corrupt or invalid.", Path.GetFileName(filename)), "Could not import", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    _dialogService.ShowMessageBox(this, string.Format(Res.ClsImportInvalid, Path.GetFileName(filename)), Res.ClsImportTitleFailed, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 }
             }
         }
@@ -1562,7 +1569,7 @@
                     var structure = (StructureCharacterViewModel)viewModel;
 
                     var saveFileDialog = _saveFileDialogFactory();
-                    saveFileDialog.Filter = Res.DialogExportSandboxObjectFilter;
+                    saveFileDialog.Filter = AppConstants.SandboxObjectFilter;
                     saveFileDialog.Title = string.Format(Res.DialogExportSandboxObjectTitle, structure.ClassType, structure.Description);
                     saveFileDialog.FileName = string.Format("{0}_{1}", structure.ClassType, structure.Description);
                     saveFileDialog.OverwritePrompt = true;
@@ -1576,7 +1583,7 @@
                 {
                     var structure = (StructureVoxelViewModel)viewModel;
                     var saveFileDialog = _saveFileDialogFactory();
-                    saveFileDialog.Filter = Res.DialogExportVoxelFilter;
+                    saveFileDialog.Filter = AppConstants.VoxelFilter;
                     saveFileDialog.Title = Res.DialogExportVoxelTitle;
                     saveFileDialog.FileName = structure.Name + MyVoxelMap.V2FileExtension;
                     saveFileDialog.OverwritePrompt = true;
@@ -1598,7 +1605,7 @@
                     var structure = (StructureFloatingObjectViewModel)viewModel;
 
                     var saveFileDialog = _saveFileDialogFactory();
-                    saveFileDialog.Filter = Res.DialogExportSandboxObjectFilter;
+                    saveFileDialog.Filter = AppConstants.SandboxObjectFilter;
                     saveFileDialog.Title = string.Format(Res.DialogExportSandboxObjectTitle, structure.ClassType, structure.DisplayName);
                     saveFileDialog.FileName = string.Format("{0}_{1}_{2}", structure.ClassType, structure.DisplayName, structure.Description);
                     saveFileDialog.OverwritePrompt = true;
@@ -1613,7 +1620,7 @@
                     var structure = (StructureMeteorViewModel)viewModel;
 
                     var saveFileDialog = _saveFileDialogFactory();
-                    saveFileDialog.Filter = Res.DialogExportSandboxObjectFilter;
+                    saveFileDialog.Filter = AppConstants.SandboxObjectFilter;
                     saveFileDialog.Title = string.Format(Res.DialogExportSandboxObjectTitle, structure.ClassType, structure.DisplayName);
                     saveFileDialog.FileName = string.Format("{0}_{1}_{2}", structure.ClassType, structure.DisplayName, structure.Description);
                     saveFileDialog.OverwritePrompt = true;
@@ -1629,7 +1636,7 @@
 
                     var partname = string.IsNullOrEmpty(structure.DisplayName) ? structure.EntityId.ToString() : structure.DisplayName.Replace("|", "_").Replace("\\", "_").Replace("/", "_");
                     var saveFileDialog = _saveFileDialogFactory();
-                    saveFileDialog.Filter = Res.DialogExportSandboxObjectFilter;
+                    saveFileDialog.Filter = AppConstants.SandboxObjectFilter;
                     saveFileDialog.Title = string.Format(Res.DialogExportSandboxObjectTitle, structure.ClassType, partname);
                     saveFileDialog.FileName = string.Format("{0}_{1}", structure.ClassType, partname);
                     saveFileDialog.OverwritePrompt = true;
@@ -1663,17 +1670,17 @@
                 else if (viewModel is StructureInventoryBagViewModel)
                 {
                     // Need to use the specific serializer when exporting to generate the correct XML, so Unknown should never be export.
-                    _dialogService.ShowMessageBox(this, "Cannot export InventoryBag currently", "Cannot export", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                    _dialogService.ShowMessageBox(this, Res.ClsExportInventoryBag, Res.ClsExportTitleFailed, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                 }
                 else if (viewModel is StructurePlanetViewModel)
                 {
                     // Too complex to export without work to package the data,
-                    _dialogService.ShowMessageBox(this, "Cannot export Planet currently", "Cannot export", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                    _dialogService.ShowMessageBox(this, Res.ClsExportPlanet, Res.ClsExportTitleFailed, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                 }
                 else if (viewModel is StructureUnknownViewModel)
                 {
                     // Need to use the specific serializer when exporting to generate the correct XML, so Unknown should never be export.
-                    _dialogService.ShowMessageBox(this, "Cannot export Unknown currently", "Cannot export", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                    _dialogService.ShowMessageBox(this, Res.ClsExportUnknown, Res.ClsExportTitleFailed, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
                 }
             }
         }
@@ -1682,7 +1689,7 @@
         public void ExportPrefabObjectToFile(bool blankOwnerAndMedBays, params IStructureViewBase[] viewModels)
         {
             var saveFileDialog = _saveFileDialogFactory();
-            saveFileDialog.Filter = Res.DialogExportPrefabObjectFilter;
+            saveFileDialog.Filter = AppConstants.PrefabObjectFilter;
             saveFileDialog.Title = Res.DialogExportSandboxObjectTitle;
             saveFileDialog.FileName = "export prefab.sbc";
             saveFileDialog.OverwritePrompt = true;

@@ -1,6 +1,8 @@
 ﻿namespace SEToolbox.Interop
 {
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Threading;
     using Sandbox;
     using Sandbox.Engine.Utils;
     using SEToolbox.Models;
@@ -46,9 +48,12 @@
 
             VRageRender.MyRenderProxy.Initialize(new MyNullRender());
             // We create a whole instance of MySandboxGame!
-            MySandboxGame gameTemp = new MySandboxGame(null, null);
+            MySandboxGame gameTemp = new MySandboxGame(null);
 
+            // creating MySandboxGame will reset the CurrentUICulture, so I have to reapply it.
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfoByIetfLanguageTag(GlobalSettings.Default.LanguageCode);
             SpaceEngineersApi.LoadLocalization();
+
             _stockDefinitions = new SpaceEngineersResources();
             _stockDefinitions.LoadDefinitions();
             _manageDeleteVoxelList = new List<string>();
