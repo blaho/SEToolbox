@@ -118,7 +118,7 @@
                             _selfTriggerType = selfRefSlots.First()._Action;
                     }
                 }
-                var pbSlots = toolbarItems.Select(s => blocks.SingleOrDefault(cb => cb.Item2.EntityId == s.BlockEntityId)).Where(cb => cb?.Item2 is MyObjectBuilder_MyProgrammableBlock);
+                var pbSlots = toolbarItems.Where(ti => ti._Action.StartsWith("Run")).Select(s => blocks.SingleOrDefault(cb => cb.Item2.EntityId == s.BlockEntityId)).Where(cb => cb?.Item2 is MyObjectBuilder_MyProgrammableBlock);
                 _programmableBlocks = pbSlots.Select(pb => new Tuple<long, string>(pb.Item2.EntityId, GetBlockName(pb)));
                 _pbNames = String.Join("\n", _programmableBlocks);
                 _pbSourceCodePreview = String.Join("\n", pbSlots.Select(pb =>
